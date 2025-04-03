@@ -7,17 +7,17 @@ const cors = require('cors'); // Importando o módulo cors para habilitar CORS, 
 const fs = require('fs'); //Importando o módulo fs para manipulação de arquivos
 const path = require('path'); // Importando o módulo path para manipulação de caminhos de arquivos
 const Groq = require('groq-sdk'); // Importando o SDK corretamente
-const { handleClientMessage } = require('../msgClientes'); // Importando o módulo msgClientes.js
-const { upload, handleFileUpload } = require('../importarArquivo'); // Importa o módulo de upload
-const { processFiles } = require('../pdfs/processarArquivos'); // Importe a função de processamento
-const { salvarMensagens } = require('../salvarMSG'); // Importando o módulo salvarMSG
+const { handleClientMessage } = require('../src/public/scripts/msgClientes'); // Importando o módulo msgClientes.js
+const { upload, handleFileUpload } = require('./controllers/importarArquivo'); // Importa o módulo de upload
+const { processFiles } = require('./controllers/processarArquivos'); // Importe a função de processamento
+const { salvarMensagens } = require('../src/public/scripts/salvarMSG'); // Importando o módulo salvarMSG
 
 // Memória da conversa
 let memoriaMensagens = [];
 
 // Função para carregar conversas salvas
 function carregarConversasSalvas() {
-    const logDir = path.join(__dirname, '../data//log');
+    const logDir = path.join(__dirname, '../../data/log');
     if (!fs.existsSync(logDir)) {
         console.log('Diretório de logs não encontrado.');
         return;
@@ -63,7 +63,7 @@ function carregarConversasSalvas() {
 
 // Função para carregar arquivos processados
 function carregarArquivosProcessados() {
-    const processedDir = path.join(__dirname, '../data//processed');
+    const processedDir = path.join(__dirname, '../../data/processed');
     if (!fs.existsSync(processedDir)) {
         console.log('Diretório de arquivos processados não encontrado.');
         return;
@@ -202,8 +202,8 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-const uploadDir = path.join(__dirname, '../data//uploads');
-const processedDir = path.join(__dirname, '../data//processed');
+const uploadDir = path.join(__dirname, '../../data/uploads');
+const processedDir = path.join(__dirname, 'data/processed');
 
 // Endpoint para upload de arquivos
 app.post('/upload', upload.single('file'), handleFileUpload);
@@ -256,7 +256,7 @@ app.get('/processed-files', (req, res) => {
 // Endpoint para listar arquivos de log
 app.get('/logs', (req, res) => {
     try {
-        const logDir = path.join(__dirname, '../data//log');
+        const logDir = path.join(__dirname, 'data/log');
         if (!fs.existsSync(logDir)) {
             return res.json([]); // Retorna uma lista vazia se o diretório não existir
         }
@@ -273,7 +273,7 @@ app.get('/logs', (req, res) => {
 app.get('/logs/:fileName', (req, res) => {
     try {
         const fileName = req.params.fileName;
-        const logFilePath = path.join(__dirname, '../data//log', fileName);
+        const logFilePath = path.join(__dirname, 'data/log', fileName);
 
         if (!fs.existsSync(logFilePath)) {
             return res.status(404).json({ error: 'Arquivo de log não encontrado.' });
@@ -319,7 +319,7 @@ app.post('/save-message', (req, res) => {
 // Endpoint para carregar arquivos processados e alimentar a memória
 app.post('/load-processed', (req, res) => {
     try {
-        const processedDir = path.join(__dirname, '/data/processed');
+        const processedDir = path.join(__dirname, 'data/processed');
         if (!fs.existsSync(processedDir)) {
             return res.status(404).json({ error: 'Diretório de arquivos processados não encontrado.' });
         }
