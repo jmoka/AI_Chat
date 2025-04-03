@@ -45,3 +45,31 @@ git branch -d testes
 ## 🗑️ Deletar o Branch Remotamente
 ```sh
 git push origin --delete testes  # Apaga no remoto
+=======
+# Deletra o branch
+git branch -d testes  # Apaga localmente
+git push origin --delete testes  # Apaga no remoto
+
+========================================
+# Estrutura
+
+/server
+│── /src
+│   ├── /controllers     # Lógica dos endpoints (funções separadas)
+│   ├── /routes          # Definição das rotas (endpoints da API)
+│   ├── /models          # Modelos (caso use banco de dados)
+│   ├── /middlewares     # Middlewares (autenticação, logs, validação, etc.)
+│   ├── /services        # Serviços (lógica de negócios separada)
+│   ├── /config          # Configurações globais (variáveis de ambiente, DB, etc.)
+│   ├── app.js           # Configuração principal do servidor Express
+│   ├── server.js        # Arquivo para iniciar o servidor
+│
+│── /tests               # Testes automatizados
+│── /logs                # Logs do servidor
+│── /public              # Arquivos estáticos (se precisar)
+│── /docs                # Documentação da API (se precisar)
+│
+│── package.json         # Dependências e scripts do projeto
+│── .env                 # Variáveis de ambiente
+│── .gitignore           # Arquivos ignorados pelo Git
+
