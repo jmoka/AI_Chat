@@ -16,6 +16,12 @@ git push -u origin main
 # Criar branck
 git checkout -b testes
 
+# Enviar as Alterações do Novo Branch
+git status
+git add . 
+git commit -m " "
+git push origin testes
+
 
 # Junta os branch
 git checkout main
