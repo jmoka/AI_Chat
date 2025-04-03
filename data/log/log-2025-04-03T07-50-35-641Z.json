@@ -1,0 +1,12 @@
+[
+  {
+    "message": "oi",
+    "isUser": true,
+    "timestamp": "04:50"
+  },
+  {
+    "message": "Olá!",
+    "isUser": false,
+    "timestamp": "04:50"
+  }
+]
