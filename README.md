@@ -26,7 +26,7 @@ git checkout -b testes
 ```sh
 git status
 git add . 
-git commit -m "instruções do Git no Readme - inclusão de alterar e envio do novo branch para GitHub"
+git commit -m " "
 git push origin testes
 ```
 
