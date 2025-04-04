@@ -2,8 +2,9 @@
   "users": [
     {
       "id": 1,
-      "name": "João Silva",
-      "email": "joao.silva@example.com",
+      "name": "izabela",
+      namorado: "joão victor"
+      "email": "joao.izabela@love.com",
       "age": 29,
       "address": {
         "street": "Rua das Flores, 123",
