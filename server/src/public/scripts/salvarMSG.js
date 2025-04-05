@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
+const baseDataPath = path.resolve(__dirname, '../../../data');
 // Diretório onde os logs serão salvos
-const logDir = path.join(__dirname, 'data/log');
+const logDir = path.join(baseDataPath, 'log');
+
+console.log("Diretório de logs:", logDir);
 
 // Função para salvar mensagens em um arquivo .json
 function salvarMensagens(messages) {

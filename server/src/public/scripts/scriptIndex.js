@@ -1,5 +1,7 @@
+const fetchHTML = "./server/src/components/mensagens.html"
+
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("./server/src/components/mensagens.html")
+    fetch(fetchHTML) // Altere o caminho para o arquivo HTML conforme necessário
         .then(response => response.text())
         .then(data => {
             const container = document.getElementById("mensagens-container");

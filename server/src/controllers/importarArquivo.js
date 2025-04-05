@@ -2,10 +2,16 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+
+// Caminhos padrão para pastas de dados
+const baseDataPath = path.resolve(__dirname, '../../data');
+const uploadDir = path.join(baseDataPath, 'uploads');
+console.log("Diretório de uploads:", uploadDir);
+
 // Configuração de armazenamento com multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, '../../../data/uploads');
+      
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }

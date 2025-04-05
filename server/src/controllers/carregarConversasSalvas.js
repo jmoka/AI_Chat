@@ -1,8 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
-function carregarConversasSalvas(memoriaMensagens) {
-    const logDir = path.join(__dirname, '../../../data/log');
+const baseDataPath = path.resolve(__dirname, '../../data'); // Ajuste o caminho conforme necessário
+const logDir = path.join(baseDataPath, 'log'); // Diretório de logs
+
+console.log(`Base data path: ${baseDataPath}`); // Caminho base para os dados
+console.log(`Base data logDir: ${logDir}`); // Caminho base para os dados
+
+
+function carregarConversasSalvas(memoriaMensagens) { // Carrega as conversas salvas na memória
+    //const logDir = path.join(__dirname, '../../../data/log'); // Diretório de logs
     if (!fs.existsSync(logDir)) {
         console.log('Diretório de logs não encontrado.');
         return;

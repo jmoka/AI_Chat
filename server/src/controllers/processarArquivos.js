@@ -3,8 +3,12 @@ const path = require('path');
 const pdfParse = require('pdf-parse'); // Biblioteca para processar PDFs
 
 // Diretórios
-const uploadDir = path.join(__dirname, '../../../data/uploads');
-const processedDir = path.join(__dirname, '../../../data/processed');
+const uploadDir = path.join(__dirname, '../../data/uploads'); // Diretório de uploads
+const processedDir = path.join(__dirname, '../../data/processed'); // Diretório de arquivos processados
+
+console.log("Diretório processe arquivo de uploads:", uploadDir);
+console.log("Diretório de processe arquivos processados:", processedDir);
+
 
 // Garante que o diretório de uploads existe
 if (!fs.existsSync(uploadDir)) {

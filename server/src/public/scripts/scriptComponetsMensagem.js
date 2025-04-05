@@ -10,6 +10,7 @@ const logFileList = document.getElementById('logFileList');
 // Array para armazenar as mensagens trocadas
 const messageLog = [];
 
+
 function getTimestamp() {
     return new Date().toLocaleTimeString('pt-BR', { 
         hour: '2-digit', 
@@ -258,8 +259,10 @@ processButton.addEventListener('click', async () => {
             throw new Error(errorData.error || 'Erro desconhecido ao processar os arquivos.');
         }
 
-        const processedFiles = await response.json();
-        processedFileList.innerHTML = ''; // Limpa a lista antes de exibir os arquivos processados
+       // const processedFiles = await response.json();
+        const result = await response.json();
+const processedFiles = result.processed || [];
+        //processedFileList.innerHTML = ''; // Limpa a lista antes de exibir os arquivos processados
 
         if (processedFiles.length === 0) {
             const emptyMessage = document.createElement('li');
@@ -400,14 +403,17 @@ async function loadLogFileContent(fileName) {
 async function loadLogFileList() {
     try {
         const response = await fetch('http://localhost:3000/logs');
+        console.log("response", response);
+            
         if (!response.ok) {
             throw new Error('Erro ao carregar a lista de logs.');
         }
 
         const files = await response.json();
         logFileList.innerHTML = ''; // Limpa a lista antes de exibir os arquivos
+        console.log("responsefff",   files);
 
-        if (files.length === 0) {
+        if (files.length ==0) {
             const emptyMessage = document.createElement('li');
             emptyMessage.textContent = 'Nenhum log salvo.';
             emptyMessage.style.textAlign = 'center';
