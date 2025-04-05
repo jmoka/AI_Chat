@@ -164,7 +164,7 @@ app.post('/chat', async (req, res) => {
 });
 
 const uploadDir = path.join(__dirname, '../../data/uploads');
-const processedDir = path.join(__dirname, 'data/processed');
+const processedDir = path.join(__dirname, '../../data/processed');
 
 // Endpoint para upload de arquivos
 app.post('/upload', upload.single('file'), handleFileUpload);
@@ -217,7 +217,7 @@ app.get('/processed-files', (req, res) => {
 // Endpoint para listar arquivos de log
 app.get('/logs', (req, res) => {
     try {
-        const logDir = path.join(__dirname, 'data/log');
+        const logDir = path.join(__dirname, '../../data/log');
         if (!fs.existsSync(logDir)) {
             return res.json([]); // Retorna uma lista vazia se o diretório não existir
         }
@@ -234,7 +234,7 @@ app.get('/logs', (req, res) => {
 app.get('/logs/:fileName', (req, res) => {
     try {
         const fileName = req.params.fileName;
-        const logFilePath = path.join(__dirname, 'data/log', fileName);
+        const logFilePath = path.join(__dirname, '../../data/log', fileName);
 
         if (!fs.existsSync(logFilePath)) {
             return res.status(404).json({ error: 'Arquivo de log não encontrado.' });
@@ -280,7 +280,7 @@ app.post('/save-message', (req, res) => {
 // Endpoint para carregar arquivos processados e alimentar a memória
 app.post('/load-processed', (req, res) => {
     try {
-        const processedDir = path.join(__dirname, 'data/processed');
+        const processedDir = path.join(__dirname, '../../data/processed');
         if (!fs.existsSync(processedDir)) {
             return res.status(404).json({ error: 'Diretório de arquivos processados não encontrado.' });
         }
@@ -302,6 +302,8 @@ app.post('/load-processed', (req, res) => {
         res.status(500).json({ error: 'Erro ao carregar arquivos processados.' });
     }
 });
+
+
 
 // Inicia o servidor
 app.listen(PORT, () => {
