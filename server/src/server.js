@@ -11,62 +11,16 @@ const { handleClientMessage } = require('../src/public/scripts/msgClientes'); //
 const { upload, handleFileUpload } = require('./controllers/importarArquivo'); // Importa o módulo de upload
 const { processFiles } = require('./controllers/processarArquivos'); // Importe a função de processamento
 const { salvarMensagens } = require('../src/public/scripts/salvarMSG'); // Importando o módulo salvarMSG
-//const {carregarConversasSalvas} = require('./controllers/carregarConversasSalvas'); // Importando o módulo carregarConversasSalvas
 const carregarConversasSalvas = require('./controllers/carregarConversasSalvas');
+
 
 
 // Memória da conversa
 
 
 let memoriaMensagens = [];
-carregarConversasSalvas(memoriaMensagens);
 
 
-// // Função para carregar conversas salvas
-// function carregarConversasSalvas() {
-//     const logDir = path.join(__dirname, '../../data/log');
-//     if (!fs.existsSync(logDir)) {
-//         console.log('Diretório de logs não encontrado.');
-//         return;
-//     }
-
-//     const logFiles = fs.readdirSync(logDir).filter(file => file.endsWith('.json'));
-//     logFiles.forEach(file => {
-//         try {
-//             const filePath = path.join(logDir, file);
-//             const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-
-//             // Verifica se o conteúdo do arquivo é um array
-//             if (Array.isArray(fileContent)) {
-//                 fileContent.forEach(message => {
-//                     if (message && typeof message.content === 'string') {
-//                         memoriaMensagens.push({
-//                             role: message.role,
-//                             content: message.content
-//                         });
-//                     }
-//                 });
-//                 console.log(`Conversas carregadas do arquivo (array): ${file}`);
-//             } else if (typeof fileContent === 'object') {
-//                 // Se for um objeto, processa diretamente
-//                 Object.keys(fileContent).forEach(key => {
-//                     const message = fileContent[key];
-//                     if (message && typeof message === 'string') {
-//                         memoriaMensagens.push({
-//                             role: 'assistant', // Assume que o conteúdo do log é do assistente
-//                             content: message
-//                         });
-//                     }
-//                 });
-//                 console.log(`Conversas carregadas do arquivo (objeto): ${file}`);
-//             } else {
-//                 console.error(`O conteúdo do arquivo ${file} não é um array nem um objeto válido.`);
-//             }
-//         } catch (error) {
-//             console.error(`Erro ao carregar o arquivo de log ${file}:`, error.message);
-//         }
-//     });
-// }
 
 // Função para carregar arquivos processados
 function carregarArquivosProcessados() {
