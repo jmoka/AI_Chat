@@ -1,7 +1,0 @@
-{
-  "name": "json.txt",
-  "size": 299,
-  "type": ".txt",
-  "createdAt": "2025-04-01T00:51:53.738Z",
-  "content": "{\r\n  \"users\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"ana frança \",\r\n      \"email\": \"ana@example.com\",\r\n      \"age\": 29,\r\n      \"address\": {\r\n        \"street\": \"Rua das Flores, 123\",\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"SP\",\r\n        \"zip\": \"01010-000\"\r\n      }\r\n    },\r\n   \r\n  ]\r\n}\r\n"
-}

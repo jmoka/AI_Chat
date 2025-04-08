@@ -1,4 +1,4 @@
-require('dotenv').config();
+server/src/services/server.jsrequire('dotenv').config();
 const xss = require('xss');
 const express = require('express');
 const axios = require('axios');
@@ -8,11 +8,12 @@ const fs = require('fs');
 const path = require('path');
 const Groq = require('groq-sdk');
 
-const { handleClientMessage } = require('../src/public/scripts/msgClientes');
-const { upload, handleFileUpload } = require('./controllers/importarArquivo');
-const { processFiles } = require('./controllers/processarArquivos');
-const { salvarMensagens } = require('../src/public/scripts/salvarMSG');
-const carregarConversasSalvas = require('./controllers/carregarConversasSalvas');
+const { rotaChat } = require('../routes/rotaChat');
+const { upload, handleFileUpload } = require('../controllers/importarArquivo');
+const { processFiles } = require('../controllers/processarArquivos');
+const { salvarMensagens } = require('../public/scripts/salvarMSG');
+const carregarConversasSalvas = require('../controllers/carregarConversasSalvas');
+const { carregarArquivosProcessados } = require('../controllers/carregarArquivos');
 
 // Caminhos padrão para pastas de dados
 const baseDataPath = path.resolve(__dirname, '../data');
@@ -36,39 +37,39 @@ console.log("Diretório de uploads:", uploadDir);
 let memoriaMensagens = [];
 
 // Função para carregar arquivos processados
-function carregarArquivosProcessados() {
-    if (!fs.existsSync(processedDir)) {
-        console.log('Diretório de arquivos processados não encontrado.');
-        return;
-    }
+// function carregarArquivosProcessados() {
+//     if (!fs.existsSync(processedDir)) {
+//         console.log('Diretório de arquivos processados não encontrado.');
+//         return;
+//     }
 
-    const processedFiles = fs.readdirSync(processedDir).filter(file => file.endsWith('.json'));
-    processedFiles.forEach(file => {
-        try {
-            const filePath = path.join(processedDir, file);
-            const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+//     const processedFiles = fs.readdirSync(processedDir).filter(file => file.endsWith('.json'));
+//     processedFiles.forEach(file => {
+//         try {
+//             const filePath = path.join(processedDir, file);
+//             const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-            if (Array.isArray(fileContent)) {
-                fileContent.forEach(message => {
-                    if (message && typeof message.content === 'string') {
-                        memoriaMensagens.push({ role: 'assistant', content: message.content });
-                    }
-                });
-            } else if (typeof fileContent === 'object') {
-                Object.keys(fileContent).forEach(key => {
-                    const message = fileContent[key];
-                    if (typeof message === 'string') {
-                        memoriaMensagens.push({ role: 'assistant', content: message });
-                    }
-                });
-            } else {
-                console.error(`O conteúdo do arquivo ${file} não é um array nem um objeto válido.`);
-            }
-        } catch (error) {
-            console.error(`Erro ao carregar o arquivo processado ${file}:`, error.message);
-        }
-    });
-}
+//             if (Array.isArray(fileContent)) {
+//                 fileContent.forEach(message => {
+//                     if (message && typeof message.content === 'string') {
+//                         memoriaMensagens.push({ role: 'assistant', content: message.content });
+//                     }
+//                 });
+//             } else if (typeof fileContent === 'object') {
+//                 Object.keys(fileContent).forEach(key => {
+//                     const message = fileContent[key];
+//                     if (typeof message === 'string') {
+//                         memoriaMensagens.push({ role: 'assistant', content: message });
+//                     }
+//                 });
+//             } else {
+//                 console.error(`O conteúdo do arquivo ${file} não é um array nem um objeto válido.`);
+//             }
+//         } catch (error) {
+//             console.error(`Erro ao carregar o arquivo processado ${file}:`, error.message);
+//         }
+//     });
+// }
 
 function limitarMemoriaMensagens(maxTokens) {
     let totalTokens = 0;
@@ -106,6 +107,11 @@ function FormatarRespostas(text) {
         .replace(/Jacob/g, '**Jacob**')
         .replace(/- (.*?)\n/g, '  - $1\n\n');
 }
+
+
+// Rota para lidar com mensagens do cliente
+
+    
 
 app.post('/chat', async (req, res) => {
     try {
@@ -221,11 +227,11 @@ app.post('/save-message', (req, res) => {
     }
 });
 
-app.post('/load-processed', (req, res) => {
+app.post('/load-processed', (req, res) => { // Carregar arquivos processados na memória
     try {
         if (!fs.existsSync(processedDir)) return res.status(404).json({ error: 'Diretório de arquivos processados não encontrado.' });
 
-        const files = fs.readdirSync(processedDir).filter(file => file.endsWith('.json'));
+        const files = fs.readdirSync(processedDir).filter(file => file.endsWith('.json')); // Filtrar apenas arquivos .json
         files.forEach(file => {
             const fileContent = JSON.parse(fs.readFileSync(path.join(processedDir, file), 'utf-8'));
             fileContent.forEach(message => {
@@ -244,5 +250,5 @@ app.post('/load-processed', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
     carregarConversasSalvas(memoriaMensagens);
-    carregarArquivosProcessados();
+    carregarArquivosProcessados(processedDir, memoriaMensagens);
 });

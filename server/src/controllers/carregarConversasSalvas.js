@@ -21,12 +21,12 @@ function carregarConversasSalvas(memoriaMensagens) { // Carrega as conversas sal
             const filePath = path.join(logDir, file);
             const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-            if (Array.isArray(fileContent)) {
-                fileContent.forEach(message => {
-                    if (message && typeof message.content === 'string') {
-                        memoriaMensagens.push({
-                            role: message.role,
-                            content: message.content
+            if (Array.isArray(fileContent)) { // Verifica se o conteúdo é um array
+                fileContent.forEach(message => { // Verifica se o conteúdo é um array
+                    if (message && typeof message.content === 'string') { // Verifica se o conteúdo é uma string
+                        memoriaMensagens.push({ // Adiciona a mensagem à memória
+                            role: message.role, // 'user' ou 'assistant'
+                            content: message.content // Conteúdo da mensagem
                         });
                     }
                 });
