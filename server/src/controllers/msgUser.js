@@ -40,7 +40,7 @@ export async function enviarMensagem(mensagens, orientacao, arquivos,  historico
     console.log("modeloEscolhido", modeloEscolhido);
     
     const resposta = await groq.chat.completions.create({
-        messages: mensagens,
+        messages: mensagens,        
         model: modeloEscolhido,
         temperature: 0.5,
         presence_penalty: 0,

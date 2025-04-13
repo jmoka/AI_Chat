@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "e pedro esta casado com quem?"
+  },
+  {
+    "role": "assistant",
+    "content": "Com base nas informações que você forneceu anteriormente, João está casado com Maria. Não há menção de Pedro estar casado com alguém. Se você puder fornecer mais detalhes ou confirmar a relação de Pedro, ficarei feliz em ajudar com informações mais precisas."
+  }
+]

@@ -24,7 +24,7 @@ export function listaHistorico() {
       .sort((a, b) => b.name.localeCompare(a.name)) // Ordem decrescente (mais recente primeiro)
       .map(file => path.join(logDir, file.name));
 
-    console.log("📂 Arquivos JSON encontrados no diretório de logs:", arquivosJSON);
+    // console.log("📂 Arquivos JSON encontrados no diretório de logs:", arquivosJSON);
 
     for (const filePath of arquivosJSON) {
       try {
@@ -71,60 +71,4 @@ export function HistoricoMSG(lista = []) {
       role: item.role.trim(),
       content: item.content.trim()
     }));
-}
-
-export function rotaChat(app) {
-  app.post('/api/chat', async (req, res) => {
-    try {
-      const {
-        mensagemEnviadaUsuario,
-        orientacaPadrao = InstrucoesSistema("vc é um especialista em economia como um economista"),
-        arquivos = [],
-        modeloPadrao = 1,
-      } = req.body;
-
-      if (!mensagemEnviadaUsuario || mensagemEnviadaUsuario.trim() === "") {
-        return res.status(400).json({ error: "Campo obrigatório: mensagemEnviadaUsuario não pode estar vazio." });
-      }
-
-      const historicoBruto = Array.isArray(req.body.listaHistoricoMSGPadrao) && req.body.listaHistoricoMSGPadrao.length > 0
-        ? req.body.listaHistoricoMSGPadrao
-        : listaHistorico();
-
-      const historicoFormatado = HistoricoMSG(historicoBruto);
-      const arquivosFormatados = await listArquivos(arquivos);
-      const modeloEscolhido = EscolherModelo(modeloPadrao);
-
-      const contextoHistorico = [...historicoFormatado];
-      console.log("📜 Enviando histórico ao modelo:", contextoHistorico);
-
-      const resposta = await enviarMensagem(
-        mensagemEnviadaUsuario,
-        orientacaPadrao,
-        contextoHistorico,
-        arquivosFormatados,
-        modeloPadrao
-      );
-
-      const respostaDaIA = resposta.choices[0]?.message?.content || "";
-
-      const novaInteracao = [
-        { role: 'user', content: mensagemEnviadaUsuario },
-        { role: 'assistant', content: respostaDaIA }
-      ];
-
-      const historicoAtualizado = [...contextoHistorico, ...novaInteracao];
-      console.log("📦 Histórico atualizado:", JSON.stringify(historicoAtualizado, null, 2));
-      salvarConversa(JSON.stringify(historicoAtualizado, null, 2));
-
-      return res.json({
-        resposta: respostaDaIA,
-        modeloUsado: modeloEscolhido,
-      });
-
-    } catch (erro) {
-      console.error("❌ Erro na rota /api/chat:", erro);
-      return res.status(500).json({ error: "Erro ao gerar resposta com modelo LLM." });
-    }
-  });
 }

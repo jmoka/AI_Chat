@@ -13,45 +13,48 @@ export function rotaChat(app) {
         mensagem,
         orientacao = "Responda sempre em português de forma clara e objetiva.",
         arquivos = [],
-        historico = [],
+        historico,
         modelo = 1,
       } = req.body;
+
+      const historicoMemoria = listaHistorico();
+      const historicoFinal = Array.isArray(historico) ? historico : historicoMemoria;
 
       console.log("🧪 Mensagens:", mensagem);
       console.log("🧪 Orientação:", orientacao);
       console.log("🧪 Arquivos:", arquivos);
-      console.log("🧪 Histórico:", historico);
+      console.log("🧪 Histórico:", historicoFinal);
       console.log("🧪 Modelo:", modelo);
 
       if (!mensagem || mensagem.trim() === "") {
         return res.status(400).json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
       }
 
-      // Construa o array de mensagens
       const mensagens = [
-        { role: "system", content: orientacao }, // Mensagem do sistema
-        ...historico, // Histórico de mensagens
-        { role: "user", content: mensagem } // Mensagem do usuário
+        { role: "system", content: orientacao },
+        ...historicoFinal,
+        { role: "user", content: mensagem }
       ];
 
       console.log("🧪 Mensagens finais:", mensagens);
 
       const resposta = await enviarMensagem(
-        mensagens, // Array de mensagens
+        mensagens,
         orientacao,
         arquivos,
-        historico,
+        historicoFinal,
         modelo
       );
 
       const respostaDaIA = resposta.choices[0]?.message?.content || "";
 
-      const novaInteracao = [
+      const mensagemSalvaJSON = [
         { role: "user", content: mensagem },
         { role: "assistant", content: respostaDaIA }
       ];
 
-      console.log("📦 Nova interação:", novaInteracao);
+      console.log("📦 Nova interação:", mensagemSalvaJSON);
+      salvarConversa(mensagemSalvaJSON);
 
       return res.json({
         resposta: respostaDaIA,

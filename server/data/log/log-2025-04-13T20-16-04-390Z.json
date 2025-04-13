@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "e paula esta casado com quem?"
+  },
+  {
+    "role": "assistant",
+    "content": "Com base na informação que você forneceu anteriormente, Paula está casada com Pedro. Se você tiver mais detalhes ou precisar de informações adicionais, estou aqui para ajudar."
+  }
+]

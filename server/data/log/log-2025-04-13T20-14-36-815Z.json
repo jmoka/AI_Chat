@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "joão e casado com maria"
+  },
+  {
+    "role": "assistant",
+    "content": "Entendi. João está casado com Maria. Se você tiver alguma pergunta específica sobre essa situação ou precisar de mais detalhes, sinta-se à vontade para perguntar."
+  }
+]
