@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Embutido</title>
+    <link rel="stylesheet" href="../public/styles/styleMensagens.css">
+</head>
+<body>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+        <!-- Chat Container -->
+        <div id="chat-container">
+            <div id="chat"></div>
+            <div id="inputArea">
+                <textarea id="message" placeholder="Digite uma mensagem..." rows="4" style="resize: none;"></textarea>
+                <button id="sendButton" type="button">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script sempre no final do body -->
+    <script src="../public/scripts/scriptChat.js"></script>
+</body>
+</html>

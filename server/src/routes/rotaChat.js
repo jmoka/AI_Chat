@@ -1,89 +1,66 @@
-// Importa o módulo do Express para criar rotas
-import express  from 'express';
-import xss      from 'xss';
+import { enviarMensagem } from '../controllers/msgUser.js';
+import EscolherModelo from '../controllers/escolherModelo.js';
+import { listaHistorico } from '../controllers/historicoMSG.js';
+import { HistoricoMSG } from '../controllers/historicoMSG.js';
+import { InstrucoesSistema } from '../controllers/instrucoesSistema.js';
+import { listArquivos } from '../controllers/listArquivos.js';
+import salvarConversa from '../controllers/salvarMensagens.js';
 
-
-// Importa a instância do cliente Groq configurado no server.js
-import { groq } from '../api/server.js';
-
-// Lista que guarda o histórico da conversa entre usuário e IA
-const memoriaMensagens = [];
-
-/**
- * Limita a quantidade de mensagens enviadas ao modelo.
- * Por simplicidade, aqui retorna apenas as últimas 10 mensagens.
- * Em versões futuras, pode considerar contagem de tokens.
- */
-function limitarMemoriaMensagens(maxTokens) {
-    return memoriaMensagens.slice(-10); // Pega as 10 mais recentes
-}
-
-/**
- * Formata a resposta do modelo para remover espaços extras.
- * Pode ser expandida futuramente com mais regras de limpeza.
- */
-function FormatarRespostas(resposta) {
-    return resposta.trim();
-}
-
-/**
- * Função que registra a rota do chat na aplicação Express.
- * Essa rota lida com as requisições POST feitas pelo frontend para enviar mensagens.
- */
 export function rotaChat(app) {
-    const router = express.Router(); // Cria um novo roteador do Express
+  app.post('/api/chat', async (req, res) => {
+    try {
+      const {
+        mensagem,
+        orientacao = "Responda sempre em português de forma clara e objetiva.",
+        arquivos = [],
+        historico = [],
+        modelo = 1,
+      } = req.body;
 
-    /**
-     * Rota POST /chat que processa mensagens enviadas pelo usuário.
-     */
-    router.post('/chat', async (req, res) => {
-        try {
-            // Limpa a mensagem para prevenir ataques XSS
-            const userMessage = xss(req.body.message);
+      console.log("🧪 Mensagens:", mensagem);
+      console.log("🧪 Orientação:", orientacao);
+      console.log("🧪 Arquivos:", arquivos);
+      console.log("🧪 Histórico:", historico);
+      console.log("🧪 Modelo:", modelo);
 
-            // Validação: não permite mensagens vazias
-            if (!userMessage) {
-                return res.status(400).json({ error: 'Mensagem não pode ser vazia.' });
-            }
+      if (!mensagem || mensagem.trim() === "") {
+        return res.status(400).json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
+      }
 
-            // Armazena a mensagem do usuário na memória
-            memoriaMensagens.push({ role: 'user', content: userMessage });
+      // Construa o array de mensagens
+      const mensagens = [
+        { role: "system", content: orientacao }, // Mensagem do sistema
+        ...historico, // Histórico de mensagens
+        { role: "user", content: mensagem } // Mensagem do usuário
+      ];
 
-            // Prepara o histórico de mensagens (últimas 10) para enviar ao modelo
-            const mensagensParaModelo = limitarMemoriaMensagens(6000);
+      console.log("🧪 Mensagens finais:", mensagens);
 
-            // Faz a chamada para a API da Groq (modelo LLaMA 3) com os parâmetros desejados
-            const chatCompletion = await groq.chat.completions.create({
-                model: "llama3-8b-8192",
-                messages: mensagensParaModelo,
-                temperature: 0.7,            // Criatividade da resposta
-                max_completion_tokens: 512, // Limite de tokens gerados na resposta
-                top_p: 0.9,                  // Diversidade do conteúdo (sampling)
-                presence_penalty: 0.6,       // Penalidade para repetir temas
-                frequency_penalty: 0.2,      // Penalidade para repetir palavras
-                stream: false                // Modo de streaming desativado
-            });
+      const resposta = await enviarMensagem(
+        mensagens, // Array de mensagens
+        orientacao,
+        arquivos,
+        historico,
+        modelo
+      );
 
-            // Pega a resposta gerada pelo modelo (se existir)
-            const botReply = chatCompletion.choices[0]?.message?.content || '';
+      const respostaDaIA = resposta.choices[0]?.message?.content || "";
 
-            // Armazena a resposta do assistente na memória
-            memoriaMensagens.push({ role: 'assistant', content: botReply });
+      const novaInteracao = [
+        { role: "user", content: mensagem },
+        { role: "assistant", content: respostaDaIA }
+      ];
 
-            // Envia a resposta ao frontend em JSON
-            res.json({ response: FormatarRespostas(botReply) });
+      console.log("📦 Nova interação:", novaInteracao);
 
-        } catch (error) {
-            // Em caso de erro, exibe no console e retorna erro 500
-            console.error('Erro ao processar a solicitação:', error.message);
-            res.status(500).json({
-                error: 'Erro ao processar a solicitação.',
-                details: error.message
-            });
-        }
-    });
+      return res.json({
+        resposta: respostaDaIA,
+        modeloUsado: modelo,
+      });
 
-    // Registra o prefixo "/api" para todas as rotas do router
-    // Exemplo: /chat vira /api/chat
-    app.use('/api', router);
+    } catch (erro) {
+      console.error("❌ Erro na rota /api/chat:", erro);
+      return res.status(500).json({ error: "Erro ao gerar resposta com modelo LLM." });
+    }
+  });
 }
