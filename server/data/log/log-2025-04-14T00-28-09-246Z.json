@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "qual o nome mesmo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Olá! Parece que você está perguntando sobre o nome de algo específico, mas não ficou claro qual é. Você poderia fornecer mais detalhes ou contexto para que eu possa ajudar de forma mais precisa?"
+  }
+]
