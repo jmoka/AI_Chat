@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "ger um html basico formatado"
+  },
+  {
+    "role": "assistant",
+    "content": "Claro! Vou gerar um exemplo de um arquivo HTML básico e formatado. Aqui está um exemplo simples:\n\n```html\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exemplo de Página HTML</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 0;\n            background-color: #f4f4f9;\n            color: #333;\n        }\n        header {\n            background-color: #4CAF50;\n            color: white;\n            padding: 10px 0;\n            text-align: center;\n        }\n        main {\n            padding: 20px;\n        }\n        footer {\n            background-color: #333;\n            color: white;\n            text-align: center;\n            padding: 10px 0;\n            position: fixed;\n            width: 100%;\n            bottom: 0;\n        }\n    </style>\n</head>\n<body>\n    <header>\n        <h1>Bem-vindo ao Meu Site</h1>\n    </header>\n    <main>\n        <h2>Sobre</h2>\n        <p>Este é um exemplo de uma página HTML básica e formatada.</p>\n        <h2>Conteúdo</h2>\n        <p>Aqui você pode adicionar mais conteúdo para sua página.</p>\n    </main>\n    <footer>\n        <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>\n    </footer>\n</body>\n</html>\n```\n\nEste exemplo inclui:\n- Um cabeçalho (`<header>`) com um título principal.\n- Um corpo principal (`<main>`) com algumas seções de conteúdo.\n- Um rodapé (`<footer>`) com informações de direitos autorais.\n- Estilos CSS básicos para formatação.\n\nVocê pode salvar este código em um arquivo com a extensão `.html` e abri-lo em um navegador para visualizar o resultado. Se precisar de mais alguma coisa ou de um exemplo mais específico, sinta-se à vontade para perguntar!"
+  }
+]

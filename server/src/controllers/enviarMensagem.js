@@ -18,7 +18,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 // Função principal que envia mensagem ao modelo Groq
-export async function enviarMensagem(mensagens, orientacao, arquivos,  historico, modelo) {
+export async function enviarMensagem(mensagens, modelo) {
     // console.log("🧪 Mensagens:", mensagens);
     // console.log("🧪 Oriantação", orientacao);
     // console.log("🧪 arquivos", arquivos);
@@ -27,19 +27,19 @@ export async function enviarMensagem(mensagens, orientacao, arquivos,  historico
 
     
 
-    mensagens.forEach((msg, index) => {
-        console.log(`🔍 Validando mensagem ${index}:`, msg);
-        if (!msg.role || !msg.content || msg.content.trim() === "") {
+    mensagens.forEach((msg, index) => { // Verifica cada mensagem
+      //  console.log(`🔍 Validando mensagem ${index}:`, msg);
+        if (!msg.role || !msg.content || msg.content.trim() === "") { // Verifica se a mensagem tem role e content
             throw new Error(`❌ A mensagem no índice ${index} está incompleta (role/content ausente ou vazio).`);
         }
     });
 
-    const modeloEscolhido = EscolherModelo(modelo)
+    const modeloEscolhido = EscolherModelo(modelo) // Retorna o modelo a ser usado
 
 
-    console.log("modeloEscolhido", modeloEscolhido);
+    // console.log("modeloEscolhido", modeloEscolhido);
     
-    const resposta = await groq.chat.completions.create({
+    const resposta = await groq.chat.completions.create({ // Envia a mensagem para o modelo Groq
         messages: mensagens,        
         model: modeloEscolhido,
         temperature: 0.5,
@@ -49,8 +49,9 @@ export async function enviarMensagem(mensagens, orientacao, arquivos,  historico
         top_p: 1,
     });
 
-    console.log("🧠 Resposta gerada pela IA:", resposta.choices[0]?.message?.content || "(sem conteúdo)");
+    // console.log("🧠 Resposta gerada pela IA:", resposta.choices[0]?.message?.content || "(sem conteúdo)"); //
 
-    return resposta;
+    
+    return resposta; // Retorna a resposta da IA
 }
 

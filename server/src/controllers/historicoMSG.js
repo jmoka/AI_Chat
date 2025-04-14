@@ -18,13 +18,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export function listaHistorico() {
   const historico = [];
   const logDir = path.resolve(__dirname, '../../data/log');
+
   try {
     const arquivosJSON = fs.readdirSync(logDir, { withFileTypes: true })
       .filter(file => file.isFile() && file.name.endsWith('.json'))
-      .sort((a, b) => b.name.localeCompare(a.name)) // Ordem decrescente (mais recente primeiro)
+      .sort((a, b) => b.name.localeCompare(a.name)) // Arquivos do mais recente ao mais antigo
       .map(file => path.join(logDir, file.name));
-
-    // console.log("📂 Arquivos JSON encontrados no diretório de logs:", arquivosJSON);
 
     for (const filePath of arquivosJSON) {
       try {
@@ -32,9 +31,9 @@ export function listaHistorico() {
         const dados = JSON.parse(conteudo);
 
         if (Array.isArray(dados)) {
-          historico.push(...dados); // Adiciona todos os itens do array
+          historico.push(...dados);
         } else if (typeof dados === 'object' && dados !== null) {
-          historico.push(dados); // Adiciona um único objeto
+          historico.push(dados);
         } else {
           console.warn(`⚠️ Dados inválidos no arquivo ${filePath}:`, dados);
         }
@@ -42,6 +41,15 @@ export function listaHistorico() {
         console.warn(`⚠️ Erro ao ler ou interpretar ${filePath}:`, erro.message);
       }
     }
+
+    // Ordena mensagens pela propriedade timestamp, se existir
+    historico.sort((a, b) => {
+      if (a.timestamp && b.timestamp) {
+        return new Date(b.timestamp) - new Date(a.timestamp); // Mais recente primeiro
+      }
+      return 0; // Se não houver timestamp, mantém a ordem lida
+    });
+
   } catch (erro) {
     console.warn(`⚠️ Erro ao acessar o diretório de logs:`, erro.message);
   }

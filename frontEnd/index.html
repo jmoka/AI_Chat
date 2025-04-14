@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat com API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    #chatContainer {
+      width: 100%;
+      max-width: 600px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fafafa;
+    }
+
+    .msg {
+      margin: 10px 0;
+      max-width: 75%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #d1e7ff;
+      text-align: right;
+    }
+
+    .assistant {
+      align-self: flex-start;
+      background-color: #eeeeee;
+    }
+
+    #form {
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      border-top: 1px solid #ccc;
+    }
+
+    #messageInput {
+      width: 100%;
+      height: 70px;
+      padding: 10px;
+      font-size: 16px;
+      resize: vertical;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #sendButton {
+      margin-top: 10px;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #sendButton:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      #chatContainer {
+        height: 95vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="chatContainer">
+    <div id="chat"></div>
+    <form id="form">
+      <textarea id="messageInput" placeholder="Digite sua mensagem..." required></textarea>
+      <button type="submit" id="sendButton">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("form");
+    const input = document.getElementById("messageInput");
+  
+    // Recupera mensagens salvas ao iniciar
+    window.addEventListener("DOMContentLoaded", () => {
+      const mensagensSalvas = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+      mensagensSalvas.forEach(({ origem, texto, classe }) => {
+        adicionarMensagem(origem, texto, classe);
+      });
+    });
+  
+    // Salva mensagem no localStorage
+    function salvarMensagem(origem, texto, classe) {
+      const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+      historico.push({ origem, texto, classe });
+      localStorage.setItem("chatHistorico", JSON.stringify(historico));
+    }
+  
+    async function enviarMensagem() {
+      const mensagem = input.value.trim();
+      if (!mensagem) return;
+  
+      adicionarMensagem("Você", mensagem, "user");
+      salvarMensagem("Você", mensagem, "user");
+      input.value = "";
+  
+      try {
+        const resposta = await fetch("http://127.0.0.1/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            mensagem: mensagem,
+            orientacao: "Responda sempre em português de forma clara e objetiva, quero que se comporte como um especialista em programação",
+            modelo: 2
+          })
+        });
+  
+        const dados = await resposta.json();
+        const textoIA = dados.resposta || "(sem resposta)";
+        adicionarMensagem("IA", textoIA, "assistant");
+        salvarMensagem("IA", textoIA, "assistant");
+  
+      } catch (erro) {
+        console.error("Erro:", erro);
+        const erroMsg = "❌ Erro ao se comunicar com a API.";
+        adicionarMensagem("IA", erroMsg, "assistant");
+        salvarMensagem("IA", erroMsg, "assistant");
+      }
+    }
+  
+    function adicionarMensagem(origem, texto, classe) {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("msg", classe);
+      msgDiv.textContent = `${texto}`;
+      chat.appendChild(msgDiv);
+      chat.scrollTop = chat.scrollHeight;
+    }
+  
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      enviarMensagem();
+    });
+  </script>
+</body>
+</html>

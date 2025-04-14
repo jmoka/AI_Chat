@@ -1,75 +1,159 @@
-# Usando o Git
+# 🧠 AI Chat - MSG
 
-## 📡 Conectar ao GitHub
-```sh
-git add README.md
-git commit -m "primeiro commit"
-git branch -M main
-git remote add origin git@github.com:jmoka/AI_Chat.git
-git push -u origin main
+Uma aplicação Node.js com Express que integra a API da **Groq** para criar um sistema de chat inteligente, com armazenamento de histórico em arquivos JSON. Ideal para interações persistentes com modelos de linguagem.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+AI_CHAT-MSG/
+├── server/
+│   └── src/
+│       ├── api/
+│       │   └── server.js              # Inicializa o servidor Express
+│       ├── routes/
+│       │   └── rotaChat.js           # Define a rota /api/chat
+│       ├── controllers/
+│       │   ├── enviarMensagem.js     # Comunica com a API da Groq
+│       │   ├── historicoMSG.js       # Carrega histórico das conversas
+│       │   └── salvarMensagens.js    # Salva o histórico
+├── log/                              # Diretório com arquivos de histórico (JSON)
+├── .env                              # Contém a chave da API da Groq
+├── package.json
+└── README.md
 ```
 
-## 📝 Realizar o Primeiro Commit
-```sh
-git status
-git add . 
-git commit -m "sistema base"
-git push -u origin main
+---
+
+## 🚀 Como Funciona
+
+### 🔁 Fluxo da Rota `/api/chat`
+
+1. **Cliente envia uma requisição POST** com:
+   - `mensagem`: Texto do usuário.
+   - `orientacao`: (opcional) instrução para o modelo.
+   - `arquivos`: (opcional) nomes dos arquivos JSON com histórico.
+   - `historico`: (opcional) mensagens anteriores.
+   - `modelo`: (opcional) número do modelo Groq a ser usado.
+
+2. **Histórico é carregado** via `listaHistorico`.
+
+3. **Contexto é montado**:
+   - Mensagem do sistema (orientação)
+   - + Histórico
+   - + Mensagem atual
+
+4. **Envio para a API da Groq** com `enviarMensagem`.
+
+5. **Resposta do modelo** é recebida e enviada ao cliente.
+
+6. **Histórico é salvo** via `salvarConversa`.
+
+---
+
+## 💬 Exemplo de Requisição
+
+```json
+POST /api/chat
+Content-Type: application/json
+
+{
+  "mensagem": "mensagem enviada",
+  "orientacao": "descrever aqui com deve se comprtar , prompt inicial",
+  "arquivos": ["arquivos.json"],
+  "modelo": 1
+}
 ```
 
-## 🌿 Criar um Novo Branch
-```sh
-git checkout -b testes
+### ✅ Resposta Esperada
+```json
+{
+  "resposta": "resposta enviada"
+}
 ```
 
-## 📤 Enviar as Alterações do Novo Branch para o GitHub
-```sh
-git status
-git add . 
-git commit -m " "
-git push origin testes
+---
+
+## 🗂️ Estrutura do Histórico (JSON)
+Cada conversa salva no diretório `log/` é um arquivo `.json` com o seguinte formato:
+
+```json
+[
+  { "role": "user", "content": "mensagem enviada" },
+  { "role": "assistant", "content": "resposta da pergunta" }
+]
 ```
 
-## 🔄 Juntar os Branches
-```sh
-git checkout main
-git merge testes
-git push origin main
+---
+
+## ⚙️ Instalação
+
+1. **Clone o repositório**:
+```bash
+git clone https://github.com/seuusuario/AI_CHAT-MSG.git
+cd AI_CHAT-MSG
 ```
 
-## 🗑️ Deletar o Branch Localmente
-```sh
-git branch -d testes  
+2. **Instale as dependências**:
+```bash
+npm install
 ```
 
-## 🗑️ Deletar o Branch Remotamente
-```sh
-git push origin --delete testes  # Apaga no remoto
-=======
-# Deletra o branch
-git branch -d testes  # Apaga localmente
-git push origin --delete testes  # Apaga no remoto
+3. **Configure o `.env`**:
+```env
+GROQ_API_KEY=sua-chave-aqui
+```
 
-========================================
-# Estrutura
+4. **Inicie o servidor**:
+```bash
+npm start
+```
 
-/server
-│── /src
-│   ├── /controllers     # Lógica dos endpoints (funções separadas)
-│   ├── /routes          # Definição das rotas (endpoints da API)
-│   ├── /models          # Modelos (caso use banco de dados)
-│   ├── /middlewares     # Middlewares (autenticação, logs, validação, etc.)
-│   ├── /services        # Serviços (lógica de negócios separada)
-│   ├── /config          # Configurações globais (variáveis de ambiente, DB, etc.)
-│   ├── app.js           # Configuração principal do servidor Express
-│   ├── server.js        # Arquivo para iniciar o servidor
-│
-│── /tests               # Testes automatizados
-│── /logs                # Logs do servidor
-│── /public              # Arquivos estáticos (se precisar)
-│── /docs                # Documentação da API (se precisar)
-│
-│── package.json         # Dependências e scripts do projeto
-│── .env                 # Variáveis de ambiente
-│── .gitignore           # Arquivos ignorados pelo Git
+O servidor iniciará na porta 80 (ou a definida em variável de ambiente).
+
+---
+
+## 🐞 Erros Comuns
+
+### 1. `GROQ_API_KEY` ausente
+- **Erro:** Acesso negado ou falha na autenticação.
+- **Solução:** Adicione sua chave da Groq no `.env`.
+
+### 2. Histórico vazio ou corrompido
+- **Erro:** Mensagens anteriores não carregadas.
+- **Solução:** Verifique se o diretório `log/` contém arquivos `.json` válidos.
+
+### 3. Modelo não especificado
+- **Erro:** Modelo indefinido no backend.
+- **Solução:** Inclua o campo `modelo` na requisição.
+
+---
+
+## 🧩 Principais Funções
+
+| Função             | Arquivo                      | Descrição                                     |
+|---------------------|------------------------------|------------------------------------------------|
+| `rotaChat`          | `routes/rotaChat.js`         | Define e processa a rota principal `/api/chat` |
+| `enviarMensagem`    | `controllers/enviarMensagem.js` | Envia mensagem para a Groq                     |
+| `listaHistorico`    | `controllers/historicoMSG.js`   | Lê arquivos JSON de histórico                 |
+| `salvarConversa`    | `controllers/salvarMensagens.js`| Salva mensagens no diretório `log/`            |
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Sinta-se à vontade para:
+- Abrir **issues** com sugestões ou bugs.
+- Criar **pull requests** com melhorias no código ou documentação.
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença **MIT**. Consulte o arquivo `LICENSE` para mais detalhes.
+
+---
+
+Feito com 💬 por [Seu Nome ou Time].
 

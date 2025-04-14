@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "vc entende de programação"
+  },
+  {
+    "role": "assistant",
+    "content": "Sim, eu entendo de programação. Sou especializado em ajudar com uma ampla variedade de linguagens de programação, frameworks e conceitos técnicos. Como posso ajudar você com sua programação hoje?"
+  }
+]
