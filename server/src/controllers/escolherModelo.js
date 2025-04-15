@@ -2,7 +2,7 @@
  export default function EscolherModelo(modelo) {
  
         if (modelo === 1) {
-            return "qwen-2.5-32b";
+            return "qwen-qwq-32b";
         } else if (modelo === 2) {
             return "qwen-2.5-coder-32b";
         } else if (modelo === 3) {

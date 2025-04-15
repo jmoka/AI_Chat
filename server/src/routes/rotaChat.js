@@ -1,56 +1,65 @@
 import { enviarMensagem } from '../controllers/enviarMensagem.js';
 import { listaHistorico } from '../controllers/historicoMSG.js';
 import salvarConversa from '../controllers/salvarMensagens.js';
-import EscolherModelo from '../controllers/escolherModelo.js'; // Importa a função EscolherModelo
+import EscolherModelo from '../controllers/escolherModelo.js';
+import { contarTokens } from '../controllers/contarTokens.js';
+import { resumirTexto } from '../controllers/resumirTexto.js';
 
 export function rotaChat(app) {
-  app.post('/api/chat', async (req, res) => { // Rota para enviar mensagens para o modelo LLM
+  app.post('/api/chat', async (req, res) => {
     try {
-      const { // Mensagem do usuário
+      const {
         mensagem,
-        orientacao,
-        arquivos = [],
-        // historico, // precisa ser um array de mensagens [{ role, content }, ...]
+        historico = [], // histórico do front (se vier)
+        orientacaoUsuario = "",
         modelo,
-      } = req.body; // Extraindo dados do corpo da requisição e definindo valores padrão
+      } = req.body;
 
-      const historicoMemoria = listaHistorico(); // Carrega o histórico de mensagens do arquivo de log
-      const historicoFinal = Array.isArray(historicoMemoria) ? historicoMemoria : listaHistorico(); // Se o histórico não for um array, usa o histórico carregado do log
-
-        // Ordena pela propriedade timestamp, se existir
-      historicoFinal.sort((a, b) => {
-        if (a.timestamp && b.timestamp) {
-          return new Date(b.timestamp) - new Date(a.timestamp); // Mais recente primeiro
-        }
-        return 0; // Mantém a ordem original caso não tenha timestamp
-      });
-
-      // Verifica se a mensagem não está vazia ou nula
-      // Se estiver vazia, retorna erro 400 (Bad Request)
       if (!mensagem || mensagem.trim() === "") {
         return res.status(400).json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
       }
-      
 
-      //
-      const mensagens = [ // Cria um array de mensagens para enviar ao modelo LLM
-        { role: "system", content: orientacao },
-        ...historicoFinal,
+      // 🔁 Recupera histórico salvo nos logs
+      const historicoSalvo = listaHistorico();
+
+      // 🔄 Mescla histórico do front com do log (opcional)
+      const historicoTotal = [...historicoSalvo, ...historico];
+
+      // ⏳ Ordena por timestamp (mais antigo primeiro)
+      historicoTotal.sort((a, b) => {
+        if (a.timestamp && b.timestamp) {
+          return new Date(a.timestamp) - new Date(b.timestamp);
+        }
+        return 0;
+      });
+
+      // 📝 Concatena e resume histórico se necessário
+      const textoHistorico = historicoTotal.map(msg => `${msg.role}: ${msg.content}`).join("\n");
+      const resumoHistorico = textoHistorico.length > 1000
+        ? await resumirTexto(textoHistorico)
+        : textoHistorico;
+
+      const orientacaoPadrao = `Você é um assistente que sempre responde em HTML. Retorne apenas HTML válido sem explicações.`;
+
+      const mensagens = [
+        { role: "system", content: `${orientacaoPadrao}\n${orientacaoUsuario}` },
+        { role: "system", content: `Resumo do histórico:\n${resumoHistorico}` },
         { role: "user", content: mensagem }
       ];
 
+      // 🔢 Conta os tokens
+      const totalTokens = contarTokens(mensagens.map(m => m.content).join(" "));
+      if (totalTokens > 5900) {
+        console.warn("⚠️ Reduzindo contexto por excesso de tokens...");
+        mensagens.splice(1, mensagens.length - 2); // Remove o resumo
+        mensagens.unshift({ role: "system", content: orientacaoPadrao });
+      }
+
       console.log("🧪 Mensagens finais:", mensagens);
 
-      const modeloEscolhido = EscolherModelo(modelo)
+      const modeloEscolhido = EscolherModelo(modelo);
 
-      const resposta = await enviarMensagem(
-        mensagens,
-        // orientacao,
-        // arquivos,
-        // historicoFinal,
-        modelo
-      );
-
+      const resposta = await enviarMensagem(mensagens, modelo);
       const respostaDaIA = resposta.choices[0]?.message?.content || "";
 
       const mensagemSalvaJSON = [
@@ -58,10 +67,8 @@ export function rotaChat(app) {
         { role: "assistant", content: respostaDaIA }
       ];
 
-      // console.log("📦 Nova interação:", mensagemSalvaJSON);
       salvarConversa(mensagemSalvaJSON);
-      
-      
+
       return res.json({
         resposta: respostaDaIA,
         modeloUsado: modeloEscolhido,

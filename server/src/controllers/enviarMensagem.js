@@ -38,6 +38,23 @@ export async function enviarMensagem(mensagens, modelo) {
 
 
     // console.log("modeloEscolhido", modeloEscolhido);
+
+    /*
+        const resposta = await groq.chat.completions.create({
+        model: 'llama3-70b-8192',
+        messages: mensagens,
+        temperature: 0.7,
+        top_p: 0.9,
+        max_tokens: 2048,
+        presence_penalty: 0.6,
+        frequency_penalty: 0.4,
+        stop: ["\nUser:"],
+        n: 1,
+        user: "usuario123",
+});
+    
+    
+    */
     
     const resposta = await groq.chat.completions.create({ // Envia a mensagem para o modelo Groq
         messages: mensagens,        
