@@ -7,6 +7,8 @@ import path from 'path';
 // Importa função para converter a URL do módulo em um caminho de arquivo (em ESM, __dirname não existe por padrão)
 import { fileURLToPath } from 'url';
 
+import limitarlogs from '../controllers/limitarlog.js';
+
 // Converte a URL do arquivo atual em um caminho de arquivo
 const __filename = fileURLToPath(import.meta.url);
 
@@ -43,7 +45,7 @@ export default function salvarConversa(messages) {
 
         // Mostra no console onde o arquivo foi salvo
         console.log(`Mensagens salvas em: ${logFilePath}`);
-
+         limitarlogs();
         // Retorna o nome do arquivo salvo, útil para log ou confirmação
         return logFileName;
 

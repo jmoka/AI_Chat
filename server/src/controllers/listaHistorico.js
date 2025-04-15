@@ -58,25 +58,3 @@ export function listaHistorico() {
   return historico;
 }
 
-/**
- * 🧠 Valida e normaliza a lista de mensagens para o formato aceito pela API da Groq
- *
- * @param {Array} lista - Lista de mensagens brutas
- * @returns {Array} Lista de mensagens válidas { role, content }
- */
-export function HistoricoMSG(lista = []) {
-  if (!Array.isArray(lista)) return [];
-
-  return lista
-    .filter(item => {
-      const valido = item && typeof item === 'object' &&
-                     typeof item.role === 'string' &&
-                     typeof item.content === 'string';
-      if (!valido) console.warn('⚠️ Mensagem inválida ignorada:', item);
-      return valido;
-    })
-    .map(item => ({
-      role: item.role.trim(),
-      content: item.content.trim()
-    }));
-}
