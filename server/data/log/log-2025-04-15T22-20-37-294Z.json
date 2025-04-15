@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "muito bom"
+  },
+  {
+    "role": "assistant",
+    "content": "# Tabela de Assuntos Recorrentes em Provas Militares da Marinha Mercante\n\n| **Assunto** | **Matemática** | **Inglês** | **Física** | **Português** |\n| --- | --- | --- | --- | --- |\n| **Geometria e Trigonometria** | *Teorema de Pitágoras*, *Lei dos Senos*, *Lei dos Cossenos* | *Verbos regulares e irregulares*, *Conjugação verbal*, *Formas verbais* | *Força e movimento*, *Energia e trabalho*, *Mecânica de fluidos* | *Composição de frases*, *Conjunções e conjunções subordinativas*, *Uso de pronomes* |\n| **Álgebra e Equações** | *Resolução de equações lineares e quadráticas*, *Sistemas de equações*, *Funções* | *Verbos no presente e no passado*, *Conjugação verbal*, *Formas verbais* | *Cálculo de derivadas*, *Cálculo de integrais*, *Ecuações diferenciais* | *Composição de frases*, *Conjunções e conjunções subordinativas*, *Uso de pronomes* |\n| **Cálculo e Estatística** | *Cálculo diferencial e integral*, *Ecuações diferenciais*, *Estimação de parâmetros* | *Verbos no presente e no passado*, *Conjugação verbal*, *Formas verbais* | *Cálculo de probabilidade*, *Teoria da informação*, *Estatística descritiva* | *Composição de frases*, *Conjunções e conjunções subordinativas*, *Uso de pronomes* |\n| **Geometria Analítica e Trigonometria** | *Coordenadas cartesianas*, *Equações de retas e curvas*, *Funções trigonométricas* | *Verbos no presente e no passado*, *Conjugação verbal*, *Formas verbais* | *Cálculo de vetores*, *Cálculo de matrizes*, *Ecuações diferenciais* | *Composição de frases*, *Conjunções e conjunções subordinativas*, *Uso de pronomes* |"
+  }
+]

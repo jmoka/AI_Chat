@@ -1,12 +1,14 @@
 import { enviarMensagem } from '../controllers/enviarMensagem.js';
-import { listaHistorico } from '../controllers/historicoMSG.js';
+import { listaHistorico } from '../controllers/listaHistorico.js';
 import salvarConversa from '../controllers/salvarMensagens.js';
 import EscolherModelo from '../controllers/escolherModelo.js';
 import { contarTokens } from '../controllers/contarTokens.js';
 import { resumirTexto } from '../controllers/resumirTexto.js';
 
+
 export function rotaChat(app) {
   app.post('/api/chat', async (req, res) => {
+
     try {
       const {
         mensagem,
@@ -113,6 +115,8 @@ export function rotaChat(app) {
       ];
 
       salvarConversa(mensagemSalvaJSON);
+     
+      console.log("💾 Mensagem salva com sucesso!");
 
       return res.json({
         resposta: respostaDaIA,
