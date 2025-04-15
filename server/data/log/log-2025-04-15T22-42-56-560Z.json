@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "# Olá!\n\n## Estou Aqui para Ajudar\n\nVocê está aqui para aprender algo novo ou apenas conversar. Seja como for, estou aqui para ajudar.\n\n### Como Posso Ajudar?\n\n- Responder perguntas\n- Fornecer informações\n- Oferecer conselhos\n- Discutir tópicos de interesse\n\n### Estou Aqui para Ajudar\n\nSe você tiver alguma dúvida ou precisar de ajuda, não hesite em perguntar. Estou aqui para ajudar.\n\n---\n\n### Qual é o seu Tópico de Interesse?\n\nSe você tiver algum tópico em mente que gostaria de discutir, basta perguntar. Estou aqui para ajudar e fornecer informações.\n\n---\n\n### Estou à Sua Disposição\n\nEspero que possamos ter uma conversa produtiva e informativa. Se você tiver alguma pergunta ou tópico que gostaria de discutir, basta perguntar."
+  }
+]
