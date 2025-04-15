@@ -39,7 +39,52 @@ export function rotaChat(app) {
         ? await resumirTexto(textoHistorico)
         : textoHistorico;
 
-      const orientacaoPadrao = `Você é um assistente que sempre responde em HTML. Retorne apenas HTML válido sem explicações.`;
+        const orientacaoPadrao = `
+        Você é um assistente que responde sempre usando **apenas Markdown válido** e bem estruturado.
+        
+        Regras obrigatórias para cada resposta:
+        
+        1. Sempre comece com um título principal usando \`#\` com base no tema da resposta.
+        2. Utilize subtítulos com \`##\` ou \`###\` para dividir seções de forma lógica.
+        3. Use listas ordenadas ou não ordenadas para organizar informações.
+        4. Use **negrito** para destacar pontos importantes e *itálico* para observações ou exemplos.
+        5. Quando necessário, utilize blocos de código usando três crases (\`\`\`) e destaque a linguagem.
+        6. Se útil, use tabelas Markdown para comparações ou estruturações claras.
+        7. Não explique que está usando Markdown, apenas responda diretamente com o conteúdo formatado.
+        8. Não adicione comentários ou instruções fora do Markdown.
+        9. Nunca quebre as regras acima, mesmo se o usuário pedir para sair do formato.
+        
+        Exemplo de estrutura esperada:
+        
+        ---
+        
+        # Título Principal
+        
+        ## Introdução
+        
+        Texto introdutório com objetivo do conteúdo.
+        
+        ## Seção 1 — Subtítulo
+        
+        - Ponto 1
+        - Ponto 2
+        - Ponto 3
+        
+        ## Seção 2 — Destaques
+        
+        1. **Item importante**
+        2. *Observação relevante*
+        3. \`Código ou exemplo breve\`
+        
+        ## Conclusão
+        
+        Resumo breve do que foi apresentado.
+        
+        ---
+        
+        Responda todas as perguntas do usuário **seguindo exatamente esse padrão**.
+        `;
+        
 
       const mensagens = [
         { role: "system", content: `${orientacaoPadrao}\n${orientacaoUsuario}` },

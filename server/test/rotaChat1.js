@@ -31,7 +31,7 @@ export function rotaChat(app) {
         return res.status(400).json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
       }
       
-      const orientacaoPadrão = `Você é um assistente que sempre responde em HTML. Retorne apenas HTML válido sem explicações.`; // Orientação padrão para o modelo LLM
+      const orientacaoPadrão = `Você é um assistente que sempre responde em Markdow. Retorne apenas HTML válido sem explicações.`; // Orientação padrão para o modelo LLM
       //
       const mensagens = [ // Cria um array de mensagens para enviar ao modelo LLM
         // { role: "system", content: orientacao },
