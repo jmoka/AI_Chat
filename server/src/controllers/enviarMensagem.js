@@ -5,11 +5,6 @@ import Groq from "groq-sdk";
 import dotenv from 'dotenv';
 dotenv.config(); // ← ESSENCIAL para ativar o uso de process.env
 
-// // Importa funções auxiliares
-// import { InstrucoesSistema } from "./instrucoesSistema.js"; // Retorna uma mensagem de system
-// import { mensagemEnviada } from "./mensagemEnviada.js";     // Retorna uma pergunta do user
-// import { HistoricoMSG } from "./historicoMSG.js";           // Retorna histórico formatado
-// import { listArquivos } from "./listArquivos.js";           // Retorna mensagens dos arquivos
 import EscolherModelo from "./escolherModelo.js";           // Retorna o modelo a ser usado
 // import { listaHistorico } from "./historicoMSG.js";     // Retorna o histórico de mensagens
 
@@ -19,14 +14,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // Função principal que envia mensagem ao modelo Groq
 export async function enviarMensagem(mensagens, modelo) {
-    // console.log("🧪 Mensagens:", mensagens);
-    // console.log("🧪 Oriantação", orientacao);
-    // console.log("🧪 arquivos", arquivos);
-    // console.log("🧪 historico", historico);
-    // console.log("🧪 modelo", modelo);
-
-    
-
+   
     mensagens.forEach((msg, index) => { // Verifica cada mensagem
       //  console.log(`🔍 Validando mensagem ${index}:`, msg);
         if (!msg.role || !msg.content || msg.content.trim() === "") { // Verifica se a mensagem tem role e content
@@ -36,25 +24,6 @@ export async function enviarMensagem(mensagens, modelo) {
 
     const modeloEscolhido = EscolherModelo(modelo) // Retorna o modelo a ser usado
 
-
-    // console.log("modeloEscolhido", modeloEscolhido);
-
-    /*
-        const resposta = await groq.chat.completions.create({
-        model: 'llama3-70b-8192',
-        messages: mensagens,
-        temperature: 0.7,
-        top_p: 0.9,
-        max_tokens: 2048,
-        presence_penalty: 0.6,
-        frequency_penalty: 0.4,
-        stop: ["\nUser:"],
-        n: 1,
-        user: "usuario123",
-});
-    
-    
-    */
     
     const resposta = await groq.chat.completions.create({ // Envia a mensagem para o modelo Groq
         messages: mensagens,        
@@ -66,9 +35,6 @@ export async function enviarMensagem(mensagens, modelo) {
         top_p: 1,
     });
 
-    // console.log("🧠 Resposta gerada pela IA:", resposta.choices[0]?.message?.content || "(sem conteúdo)"); //
-
-    
     return resposta; // Retorna a resposta da IA
 }
 

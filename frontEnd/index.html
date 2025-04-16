@@ -37,19 +37,36 @@
       margin: 10px 0;
       padding: 10px 15px;
       line-height: 1.5;
-      word-wrap: break-word;
       border-radius: 10px;
       max-width: 100%;
       background-color: aqua;
+      overflow: auto;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: pre-wrap;
     }
+    
+    /* Markdown + código */
+    .msg code, .msg pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-x: auto;
+      max-width: 100%;
+      font-family: monospace;
+      background-color: #eee;
+      padding: 5px;
+      border-radius: 6px;
+    }
+    
 
     .user {
       align-self: flex-start;
-      background-color: aliceblue;
+      background-color: rgb(194, 229, 243);
       text-align: start;
       max-width: 75%;
       margin-right: 10%;
-      box-shadow: 0 0 15px royalblue;
+      box-shadow: 0 0 15px rgb(83, 118, 225);
       margin: 15px;
     }
 
@@ -59,7 +76,7 @@
       text-align: start;
       max-width: 75%;
       margin-left: 10%;
-      box-shadow: 0 0 15px rgb(5, 138, 78);
+      box-shadow: 0 0 15px rgb(117, 240, 205);
     }
 
     /* Markdown */
@@ -151,8 +168,9 @@
 <body>
   <div id="chatContainer">
     <div id="chat"></div>
+
     <form id="form">
-      <textarea id="messageInput" placeholder="Digite sua mensagem..." required></textarea>
+      <textarea  id="messageInput" placeholder="Digite sua mensagem..." required ></textarea>
       <div class="botoes">
         <button type="submit" id="sendButton">Enviar</button>
         <button onclick="apagar()" type="button" id="botoes">Limpar</button>
@@ -174,18 +192,7 @@
       });
     });
 
-    // Limpa o conteúdo da tela (interface)
-    function limparConversa() {
-      chat.innerHTML = "";
-      console.log("Conversa limpa da tela.");
-    }
-
-    // Limpa o localStorage, mas mantém a conversa visível na tela
-    function limparHistoricoLocalstorage() {
-      localStorage.removeItem("chatHistorico");
-      console.log("Histórico removido do localStorage.");
-    }
-
+   
     // Limpa tudo (localStorage + tela)
     function apagar() {
       localStorage.removeItem("chatHistorico");

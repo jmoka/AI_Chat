@@ -5,7 +5,7 @@
  * Este é um resumo simplificado baseado em tamanho. Em produção, use uma LLM.
  */
 export async function resumirTexto(texto) {
-    const limite = 1000; // caracteres máximos no resumo
+    const limite = 10000; // caracteres máximos no resumo
   
     if (texto.length <= limite) {
       return texto;
