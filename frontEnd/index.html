@@ -256,6 +256,8 @@
       historico.forEach(mensagem => {
         adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
       });
+      apagar();
+
     });
 
    
@@ -271,16 +273,26 @@
         fontSize: '16px',
         resize: 'vertical',
         borderRadius: '8px',
+       
        });
+       messageInput.style.transition = "all 0.5s ease";
 
        Object.assign(textBoasVindas.style, {
         display: "flex"
-       })
+       }) 
+    
+    }
 
+    document.getElementById('messageInput').addEventListener("keydown", animacaoTextAreaEnviar);
 
+    function animacaoTextAreaEnviar(){
+      Object.assign(textBoasVindas.style, {
+        display: "none"
+       });
        
-
-      
+       
+       
+        messageInput.style.marginBottom = '';
      
     }
     
