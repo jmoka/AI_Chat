@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat com API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-areas:
+        "header header"
+        "sidebar main";
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: 60px 1fr;
+      height: 100vh;
+    }
+
+    header {
+      grid-area: header;
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    aside {
+      grid-area: sidebar;
+      background-color: #f44336;
+      padding: 20px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    main {
+      grid-area: main;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #chat {
+      width: 80%;
+      max-width: 800px;
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      background: #eee;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #form {
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #messageInput {
+      width: 100%;
+      height: 70px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .botoes {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .botoes button {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      background-color: #0644df;
+      cursor: pointer;
+    }
+
+    .botoes button:hover {
+      background-color: #0056b3;
+    }
+
+    .msg {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color: white;
+      word-wrap: break-word;
+    }
+
+    .user { align-self: flex-start; background-color: #e1f5fe; }
+    .assistant { align-self: flex-end; background-color: #f3f3f3; }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-areas:
+          "header"
+          "main";
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 1fr;
+      }
+
+      aside {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 200px;
+        height: calc(100% - 60px);
+        background-color: #f44336;
+        transform: translateX(-100%);
+        z-index: 10;
+      }
+
+      aside.open {
+        transform: translateX(0);
+      }
+
+      main, #chat, #form {
+        width: 100%;
+      }
+
+      .botoes button {
+        width: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <header>
+      <div><strong>Jota AI</strong></div>
+      <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    </header>
+
+    <aside id="sidebar">
+      <p>Menu lateral</p>
+      <p>Opções aqui</p>
+    </aside>
+
+    <main>
+      <div id="chat"></div>
+      <form id="form">
+        <textarea id="messageInput" placeholder="Digite sua mensagem..."></textarea>
+        <div class="botoes">
+          <button type="submit">Enviar</button>
+          <button type="button" onclick="apagar()">Limpar</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("form");
+    const input = document.getElementById("messageInput");
+    const sidebar = document.getElementById("sidebar");
+
+    function toggleMenu() {
+      sidebar.classList.toggle("open");
+    }
+
+    function adicionarMensagem(origem, texto, classe) {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("msg", classe);
+      msgDiv.innerHTML = marked.parse(texto);
+      chat.appendChild(msgDiv);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function apagar() {
+      localStorage.removeItem("chatHistorico");
+      chat.innerHTML = "";
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const mensagem = input.value.trim();
+      if (!mensagem) return;
+
+      adicionarMensagem("Você", mensagem, "user");
+      input.value = "";
+
+      try {
+        const resposta = await fetch("http://127.0.0.1/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mensagem, orientacao: "", modelo: 8 })
+        });
+        const dados = await resposta.json();
+        adicionarMensagem("IA", dados.resposta || "(sem resposta)", "assistant");
+      } catch (erro) {
+        adicionarMensagem("Erro", "❌ Erro ao se comunicar com a API.", "assistant");
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+      historico.forEach(m => adicionarMensagem(m.origem, m.texto, m.classe));
+    });
+  </script>
+</body>
+</html>

@@ -4,238 +4,27 @@
   <meta charset="UTF-8" />
   <title>Chat com API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../frontEnd/src/config/style/pc.css"> 
+  <link rel="stylesheet" href="../frontEnd/src/config/style/mob.css"> 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    marked.setOptions({
-      breaks: true,
-      gfm: true,
-      sanitize: true // importante para evitar interpretação direta de HTML no conteúdo
-    });
-  </script>
-  
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    #chatContainer {
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      background-color: rgb(134, 134, 83);
-
-    }
-    #menuContainer {
-      width: 25%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      background-color: rgb(184, 9, 9);
-    }
-
-    #chat {
-      flex: 1;
-      overflow-y: auto;
-      padding-left: 20%;
-    }
-
-    .msg {
-      margin: 10px 0;
-      padding: 10px 15px;
-      line-height: 1.3;
-      border-radius: 10px;
-      max-width: 80%;
-      overflow: auto;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      word-break: break-word;
-      white-space: pre-wrap;
-      border: #c8ff00 solid  2px;
-    }
-    
-    /* Markdown + código */
-    .msg code, .msg pre {
-      white-space: pre-wrap;
-      word-break: break-word;
-      overflow-x: auto;
-      max-width: 100%;
-      font-family: monospace;
-      background-color: #bdb8b8;
-      padding: 5px;
-      border-radius: 6px;
-    }
-    
-
-    .user {
-      align-self: flex-start;
-      background-color: rgb(251, 253, 254);
-      text-align: start;
-      max-width: 75%;
-      margin-right: 5%;   
-      margin: 15px;
-    }
-
-    .assistant {
-      align-self: flex-end;
-      background-color: #f3f3f3;
-      text-align: start;
-      max-width: 75%;
-      margin-left: 5%;
-      
-    }
-
-    /* Markdown */
-    .msg h1, .msg h2, .msg h3, .msg h4, .msg h5, .msg h6 {
-      margin-top: 0px;
-      margin-bottom: 1px;
-      font-weight: bold;
-    }
-
-    .msg p {
-      margin: 1px 0;
-      margin-bottom: 0.5px;
-      line-height: 1.3; /* adicione isso */
-    }
-    
-
-    .msg ul {
-      padding-left: 15px;
-      margin: 1px 0;
-    }
-
-    .msg li {
-      margin-bottom: 1px;
-    }
-
-    #form {
-      display: flex;
-      flex-direction: column;
-      padding: 1px;
-    }
-
-    #messageInput {
-      width: 90%;
-      height: 70px;
-      padding: 10px;
-      font-size: 16px;
-      resize: vertical;
-      border-radius: 8px;
-      margin-left: 5%;
-      
-    }
-
-    #sendButton {
-      background-color: #0644df;
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 8px 14px;
-      font-size: 14px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      
-    }
-
-    #sendButton:hover {
-      background-color: #0056b3;
-    }
-
-    .botoes button {
-      background-color: #f73105;
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 8px 14px;
-      font-size: 14px;
-      border-radius: 6px;
-      margin-right: 10px;
-      margin-bottom: 10px;
-    }
-
-    .botoes button:hover {
-      background-color: #c62828;
-    }
-
-    .botoes {
-      width: 100%;
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      justify-content: flex-end;
-    }
-
-    #textBoasVindas{
-      align-self: center;
-      display: none;
-    }
-
-    @media (max-width: 600px) {
-
-      #chat {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-      }
-
-      #messageInput {
-        width: 90%;
-        height: 70px;
-        padding: 10px;
-        font-size: 16px;
-        resize: vertical;
-        border-radius: 8px;
-       
-        
-        
-      }
-
-      #menuContainer {
-       display: none;
-      }
-  
-      #chatContainer {
-        width: 100%;
-        height: 100%;
-        
-      }
-
-      .assistant {
-        max-width: 100%;
-        margin: 0;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        margin-left: 5%;
-      }
-
-      .user {
-        max-width: 100%;
-        margin: 0;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        margin-right: 5%;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div>
-    
-  </div>
-  <div id="menuContainer">teste</div>
-  <br>
-  <div id="chatContainer">
+
+  <header>
+    <div class="wrapper">
+      <div class="logo">
+        <svg>
+          <text x="0" y="50%" dy=".35em" text-anchor="start">
+            Jota AI
+          </text>
+        </svg>
+      </div>
+      <div class="toggleMenu" onclick="toggleMenu()">&#9776;</div>
+    </div>
+  </header>
+
+
+ <div id="chatContainer">
    
     <div id="chat"></div>
 
@@ -243,148 +32,18 @@
       <div id="textBoasVindas">
         <h2>Em que posso ajudar?</h2>
       </div>
-      
-      <textarea  id="messageInput" placeholder="Digite sua mensagem..." required ></textarea>
-      <div class="botoes">
-        <button type="submit" id="sendButton">Enviar</button>
-        <button onclick="apagar()" type="button" id="botoes">Limpar</button>
-       
+      <div class="inputBotao">
+        <textarea id="messageInput" rows="20" placeholder="Digite sua mensagem..."></textarea>
+        <div class="botoes">
+          <button type="submit" class="botao botao-enviar">Enviar</button>
+          <button type="button" onclick="apagar()" class="botao botao-limpar">Limpar</button>
+        </div>
       </div>
+
+      </div>
+     
     </form>
   </div>
-
-  <script>
-    const chat = document.getElementById("chat");
-    const form = document.getElementById("form");
-    const input = document.getElementById("messageInput");
-    const msg = document.getElementsByClassName("msg");
-      
-
-    // Recupera mensagens salvas ao iniciar
-    window.addEventListener("DOMContentLoaded", () => {      
-      const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
-      if(historico.length === 0){        
-        Object.assign(messageInput.style, {
-          height: '70px',
-          padding: '10px',  
-          marginBottom: '200px',
-          fontSize: '16px',
-          resize: 'vertical',
-          borderRadius: '8px',         
-         });
-         messageInput.style.transition = "all 0.5s ease";  
-         Object.assign(textBoasVindas.style, {
-          display: "flex"
-         }) 
-
-      }
-      historico.forEach(mensagem => {
-        adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
-      });
-    });
-
-    
-   
-    // Limpa tudo (localStorage + tela)
-    function apagar() {
-      localStorage.removeItem("chatHistorico");
-      chat.innerHTML = "";
-      console.log("Histórico de mensagens apagado.");
-      Object.assign(messageInput.style, {
-        height: '70px',
-        padding: '10px',
-        marginBottom: '200px',
-        fontSize: '16px',
-        resize: 'vertical',
-        borderRadius: '8px',
-       
-       });
-       messageInput.style.transition = "all 0.5s ease";
-
-       Object.assign(textBoasVindas.style, {
-        display: "flex"
-       }) 
-    
-    }
-
-    document.getElementById('messageInput').addEventListener("keydown", animacaoTextAreaEnviar);
-
-    function animacaoTextAreaEnviar(){
-      Object.assign(textBoasVindas.style, {
-        display: "none"
-       });
-       
-       
-       
-        messageInput.style.marginBottom = '';
-     
-    }
-    
-    
-
-
-    // Salva mensagem no localStorage
-    function salvarMensagem(origem, texto, classe) {
-      const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
-      historico.push({ origem, texto, classe });
-      localStorage.setItem("chatHistorico", JSON.stringify(historico));
-    }
-
-    async function enviarMensagem() {
-      const mensagem = input.value.trim();
-      if (!mensagem) return;
-
-      adicionarMensagem("Você", mensagem, "user");
-      salvarMensagem("Você", mensagem, "user");
-      input.value = "";
-
-      try {
-        const resposta = await fetch("http://127.0.0.1/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            mensagem: mensagem,
-            orientacao: "",
-            modelo: 8
-          })
-        });
-
-        const dados = await resposta.json();
-        const textoIA = dados.resposta || "(sem resposta)";
-        adicionarMensagem("IA", textoIA, "assistant");
-        salvarMensagem("IA", textoIA, "assistant");
-
-      } catch (erro) {
-        console.error("Erro:", erro);
-        const erroMsg = "❌ Erro ao se comunicar com a API.";
-        adicionarMensagem("IA", erroMsg, "assistant");
-        salvarMensagem("IA", erroMsg, "assistant");
-      }
-    }
-
-    function adicionarMensagem(origem, texto, classe) {
-      const msgDiv = document.createElement("div");
-      msgDiv.classList.add("msg", classe);
-      const textoSanitizado = texto.replace(/<\/?[^>]+(>|$)/g, ""); 
-      msgDiv.innerHTML = marked.parse(textoSanitizado); // Markdown -> HTML
-      chat.appendChild(msgDiv);
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      enviarMensagem();
-    });
-
-    // Envia com Enter
-    input.addEventListener("keypress", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        enviarMensagem();
-      }
-    });
-  </script>
+  <script src="./src/config/script/script.js" defer></script>
 </body>
 </html>
