@@ -5,6 +5,14 @@
   <title>Chat com API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+      sanitize: true // importante para evitar interpretação direta de HTML no conteúdo
+    });
+  </script>
+  
   <style>
     * {
       box-sizing: border-box;
@@ -46,7 +54,7 @@
     .msg {
       margin: 10px 0;
       padding: 10px 15px;
-      line-height: 1.5;
+      line-height: 1.3;
       border-radius: 10px;
       max-width: 80%;
       overflow: auto;
@@ -98,7 +106,9 @@
     .msg p {
       margin: 1px 0;
       margin-bottom: 0.5px;
+      line-height: 1.3; /* adicione isso */
     }
+    
 
     .msg ul {
       padding-left: 15px;
@@ -256,7 +266,7 @@
       if(historico.length === 0){        
         Object.assign(messageInput.style, {
           height: '70px',
-          padding: '10px',
+          padding: '10px',  
           marginBottom: '200px',
           fontSize: '16px',
           resize: 'vertical',
@@ -357,7 +367,8 @@
     function adicionarMensagem(origem, texto, classe) {
       const msgDiv = document.createElement("div");
       msgDiv.classList.add("msg", classe);
-      msgDiv.innerHTML = marked.parse(texto); // Markdown -> HTML
+      const textoSanitizado = texto.replace(/<\/?[^>]+(>|$)/g, ""); 
+      msgDiv.innerHTML = marked.parse(textoSanitizado); // Markdown -> HTML
       chat.appendChild(msgDiv);
       chat.scrollTop = chat.scrollHeight;
     }

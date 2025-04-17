@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "ola"
+  },
+  {
+    "role": "assistant",
+    "content": "# Olá!\n\n## Bem-vindo ao Chat!\n\nVocê pode me perguntar qualquer coisa e eu farei o meu melhor para ajudar. Se precisar de informações ou ajuda, basta enviar uma mensagem e eu estarei aqui para responder.\n\n### O que você gostaria de conversar hoje?\n\n* Sobre um tópico específico\n* Com perguntas e respostas\n* Com uma conversa mais livre\n\n### Qualquer coisa, estou aqui para ajudar!"
+  }
+]

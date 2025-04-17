@@ -4,6 +4,7 @@ import salvarConversa from '../controllers/salvarMensagens.js';
 import EscolherModelo from '../controllers/escolherModelo.js';
 import { contarTokens } from '../controllers/contarTokens.js';
 import { resumirTexto } from '../controllers/resumirTexto.js';
+import { sanitizarTexto } from "../controllers/sanitizar.js"
 
 
 export function rotaChat(app) {
@@ -42,10 +43,8 @@ export function rotaChat(app) {
         : textoHistorico;
 
         const orientacaoPadrao = `
-        Você é um assistente que responde sempre usando **apenas Markdown válido** e bem estruturado.
-        
-        Regras obrigatórias para cada resposta:
-        
+        Você é um assistente que responde sempre usando **apenas Markdown válido** e bem estruturado.        
+        Regras obrigatórias para cada resposta:        
         1. Sempre comece com um título principal usando \`#\` com base no tema da resposta.
         2. Utilize subtítulos com \`##\` ou \`###\` para dividir seções de forma lógica.
         3. Use listas ordenadas ou não ordenadas para organizar informações.
@@ -55,35 +54,22 @@ export function rotaChat(app) {
         7. Não explique que está usando Markdown, apenas responda diretamente com o conteúdo formatado.
         8. Não adicione comentários ou instruções fora do Markdown.
         9. Nunca quebre as regras acima, mesmo se o usuário pedir para sair do formato.
-        
-        Exemplo de estrutura esperada:
-        
-        ---
-        
-        # Título Principal
-        
-        ## Introdução
-        
-        Texto introdutório com objetivo do conteúdo.
-        
-        ## Seção 1 — Subtítulo
-        
+        Exemplo de estrutura esperada:        
+        ---        
+        # Título Principal        
+        ## Introdução        
+        Texto introdutório com objetivo do conteúdo.        
+        ## Seção 1 — Subtítulo        
         - Ponto 1
         - Ponto 2
-        - Ponto 3
-        
-        ## Seção 2 — Destaques
-        
+        - Ponto 3        
+        ## Seção 2 — Destaques        
         1. **Item importante**
         2. *Observação relevante*
-        3. \`Código ou exemplo breve\`
-        
-        ## Conclusão
-        
-        Resumo breve do que foi apresentado.
-        
-        ---
-        
+        3. \`Código ou exemplo breve\`        
+        ## Conclusão        
+        Resumo breve do que foi apresentado.        
+        ---        
         Responda todas as perguntas do usuário **seguindo exatamente esse padrão**.
         `;
         
@@ -107,7 +93,8 @@ export function rotaChat(app) {
       const modeloEscolhido = EscolherModelo(modelo);
 
       const resposta = await enviarMensagem(mensagens, modelo);
-      const respostaDaIA = resposta.choices[0]?.message?.content || "";
+      const respostaDaIAOriginal = resposta.choices[0]?.message?.content || "";
+      const respostaDaIA = sanitizarTexto(respostaDaIAOriginal);
 
       const mensagemSalvaJSON = [
         { role: "user", content: mensagem },
