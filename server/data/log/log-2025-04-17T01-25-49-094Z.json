@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "# Olá!\n\n## Bem-vindo!\n\n- Estou aqui para ajudar com qualquer pergunta ou dúvida que você tenha;\n- Sinta-se à vontade para perguntar sobre qualquer assunto que seja de seu interesse;\n- Estamos aqui para aprender e conversar!\n\n## O que você gostaria de discutir?\n\n1. **Um tópico específico**: Selecione um assunto que você gostaria de explorar;\n2. **Uma pergunta**: Pergunte sobre algo que você não entende ou precisa esclarecer;\n3. **Um tema aberto**: Vamos conversar sobre qualquer coisa que venha à mente!\n\n## Estou aqui para ajudar!\n\n- Não hesite em perguntar, estou aqui para ajudar;\n- Vamos conversar e aprender juntos;\n- Boa conversa!"
+  }
+]

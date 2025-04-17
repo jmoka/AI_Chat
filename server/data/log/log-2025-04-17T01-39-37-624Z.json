@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "function apagar() {\n      localStorage.removeItem(\"chatHistorico\");\n      chat.innerHTML = \"\";\n      console.log(\"Histórico de mensagens apagado.\");\n     <style>\n      ,msg{\n        border: #000000 solid  2px;\n      }\n     \n     </style>\n\n    }corrija para adicionar o style"
+  },
+  {
+    "role": "assistant",
+    "content": "# Corrigindo o Código\n\n## Função `apagar()`\n\n### Código Corrigido\n\n```javascript\nfunction apagar() {\n  localStorage.removeItem(\"chatHistorico\");\n  chat.innerHTML = \"\";\n  console.log(\"Histórico de mensagens apagado.\");\n}\n\n// Adicionando estilo\napagar.style = `\n  .msg {\n    border: #000000 solid 2px;\n  }\n`;\n```\n\n### Explicação\n\n- O código `apagar.style` é uma forma de adicionar estilo CSS dinamicamente em JavaScript;\n- O `style` é uma propriedade do objeto, que permite adicionar estilos CSS como uma string;\n- O `apagar.style` é usado para adicionar o estilo CSS à função `apagar()`.\n\n## Exemplo de Uso\n\n```javascript\nfunction apagar() {\n  localStorage.removeItem(\"chatHistorico\");\n  chat.innerHTML = \"\";\n  console.log(\"Histórico de mensagens apagado.\");\n  apagar.style = `\n    .msg {\n      border: #000000 solid 2px;\n    }\n  `;\n}\n```\n\n### Nota\n\n- O estilo CSS é adicionado ao final da função `apagar()`, pois o estilo é aplicado apenas quando a função é chamada;\n- Se você quiser aplicar o estilo antes de chamar a função, basta adicionar o código `apagar.style` antes da função `apagar()`.\n\n### Exemplo de Chamada da Função\n\n```javascript\napagar();\n```\n\n### Resultado\n\n- Ao chamar a função `apagar()`, o histórico de mensagens será apagado e o estilo CSS será aplicado às mensagens."
+  }
+]
