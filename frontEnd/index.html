@@ -251,15 +251,29 @@
       
 
     // Recupera mensagens salvas ao iniciar
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", () => {      
       const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+      if(historico.length === 0){        
+        Object.assign(messageInput.style, {
+          height: '70px',
+          padding: '10px',
+          marginBottom: '200px',
+          fontSize: '16px',
+          resize: 'vertical',
+          borderRadius: '8px',         
+         });
+         messageInput.style.transition = "all 0.5s ease";  
+         Object.assign(textBoasVindas.style, {
+          display: "flex"
+         }) 
+
+      }
       historico.forEach(mensagem => {
         adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
       });
-      apagar();
-
     });
 
+    
    
     // Limpa tudo (localStorage + tela)
     function apagar() {
