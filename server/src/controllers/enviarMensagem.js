@@ -22,12 +22,9 @@ export async function enviarMensagem(mensagens, modelo) {
         }
     });
 
-    const modeloEscolhido = EscolherModelo(modelo) // Retorna o modelo a ser usado
-
-    
     const resposta = await groq.chat.completions.create({ // Envia a mensagem para o modelo Groq
         messages: mensagens,        
-        model: modeloEscolhido,
+        model: modelo,
         temperature: 0.5,
         presence_penalty: 0,
         frequency_penalty: 0,

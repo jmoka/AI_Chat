@@ -100,6 +100,8 @@ function salvarMensagem(origem, texto, classe) {
 }
 
 async function enviarMensagem() {
+  const llmEscolhido = pegarSelecionado();
+  
   const mensagem = input.value.trim();
   if (!mensagem) return;
 
@@ -128,7 +130,7 @@ async function enviarMensagem() {
       body: JSON.stringify({
         mensagem: mensagem,
         orientacao: "",
-        modelo: 2
+        modelo: pegarSelecionado()
       })
     });
 
@@ -177,4 +179,11 @@ const sidebar = document.getElementById("sidebar");
 function toggleMenu() {
   sidebar.classList.toggle('open');
  
+}
+
+function pegarSelecionado() {
+  const select = document.getElementById('modeloLLM');
+  const valor = select.value;
+  console.log("Selecionado:", valor);
+  return valor
 }

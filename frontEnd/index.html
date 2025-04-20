@@ -26,10 +26,9 @@
 
   <aside id="sidebar">
     <div class="custom-select">
-      <select>
+      <select onchange="pegarSelecionado()" id="modeloLLM">
           <option>LLMs</option>
           <option disabled>──────────</option>
-          <option>qwen-qwq-32b</option>
           <option>qwen-qwq-32b</option>
           <option>deepseek-r1-distill-llama-70b</option>
           <option>llama-3.2-11b-vision-preview</option>
@@ -37,7 +36,7 @@
           <option>llama-3.3-70b-versatile</option>
           <option>llama3-70b-8192</option>
       </select>
-      <div class="select-arrow"></div>
+      
   </div>
   </aside>
 

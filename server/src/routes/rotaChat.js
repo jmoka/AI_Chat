@@ -1,7 +1,7 @@
 import { enviarMensagem } from '../controllers/enviarMensagem.js';
 import { listaHistorico } from '../controllers/listaHistorico.js';
 import salvarConversa from '../controllers/salvarMensagens.js';
-import EscolherModelo from '../controllers/escolherModelo.js';
+// import EscolherModelo from '../controllers/escolherModelo.js';
 import { contarTokens } from '../controllers/contarTokens.js';
 import { resumirTexto } from '../controllers/resumirTexto.js';
 import { sanitizarTexto } from "../controllers/sanitizar.js"
@@ -90,7 +90,10 @@ export function rotaChat(app) {
 
       console.log("🧪 Mensagens finais:", mensagens);
 
-      const modeloEscolhido = EscolherModelo(modelo);
+    
+
+      console.log(modelo, "modelo");
+      
 
       const resposta = await enviarMensagem(mensagens, modelo);
       const respostaDaIAOriginal = resposta.choices[0]?.message?.content || "";
@@ -107,7 +110,7 @@ export function rotaChat(app) {
 
       return res.json({
         resposta: respostaDaIA,
-        modeloUsado: modeloEscolhido,
+        modeloUsado: modelo,
       });
 
     } catch (erro) {
