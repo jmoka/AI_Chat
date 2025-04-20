@@ -175,7 +175,6 @@ input.addEventListener("keypress", (e) => {
 const sidebar = document.getElementById("sidebar");
 
 function toggleMenu() {
-  const sidebar = document.getElementById("sidebar");
-  const currentDisplay = window.getComputedStyle(sidebar).display;
-  sidebar.style.display = (currentDisplay === "block") ? "none" : "block";
+  sidebar.classList.toggle('open');
+ 
 }
