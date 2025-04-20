@@ -1,27 +1,50 @@
 const chat = document.getElementById("chat");
+const limpar = document.getElementById("btnLimpar");
+const enviar = document.getElementById("btnenviar");
 const form = document.getElementById("form");
 const input = document.getElementById("messageInput");
 const msg = document.getElementsByClassName("msg");
+
   
 
 // Recupera mensagens salvas ao iniciar
-window.addEventListener("DOMContentLoaded", () => {      
+window.addEventListener("DOMContentLoaded", () => {     
+
   const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
-  if(historico.length === 0){        
+  if(historico.length === 0){   
+   
+    Object.assign(limpar.style, {
+      display: "none"
+     });
+    
+     Object.assign(enviar.style, {
+      display: "none"
+     });    
+
     Object.assign(messageInput.style, {
       height: '70px',
       padding: '10px',  
       marginBottom: '200px',
       fontSize: '16px',
       resize: 'vertical',
-      borderRadius: '8px',         
-     });
+      borderRadius: '8px',     
+
+     });     
+    
      messageInput.style.transition = "all 0.5s ease";  
      Object.assign(textBoasVindas.style, {
       display: "flex"
      }) 
-
+  }else{
+    Object.assign(limpar.style, {
+      display: ""
+     }) 
+    
+     Object.assign(enviar.style, {
+      display: ""
+     }) 
   }
+ 
   historico.forEach(mensagem => {
     adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
   });
@@ -48,6 +71,8 @@ function apagar() {
    Object.assign(textBoasVindas.style, {
     display: "flex"
    }) 
+
+   location.reload();
 
 }
 
@@ -82,6 +107,18 @@ async function enviarMensagem() {
   salvarMensagem("Você", mensagem, "user");
   input.value = "";
 
+  if(mensagem){
+    Object.assign(limpar.style, {
+      display: ""
+     }) 
+    
+     Object.assign(enviar.style, {
+      display: ""
+     }) 
+    
+  }
+  
+    
   try {
     const resposta = await fetch("http://127.0.0.1/api/chat", {
       method: "POST",
@@ -91,7 +128,7 @@ async function enviarMensagem() {
       body: JSON.stringify({
         mensagem: mensagem,
         orientacao: "",
-        modelo: 8
+        modelo: 2
       })
     });
 
@@ -99,6 +136,7 @@ async function enviarMensagem() {
     const textoIA = dados.resposta || "(sem resposta)";
     adicionarMensagem("IA", textoIA, "assistant");
     salvarMensagem("IA", textoIA, "assistant");
+    
 
   } catch (erro) {
     console.error("Erro:", erro);
@@ -106,6 +144,10 @@ async function enviarMensagem() {
     adicionarMensagem("IA", erroMsg, "assistant");
     salvarMensagem("IA", erroMsg, "assistant");
   }
+
+ 
+
+  
 }
 
 function adicionarMensagem(origem, texto, classe) {
@@ -129,3 +171,11 @@ input.addEventListener("keypress", (e) => {
     enviarMensagem();
   }
 });
+
+const sidebar = document.getElementById("sidebar");
+
+function toggleMenu() {
+  const sidebar = document.getElementById("sidebar");
+  const currentDisplay = window.getComputedStyle(sidebar).display;
+  sidebar.style.display = (currentDisplay === "block") ? "none" : "block";
+}

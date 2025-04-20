@@ -1,182 +1,291 @@
+
+
 @media (max-width: 600px) {
+
   * {
     box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   }
-
+  
   body {
-    margin: 5px;
+    margin: 0;
+  padding: 0;
     font-family: Arial, sans-serif;
     display: flex;
-    height: 100vh;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  #chatContainer {
     width: 100%;
     height: 100vh;
-    display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: rgb(134, 134, 83);
+
+    
+    
+  }
+  
+  #chatContainer {
+    margin: 0;
+  padding: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    overflow: hidden;
+    background-color: rgb(134, 134, 83);  
+  }
+
+  #chat {
+    flex: 1;
+    overflow-y: auto;
+  
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    
   }
 
   #menuContainer {
-    width: 25%;
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     background-color: rgb(184, 9, 9);
   }
-
-  #chat {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 10px;
-  }
-
+  
+  
+  
   .msg {
-    margin: 10px auto;
-    padding: 10px 15px;
+    margin: 10px 0;
+    padding: 10px 10px;
     line-height: 1.3;
     border-radius: 10px;
-    width: 100%;
-    max-width: 100%;
+    width: 90%; /* agora igual ao input */
+    overflow: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     word-break: break-word;
     white-space: pre-wrap;
     border: #c8ff00 solid 2px;
-    background-color: #f1f1f1;
   }
-
-  .user, .assistant {
+  
+  /* Markdown + código */
+  .msg code, .msg pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
     width: 100%;
+    font-family: monospace;
+    background-color: #bdb8b8;
+    padding: 5px;
+    border-radius: 6px;
+  }
+  
+  
+  .user {
+    align-self: flex-start;
+    background-color: rgb(251, 253, 254);
     text-align: start;
+    max-width: 90%;
+    margin-left: 10px;
+    margin-right: auto;
   }
-
+  
   .assistant {
-    width: 100%;
-    text-align: end;
+    align-self: flex-end;
+    background-color: #f3f3f3;
+    text-align: start;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: 10px;
+    
   }
-
-
+  
   /* Markdown */
   .msg h1, .msg h2, .msg h3, .msg h4, .msg h5, .msg h6 {
-    margin-top: 0;
+    margin-top: 0px;
     margin-bottom: 1px;
     font-weight: bold;
+   
   }
-
+  
   .msg p {
     margin: 1px 0;
     margin-bottom: 0.5px;
-    line-height: 1.3;
+    line-height: 1.3; /* adicione isso */
   }
-
+  
+  
   .msg ul {
-    padding-left: 15px;
-    margin: 1px 0;
+    padding-left: 5px;
+    margin: 2px 2px;
+    
   }
-
+  
   .msg li {
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+  
   }
-
+  
   #form {
     display: flex;
     flex-direction: column;
-    padding: 1px;
+    padding: 3px;
   }
-
+  
   #messageInput {
-    width: 100%;
+    width: 90%;
     height: 70px;
     padding: 10px;
     font-size: 16px;
     resize: vertical;
     border-radius: 8px;
-    align-self: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    
+    
   }
-
-  /* Botões */
-  .botoes {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .botao {
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    width: 120px;
-    text-align: center;
-  }
-
-  .botao-enviar {
+  
+  #sendButton {
     background-color: #0644df;
     color: white;
+    border: none;
+    cursor: pointer;
+    padding: 8px 14px;
+    font-size: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    
   }
-
-  .botao-enviar:hover {
+  
+  #sendButton:hover {
     background-color: #0056b3;
   }
-
-  .botao-limpar {
-    background-color: #f73105;
+  
+  #sendButton {
+    background-color: #0644df;
     color: white;
+    border: none;
+    cursor: pointer;
+    padding: 8px 14px;
+    font-size: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    
   }
-
+  
+  #sendButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .inputBotao{
+    display: flex;
+  }
+  
+  .inputBotao {
+    display: flex;
+    flex-direction: column; /* input em cima, botões embaixo */
+    align-items: center;     /* alinha horizontalmente ao centro */
+    justify-content: center; /* opcional para centralizar verticalmente */
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .botoes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  
+  
+  
+  /* Estilo base para os dois botões */
+  .botao {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  width: 120px; /* mesmo tamanho fixo */
+  text-align: center;
+  }
+  
+  
+  /* Botão Enviar - azul */
+  .botao-enviar {
+  background-color: #0644df;
+  color: white;
+  }
+  .botao-enviar:hover {
+  background-color: #0056b3;
+  }
+  
+  /* Botão Limpar - vermelho */
+  .botao-limpar {
+  background-color: #c62828;
+  color: white;
+  }
   .botao-limpar:hover {
-    background-color: #c62828;
+  background-color: #a81f1f;
   }
-
-  #textBoasVindas {
+  
+  
+  
+  #textBoasVindas{
     align-self: center;
     display: none;
   }
-
-  /* Scrollbar */
-  #chat::-webkit-scrollbar {
-    width: 6px;
+  
+  
+  
+  
+  @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+  
+  svg {
+      font-family: "Russo One", sans-serif;
+      width: 100%; height: 100%;
   }
-
-  #chat::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
+  svg text {
+      animation: stroke 7s infinite alternate;
+      stroke-width: 2;
+      stroke: #FFC61C;
+      font-size: 30px;
   }
-
-  #chat::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+  @keyframes stroke {
+      0%   {
+          fill: rgba(204,38,38,0); stroke: rgb(255, 0, 0);
+          stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 2;
+      }
+      70%  {fill: rgba(204,38,38,0); stroke: rgb(255, 234, 4); }
+      80%  {fill: rgba(204,38,38,0); stroke: rgb(145, 255, 28); stroke-width: 3; }
+      100% {
+          fill: rgb(20, 19, 19); stroke: rgba(255,198,28,0);
+          stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0;
+      }
   }
-
-  header {
-    background-color: #f8f8f8;
-    padding: 1rem;
+  
+  .wrapper {
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* <-- elementos nas extremidades */
   }
-
-  .coluna1 {
-    background-color: #0644df;
-    width: 80%;
-    height: 100%;
-  }
-
-  .barralateral {
-    width: 100%;
-    height: 100%;
-    gap: 10px;
-    padding: 10px;
-    background: #e7e4e4;
+  .logo svg {
+    width: 100px;
+    height: 40px;
+  }    
+  
+  .toggleMenu {
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  margin-right: 50px;
+  
+  
   }
 }
+
+
+
+
+
+

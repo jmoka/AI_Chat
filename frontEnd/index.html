@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../frontEnd/src/config/style/pc.css"> 
   <link rel="stylesheet" href="../frontEnd/src/config/style/mob.css"> 
+  <link rel="stylesheet" href="../frontEnd/src/config/style/seletorLLM.css"> 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-
+  <div class="grid-container">
   <header>
     <div class="wrapper">
       <div class="logo">
@@ -23,6 +24,24 @@
     </div>
   </header>
 
+  <aside id="sidebar">
+    <div class="custom-select">
+      <select>
+          <option>LLMs</option>
+          <option disabled>──────────</option>
+          <option>qwen-qwq-32b</option>
+          <option>qwen-qwq-32b</option>
+          <option>deepseek-r1-distill-llama-70b</option>
+          <option>llama-3.2-11b-vision-preview</option>
+          <option>llama-3.3-70b-specdec</option>
+          <option>llama-3.3-70b-versatile</option>
+          <option>llama3-70b-8192</option>
+      </select>
+      <div class="select-arrow"></div>
+  </div>
+  </aside>
+
+
 
  <div id="chatContainer">
    
@@ -30,13 +49,17 @@
 
     <form id="form">
       <div id="textBoasVindas">
-        <h2>Em que posso ajudar?</h2>
+        <svg>
+          <text x="0" y="50%" dy=".35em" text-anchor="start">
+            Em que posso ajudar?
+          </text>
+        </svg>
       </div>
       <div class="inputBotao">
         <textarea id="messageInput" rows="20" placeholder="Digite sua mensagem..."></textarea>
         <div class="botoes">
-          <button type="submit" class="botao botao-enviar">Enviar</button>
-          <button type="button" onclick="apagar()" class="botao botao-limpar">Limpar</button>
+          <button id="btnenviar" type="submit" class="botao botao-enviar">Enviar</button>
+          <button id="btnLimpar" type="button" onclick="apagar()" class="botao botao-limpar">Limpar</button>
         </div>
       </div>
 
@@ -44,6 +67,7 @@
      
     </form>
   </div>
+</div>
   <script src="./src/config/script/script.js" defer></script>
 </body>
 </html>
