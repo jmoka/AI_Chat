@@ -16,6 +16,7 @@ export function rotaChat(app) {
         historico = [], // histórico do front (se vier)
         orientacaoUsuario = "",
         modelo,
+        temperatura
       } = req.body;
 
       if (!mensagem || mensagem.trim() === "") {
@@ -88,14 +89,16 @@ export function rotaChat(app) {
         mensagens.unshift({ role: "system", content: orientacaoPadrao });
       }
 
-      console.log("🧪 Mensagens finais:", mensagens);
-
-    
+     
 
       console.log(modelo, "modelo");
+      console.log("temperatura", temperatura , "temperatura");
       
 
-      const resposta = await enviarMensagem(mensagens, modelo);
+      const resposta = await enviarMensagem(mensagens, modelo, temperatura);
+
+     
+      
       const respostaDaIAOriginal = resposta.choices[0]?.message?.content || "";
       const respostaDaIA = sanitizarTexto(respostaDaIAOriginal);
 
@@ -111,6 +114,7 @@ export function rotaChat(app) {
       return res.json({
         resposta: respostaDaIA,
         modeloUsado: modelo,
+        temperaturaUsada: temperatura
       });
 
     } catch (erro) {

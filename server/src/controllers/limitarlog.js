@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   const logDir = path.resolve(__dirname, '../../data/log'); // Diretório de logs
-  const maxFiles = 10; // Número máximo de arquivos a manter
+  const maxFiles = 20; // Número máximo de arquivos a manter
  
 
 

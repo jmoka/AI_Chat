@@ -130,7 +130,8 @@ async function enviarMensagem() {
       body: JSON.stringify({
         mensagem: mensagem,
         orientacao: "",
-        modelo: pegarSelecionado()
+        modelo: pegarSelecionado(),
+        temperatura: pegarTemperatura()
       })
     });
 
@@ -181,9 +182,33 @@ function toggleMenu() {
  
 }
 
+
+
 function pegarSelecionado() {
-  const select = document.getElementById('modeloLLM');
-  const valor = select.value;
+  const modelo = document.getElementById("modeloLLM").value;
+  localStorage.setItem("modeloSelecionado", modelo);  
+  const valor = modelo;
   console.log("Selecionado:", valor);
   return valor
 }
+function pegarTemperatura() {
+  const modelo = document.getElementById("modeTemperatura").value;
+  localStorage.setItem("modeTemperatura", modelo);  
+  const valor = modelo;
+  console.log("modeTemperatura:", valor);
+  return valor
+}
+
+ // Ao carregar a página, define o modelo previamente salvo (se houver)
+ window.addEventListener("DOMContentLoaded", () => {
+  const modeloSalvo = localStorage.getItem("modeloSelecionado");
+  const modeTemperatura = localStorage.getItem("modeTemperatura");
+  if (modeloSalvo && modeTemperatura) {
+    document.getElementById("modeloLLM").value = modeloSalvo;
+    document.getElementById("modeTemperatura").value = modeTemperatura;
+  } else {
+    // Define um padrão caso nenhum tenha sido salvo ainda
+    document.getElementById("modeloLLM").value = "qwen-qwq-32b";
+    document.getElementById("modeTemperatura").value = "0.5";
+  }
+});

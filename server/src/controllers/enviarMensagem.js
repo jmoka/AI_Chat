@@ -13,7 +13,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 // Função principal que envia mensagem ao modelo Groq
-export async function enviarMensagem(mensagens, modelo) {
+export async function enviarMensagem(mensagens, modelo, temperatura) {
    
     mensagens.forEach((msg, index) => { // Verifica cada mensagem
       //  console.log(`🔍 Validando mensagem ${index}:`, msg);
@@ -25,7 +25,7 @@ export async function enviarMensagem(mensagens, modelo) {
     const resposta = await groq.chat.completions.create({ // Envia a mensagem para o modelo Groq
         messages: mensagens,        
         model: modelo,
-        temperature: 0.5,
+        temperature: Number(temperatura), // Baixa temperatura (0.1 a 0.5): Respostas mais focadas e determinísticas. Alta temperatura (0.5 a 1.0): Respostas mais criativas e imprevisíveis.
         presence_penalty: 0,
         frequency_penalty: 0,
         max_tokens: 3000,

@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "\nOkay, the user sent \"oi\" which is Portuguese for \"hi\". I need to respond in a friendly manner. Since the previous conversation was about Brazilian football and vice-championships, maybe they want to continue that topic. But \"oi\" is just a greeting, so I should keep it simple. I'll greet them back and offer help. I need to follow the markdown rules: start with a main title, use sections, lists, etc. Let me structure a welcoming response that invites them to ask more questions. Make sure to use bold and italics where appropriate. Also, check for any typos. Alright, let's put it all together in valid markdown without any extra text.\n\n\n# Bem-vindo! 😊\n\n## Como posso ajudar?\n\n- **Respostas rápidas**: Pergunte sobre notícias, fatos históricos ou curiosidades.\n- **Análises políticas**: Explico sobre partidos, eleições ou temas atuais.\n- **Ajuda técnica**: Aconselho sobre configurações de modelos, parâmetros ou APIs.\n\n*Exemplo*:  \n\"Como funciona o parâmetro `temperature` em modelos de IA?\"  \n\"Quem foram os últimos vice-campeões do Brasileirão?\"  \n\n**Digite sua pergunta e vou detalhar a resposta!**"
+  }
+]

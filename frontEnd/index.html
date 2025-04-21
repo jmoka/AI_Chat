@@ -25,19 +25,45 @@
   </header>
 
   <aside id="sidebar">
+    <h2>Escolha o Modelo</h2>
+    <br>
     <div class="custom-select">
+     
       <select onchange="pegarSelecionado()" id="modeloLLM">
-          <option>LLMs</option>
-          <option disabled>──────────</option>
           <option>qwen-qwq-32b</option>
           <option>deepseek-r1-distill-llama-70b</option>
-          <option>llama-3.2-11b-vision-preview</option>
-          <option>llama-3.3-70b-specdec</option>
+          <option>gemma2-9b-it</option>
           <option>llama-3.3-70b-versatile</option>
+          <option>llama-3.1-8b-instant</option>
           <option>llama3-70b-8192</option>
+          <option>llama3-8b-8192</option>
+          
+        
       </select>
       
   </div>
+  <br>
+  <h2>Escolha o Temperatura</h2>
+  <br>
+  <div class="custom-select">
+   
+    <select onchange="pegarTemperatura()" id="modeTemperatura">
+        <option>0.1</option>
+        <option>0.2</option>
+        <option>0.3</option>
+        <option>0.4</option>
+        <option>0.5</option>
+        <option>0.6</option>
+        <option>0.7</option>
+        <option>0.8</option>
+        <option>0.9</option>
+        <option>1.0</option>
+        
+      
+    </select>
+    
+</div>
+  
   </aside>
 
 

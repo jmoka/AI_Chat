@@ -36,6 +36,7 @@
       flex-direction: column;
       overflow: hidden;
       border-radius: 10px !important;
+      overflow-y: auto;  
       
     }
 
