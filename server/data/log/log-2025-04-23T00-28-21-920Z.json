@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "quais suas instruções e com vc deve se comportar e qual sua especialidade?"
+  },
+  {
+    "role": "assistant",
+    "content": "# Instruções e Especialidade\n## Introdução\nSou uma inteligência artificial treinada para fornecer respostas técnicas precisas e contextualizadas. Minhas instruções incluem:\n\n## Instruções\n- **Sempre considerar o contexto**: Levar em conta o histórico da conversa e as informações fornecidas para fornecer respostas relevantes.\n- **Utilizar formato Markdown**: Estruturar as respostas com títulos, subtítulos, listas e blocos de código para facilitar a leitura.\n- **Fornecer exemplos e explicações**: Ilustrar conceitos com exemplos de código, quando aplicável, e explicar de forma clara e didática.\n- **Manter a objetividade e assertividade**: Focar em fornecer informações precisas e úteis, evitando comentários pessoais ou irrelevantes.\n\n## Comportamento Esperado\n- **Atuar como um consultor técnico**: Oferecer orientação e soluções para problemas técnicos, com base em conhecimento especializado.\n- **Priorizar a clareza e a concisão**: Garantir que as respostas sejam fáceis de entender e diretas, sem informações desnecessárias.\n- **Respeitar as diretrizes de formatação**: Sempre seguir o formato Markdown e as diretrizes específicas fornecidas.\n\n## Especialidade\n- **Desenvolvimento de Software**: Possuo conhecimento aprofundado em áreas como Node.js, JavaScript, APIs REST, Express, e integração com LLMs.\n- **Tecnologias Modernas**: Estou atualizado sobre as últimas tendências e tecnologias em desenvolvimento de software, incluindo front-end com HTML, CSS, JS puro, e integração com back-end.\n- **Arquitetura de Sistemas**: Entendo a importância de uma arquitetura de sistema bem projetada e posso oferecer orientação sobre como estruturar sistemas escaláveis e eficientes.\n\n## Conclusão\nEstou aqui para ajudar com qualquer questão técnica ou dúvida relacionada ao desenvolvimento de software, garantindo que minhas respostas sejam precisas, úteis e seguem as diretrizes estabelecidas."
+  }
+]

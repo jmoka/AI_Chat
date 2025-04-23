@@ -4,6 +4,7 @@ const enviar = document.getElementById("btnenviar");
 const form = document.getElementById("form");
 const input = document.getElementById("messageInput");
 const msg = document.getElementsByClassName("msg");
+const instrucao = localStorage.getItem("InstrucoesUsuario")
 
   
 
@@ -119,6 +120,8 @@ async function enviarMensagem() {
      }) 
     
   }
+
+
   
     
   try {
@@ -129,7 +132,7 @@ async function enviarMensagem() {
       },
       body: JSON.stringify({
         mensagem: mensagem,
-        orientacao: "",
+        orientacaoUsuario: instrucao,
         modelo: pegarSelecionado(),
         temperatura: pegarTemperatura()
       })
@@ -212,3 +215,5 @@ function pegarTemperatura() {
     document.getElementById("modeTemperatura").value = "0.5";
   }
 });
+
+// modal

@@ -27,7 +27,7 @@ export default function salvarConversa(messages) {
         // Verifica se o diretório de logs existe. Se não existir, cria ele (e os pais, se necessário)
         if (!fs.existsSync(logDir)) {
             fs.mkdirSync(logDir, { recursive: true }); // Cria diretório recursivamente
-            console.log(`Diretório criado: ${logDir}`); // Confirma criação
+            // console.log(`Diretório criado: ${logDir}`); // Confirma criação
         }
 
         // Cria um timestamp único baseado na data atual, substituindo : e . por - para ser válido no nome de arquivo
@@ -44,14 +44,14 @@ export default function salvarConversa(messages) {
         fs.writeFileSync(logFilePath, JSON.stringify(messages, null, 2), 'utf-8');
 
         // Mostra no console onde o arquivo foi salvo
-        console.log(`Mensagens salvas em: ${logFilePath}`);
+        // console.log(`Mensagens salvas em: ${logFilePath}`);
          limitarlogs();
         // Retorna o nome do arquivo salvo, útil para log ou confirmação
         return logFileName;
 
     } catch (error) {
         // Se der erro em qualquer parte (como permissão, disco cheio, etc), mostra no console
-        console.error('Erro ao salvar mensagens:', error.message);
+        // console.error('Erro ao salvar mensagens:', error.message);
 
         // Repassa o erro para que outras partes do sistema possam lidar com ele se necessário
         throw error;

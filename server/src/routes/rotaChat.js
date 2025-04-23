@@ -91,8 +91,8 @@ export function rotaChat(app) {
 
      
 
-      console.log(modelo, "modelo");
-      console.log("temperatura", temperatura , "temperatura");
+      // console.log(modelo, "modelo");
+      // console.log("temperatura", temperatura , "temperatura");
       
 
       const resposta = await enviarMensagem(mensagens, modelo, temperatura);
@@ -102,6 +102,8 @@ export function rotaChat(app) {
       const respostaDaIAOriginal = resposta.choices[0]?.message?.content || "";
       const respostaDaIA = sanitizarTexto(respostaDaIAOriginal);
 
+      
+
       const mensagemSalvaJSON = [
         { role: "user", content: mensagem },
         { role: "assistant", content: respostaDaIA }
@@ -109,8 +111,6 @@ export function rotaChat(app) {
 
       salvarConversa(mensagemSalvaJSON);
      
-      console.log("💾 Mensagem salva com sucesso!");
-
       return res.json({
         resposta: respostaDaIA,
         modeloUsado: modelo,

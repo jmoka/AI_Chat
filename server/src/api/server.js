@@ -6,6 +6,7 @@ import path                              from 'path';
 import { fileURLToPath }                 from 'url';
 import Groq                              from 'groq-sdk'; 
 import { rotaChat } from '../routes/rotaChat.js';   
+
 import dotenv                            from 'dotenv';
 dotenv.config(); // ← ESSENCIAL para ativar o .env
 
@@ -107,6 +108,7 @@ export const groq = new Groq({ apiKey: API_URL });
 // O app é a instância do servidor Express que foi criada anteriormente.
 
 rotaChat(app);
+
 
 //============================================================================
 // ✅ Ativa a rota de salvar mensagens

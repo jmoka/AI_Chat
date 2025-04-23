@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../frontEnd/src/config/style/pc.css"> 
   <link rel="stylesheet" href="../frontEnd/src/config/style/mob.css"> 
   <link rel="stylesheet" href="../frontEnd/src/config/style/seletorLLM.css"> 
+  <link rel="stylesheet" href="../frontEnd/src/config/style/modalInstrucao.css"> 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -25,6 +26,8 @@
   </header>
 
   <aside id="sidebar">
+
+
     <h2>Escolha o Modelo</h2>
     <br>
     <div class="custom-select">
@@ -42,7 +45,11 @@
       </select>
       
   </div>
+
+
   <br>
+
+
   <h2>Escolha o Temperatura</h2>
   <br>
   <div class="custom-select">
@@ -57,13 +64,13 @@
         <option>0.7</option>
         <option>0.8</option>
         <option>0.9</option>
-        <option>1.0</option>
-        
-      
+        <option>1.0</option>      
     </select>
-    
-</div>
-  
+
+  </div>
+
+  <br>  
+  <button onclick="abrirPaginaInstrucoes()" type="btn" class="botoeInstrucaos">Instruções</button>
   </aside>
 
 
@@ -94,5 +101,6 @@
   </div>
 </div>
   <script src="./src/config/script/script.js" defer></script>
+  <script src="./src/config/script/scriptInstrucoes.js"></script>
 </body>
 </html>

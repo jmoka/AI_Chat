@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  /* body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+  } */
+
+  #container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    margin-left: 25%;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 470px; /* Aproximadamente 100 linhas */
+    resize: vertical;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: justify;
+    
+  }
+
+  .botoes {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button.salvar {
+    background-color: #28a745;
+  }
+
+  button.salvar:hover {
+    background-color: #218838;
+  }
+
+  button.editar {
+    background-color: #007bff;
+  }
+
+  button.editar:hover {
+    background-color: #0056b3;
+  }
+
+  button.apagar {
+    background-color: #dc3545;
+  }
+
+  button.apagar:hover {
+    background-color: #c82333;
+  }
+
+  .botoeInstrucaos {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* mesmo tamanho fixo */
+    text-align: center;
+    background-color: chocolate;
+  }
+  
+  
