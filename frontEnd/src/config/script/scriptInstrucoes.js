@@ -1,4 +1,6 @@
 const textArea = document.getElementById("textArea")
+const Instrucoes = document.getElementById("Instrucoes")
+const Exemplo = document.getElementById("Exemplo")
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -6,10 +8,25 @@ window.addEventListener("DOMContentLoaded", () => {
         backgroundColor: "lightblue", // Ou "blue", "#2196f3", etc.
   color: "black",
   border: "1px solid #888"    
-    }
-    
-    )
+    })
+
+    Object.assign(Exemplo.style,{
+        backgroundColor: "#F8ECB1FF", // Ou "blue", "#373736FF", etc.
+        color: "black",
+        border: "1px solid #888"  
+
+    })
+    Object.assign(Instrucoes.style,{
+        backgroundColor: "#F8ECB1FF", // Ou "blue", "#373736FF", etc.
+        color: "black",
+        border: "1px solid #888"  
+
+    })
+
+
     textArea.readOnly = true;
+    Exemplo.readOnly = true;
+    Instrucoes.readOnly = true;
 
     const InstrucoesUsuario = localStorage.getItem("InstrucoesUsuario")
     console.log(InstrucoesUsuario);

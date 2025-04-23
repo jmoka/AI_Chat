@@ -15,16 +15,32 @@
 
   #container {
     width: 100%;
-    height: 100%;
+    height: 100%;       /* Limita o tamanho máximo no desktop */
+    margin: 0 auto;           /* Centraliza horizontalmente */
+    padding: 20px;            /* Espaço interno */
     background-color: #fff;
-    padding: 30px;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 800px;
-    text-align: center;
-    margin-left: 25%;
+  
+    display: flex;
+    flex-wrap: wrap;          /* Permite que os itens quebrem linha */
+    gap: 20px;                /* Espaço entre colunas */
+    justify-content: center; /* Alinha as colunas horizontalmente */
+    align-items: stretch;     /* Faz com que todas as colunas tenham a mesma altura */
+    box-sizing: border-box;
   }
+  
+  .coluna {
+    flex: 1 1 30%;            /* Cresce, encolhe, ocupa ~30% do espaço */
+    min-width: 280px;         /* Largura mínima antes de quebrar para baixo */
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+
+  
 
   h1 {
     margin-bottom: 20px;
@@ -65,7 +81,7 @@
   }
 
   button.salvar:hover {
-    background-color: #218838;
+    background-color: #888821;
   }
 
   button.editar {
@@ -73,7 +89,7 @@
   }
 
   button.editar:hover {
-    background-color: #0056b3;
+    background-color: #888821;
   }
 
   button.apagar {
@@ -81,7 +97,14 @@
   }
 
   button.apagar:hover {
-    background-color: #c82333;
+    background-color: #888821;
+  }
+  button.voltar {
+    background-color: #c935dc;
+  }
+
+  button.voltar:hover {
+    background-color: #888821;
   }
 
   .botoeInstrucaos {
