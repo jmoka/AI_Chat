@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "o"
+  },
+  {
+    "role": "assistant",
+    "content": "\n\nOkay, the user just sent \"o\". That's a single letter, which is odd. Let me check the history to see the pattern.\n\nLooking back, the user has been greeting with \"oi\" multiple times, and I've responded with structured technical offers. Now they sent \"o\", maybe a typo or test. Since they might be testing the system's response to short inputs, I need to follow the instructions strictly.\n\nThe user's message is just \"o\". Since my instructions say to answer every question using the exact markdown structure, even for short inputs. But I need to avoid making up content. How to handle this?\n\nThe user might have mistyped, so I should prompt them to clarify. But the instructions require following the markdown format regardless. Hmm. The example responses from before use titles and sections even for simple greetings. So I should respond in the required structure, acknowledging the single \"o\" and inviting them to ask properly.\n\nStructure: Main title, sections, lists, etc. Maybe start with a friendly notice about the short message, then offer help as usual. Need to make sure it's in Portuguese, uses markdown properly, and follows all the formatting rules. Let me draft that.\n\n\n# Notação de Mensagem Curta Detectada  \n\n## Observação  \nRecebi uma mensagem curta: **\"o\"**. Vamos avançar da melhor forma possível!  \n\n## Como posso ajudar?  \n- **Precisa de um exemplo de código** (ex: Node.js, HTML, ou JavaScript)?  \n- **Dúvida sobre um conceito** (ESM, async/await, algoritmos)?  \n- **Problema técnico** (erros de sintaxe, integrações, desempenho)?  \n\n## Exemplo de código base  \n```javascript  \n// Função simples para demonstrar estrutura  \nfunction saudacao(nome) {  \n  return `Olá, ${nome}! Como posso auxiliar?`;  \n}  \n```  \n\n## Próximos passos  \n1. **Especifique o tema** da sua dúvida.  \n2. **Compartilhe detalhes** do problema ou código relevante.  \n3. **Defina a tecnologia** envolvida (Node.js, React, etc.).  \n\nEstou pronto para ajudar! *Qual é o seu desafio técnico hoje?*"
+  }
+]

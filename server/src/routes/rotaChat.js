@@ -75,8 +75,16 @@ export function rotaChat(app) {
         `;
         
 
+          let orientacaoUsada = "";
+          if(orientacaoUsuario === null || orientacaoUsuario === "" ){
+            orientacaoUsada = orientacaoPadrao
+          }else{
+            orientacaoUsada = orientacaoUsuario
+          }
+
+
       const mensagens = [
-        { role: "system", content: `${orientacaoPadrao}\n${orientacaoUsuario}` },
+        { role: "system", content: orientacaoUsada },
         { role: "system", content: `Resumo do histórico:\n${resumoHistorico}` },
         { role: "user", content: mensagem }
       ];

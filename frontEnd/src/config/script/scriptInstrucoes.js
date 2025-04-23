@@ -57,9 +57,9 @@ function Editar(){
     textArea.readOnly = false;
     localStorage.setItem("InstrucoesUsuario", textArea.value)
 }
-function Apagar(){    
+function ApagarInstrucao(){    
     textArea.value = ""
-    localStorage.clear("InstrucoesUsuario")
+    localStorage.removeItem("InstrucoesUsuario")
 }
 
 async function Voltar(){

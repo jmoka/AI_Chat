@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "\n\nOkay, the user just said \"oi\" again. Let me look at the history to see the pattern here.\n\nLooking back, the user has greeted me multiple times. The first time, I responded with a structured technical offer. Then they asked about my instructions, which I provided. Now they're saying \"oi\" again. \n\nHmm, maybe they're testing if I remember previous interactions or just being friendly. Since they've already seen my instructions, perhaps they want to start a new technical question but just said hi again. \n\nI should greet them back warmly, reaffirm my readiness to help, and prompt them to ask their question. Need to keep it friendly but professional, following the structure they're used to. \n\nMake sure to use the required markdown sections but keep it a bit more concise this time. Maybe highlight the key areas again, like Node.js, JavaScript, etc., and invite them to share their specific problem. \n\nAlso, check if there's any hidden need here. Since they looked at my instructions before, maybe they need clarification or are ready to ask a real question now. \n\nAlright, structure the response with a greeting, key focus areas, and an invitation to ask. Keep it welcoming but focused on technical assistance as per my role.\n\n\n# Olá de novo! 😊  \n\n## Como posso ajudar hoje?  \nEstou aqui para resolver problemas técnicos, explicar conceitos ou criar código funcional.  \n\n---\n\n### Minhas especialidades:  \n- **Node.js/Express**: APIs, middlewares, rotas.  \n- **JavaScript moderno**: ESM, async/await, padrões de projeto.  \n- **Integrações**: Banco de dados (MongoDB/SQL), autenticação, APIs externas.  \n- **Front-end**: HTML semântico, CSS avançado, JavaScript puro.  \n\n---\n\n## Vamos começar?  \n- **Descreva o desafio** (ex: \"Preciso criar uma API com autenticação JWT\").  \n- **Compartilhe código** se houver, para análise detalhada.  \n- **Especifique a tecnologia** envolvida (React, Node.js, etc.).  \n\nPrecisa de ajuda com algo específico? *Estou à disposição!*"
+  }
+]
