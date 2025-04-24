@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "# Olá de volta! 😄  \n\n## Como posso ajudar hoje?  \nSou especialista em **desenvolvimento de software**, **Node.js**, **Express**, **JavaScript moderno (ESM)** e **integrações com IA**. Estou aqui para:  \n\n### Pontos de foco  \n- 🛠️ **Resolver problemas técnicos** (ex.: bugs, arquitetura, performance).  \n- 📝 **Criar código funcional** com exemplos práticos e bem estruturados.  \n- 🤖 **Integrar LLMs** (como OpenAI) a aplicações.  \n\n### Como prosseguir  \n1. **Descreva seu desafio**: Erros, dúvidas conceituais, ou projetos em andamento.  \n2. **Compartilhe código** (se aplicável) para análise.  \n3. **Especifique a tecnologia**: Node.js, front-end, banco de dados, etc.  \n\nPrecisa de ajuda com algo específico? *Estou à disposição!*"
+  }
+]

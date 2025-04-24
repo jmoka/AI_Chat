@@ -6,6 +6,7 @@ const input = document.getElementById("messageInput");
 const msg = document.getElementsByClassName("msg");
 const instrucao = localStorage.getItem("InstrucoesUsuario")
 
+
   
 
 // Recupera mensagens salvas ao iniciar
@@ -122,7 +123,7 @@ async function enviarMensagem() {
   }
 
 
-  
+  const top_p_padrao = 1;
     
   try {
     const resposta = await fetch("http://127.0.0.1/api/chat", {
@@ -134,7 +135,12 @@ async function enviarMensagem() {
         mensagem: mensagem,
         orientacaoUsuario: instrucao,
         modelo: pegarSelecionado(),
-        temperatura: pegarTemperatura()
+        temperatura: pegarTemperatura(),
+        presence_penalty:pegarPresence(),
+        frequency_penalty: pegarFrequency(),
+        max_tokens: token(),
+        top_p: top_p_padrao
+        
       })
     });
 
@@ -201,18 +207,48 @@ function pegarTemperatura() {
   console.log("modeTemperatura:", valor);
   return valor
 }
+function pegarPresence() {
+  const modelo = document.getElementById("modePresence").value;
+  localStorage.setItem("modePresence", modelo);  
+  const valor = modelo;
+  console.log("modePresence:", valor);
+  return valor
+}
+function pegarFrequency() {
+  const modelo = document.getElementById("modeFrequency").value;
+  localStorage.setItem("modeFrequency", modelo);  
+  const valor = modelo;
+  console.log("modeFrequency:", valor);
+  return valor
+}
+function token() {
+  const modelo = document.getElementById("token").value;
+  localStorage.setItem("token", modelo);  
+  const valor = modelo;
+  console.log("token:", valor);
+  return valor
+}
 
  // Ao carregar a página, define o modelo previamente salvo (se houver)
  window.addEventListener("DOMContentLoaded", () => {
   const modeloSalvo = localStorage.getItem("modeloSelecionado");
   const modeTemperatura = localStorage.getItem("modeTemperatura");
-  if (modeloSalvo && modeTemperatura) {
+  const modePresence = localStorage.getItem("modePresence");
+  const modeFrequency = localStorage.getItem("modeFrequency");
+  const token = localStorage.getItem("token");
+  if (modeloSalvo || modeTemperatura || modePresence || modeFrequency || token) {
     document.getElementById("modeloLLM").value = modeloSalvo;
     document.getElementById("modeTemperatura").value = modeTemperatura;
+    document.getElementById("modePresence").value = modePresence;
+    document.getElementById("modeFrequency").value = modeFrequency;
+    document.getElementById("token").value = token;
   } else {
     // Define um padrão caso nenhum tenha sido salvo ainda
     document.getElementById("modeloLLM").value = "qwen-qwq-32b";
     document.getElementById("modeTemperatura").value = "0.5";
+    document.getElementById("modePresence").value = "0.0";
+    document.getElementById("modeFrequency").value = "0.0";
+    document.getElementById("token").value = "3000";
   }
 });
 

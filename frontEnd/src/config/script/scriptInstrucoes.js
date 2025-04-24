@@ -2,47 +2,47 @@ const textArea = document.getElementById("textArea")
 const Instrucoes = document.getElementById("Instrucoes")
 const Exemplo = document.getElementById("Exemplo")
 
-
 window.addEventListener("DOMContentLoaded", () => {
+    const textArea = document.getElementById("textArea");
+    const Exemplo = document.getElementById("Exemplo");
+    const Instrucoes = document.getElementById("Instrucoes");
+
+    if (!textArea || !Exemplo || !Instrucoes) {
+        
+        return; // Para aqui se algo está errado
+    }
+
     Object.assign(textArea.style, {
-        backgroundColor: "lightblue", // Ou "blue", "#2196f3", etc.
-  color: "black",
-  border: "1px solid #888"    
-    })
-
-    Object.assign(Exemplo.style,{
-        backgroundColor: "#F8ECB1FF", // Ou "blue", "#373736FF", etc.
+        backgroundColor: "lightblue",
         color: "black",
-        border: "1px solid #888"  
+        border: "1px solid #888"
+    });
 
-    })
-    Object.assign(Instrucoes.style,{
-        backgroundColor: "#F8ECB1FF", // Ou "blue", "#373736FF", etc.
+    Object.assign(Exemplo.style, {
+        backgroundColor: "#F8ECB1FF",
         color: "black",
-        border: "1px solid #888"  
+        border: "1px solid #888"
+    });
 
-    })
-
+    Object.assign(Instrucoes.style, {
+        backgroundColor: "#F8ECB1FF",
+        color: "black",
+        border: "1px solid #888"
+    });
 
     textArea.readOnly = true;
     Exemplo.readOnly = true;
     Instrucoes.readOnly = true;
 
-    const InstrucoesUsuario = localStorage.getItem("InstrucoesUsuario")
+    const InstrucoesUsuario = localStorage.getItem("InstrucoesUsuario");
     console.log(InstrucoesUsuario);
-    
 
-    if(InstrucoesUsuario == null){
-        localStorage.setItem("InstrucoesUsuario", textArea.value)
-        textArea.style.value = InstrucoesUsuario
-    }else{
-        textArea.value = InstrucoesUsuario
+    if (InstrucoesUsuario == null) {
+        localStorage.setItem("InstrucoesUsuario", textArea.value);
+    } else {
+        textArea.value = InstrucoesUsuario;
     }
-
-    
-
-    
-})
+});
 
 function Salvar(){    
     

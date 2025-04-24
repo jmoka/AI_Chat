@@ -16,7 +16,12 @@ export function rotaChat(app) {
         historico = [], // histórico do front (se vier)
         orientacaoUsuario = "",
         modelo,
-        temperatura
+        temperatura,
+        presence_penalty, 
+        frequency_penalty, 
+        token,
+        top_p
+        
       } = req.body;
 
       if (!mensagem || mensagem.trim() === "") {
@@ -91,7 +96,7 @@ export function rotaChat(app) {
 
       // 🔢 Conta os tokens
       const totalTokens = contarTokens(mensagens.map(m => m.content).join(" "));
-      if (totalTokens > 5900) {
+      if (totalTokens > token) { // verificar aqui
         console.warn("⚠️ Reduzindo contexto por excesso de tokens...");
         mensagens.splice(1, mensagens.length - 2); // Remove o resumo
         mensagens.unshift({ role: "system", content: orientacaoPadrao });
@@ -103,7 +108,7 @@ export function rotaChat(app) {
       // console.log("temperatura", temperatura , "temperatura");
       
 
-      const resposta = await enviarMensagem(mensagens, modelo, temperatura);
+      const resposta = await enviarMensagem(mensagens, modelo, temperatura, presence_penalty,frequency_penalty,token, top_p  );
 
      
       
@@ -122,7 +127,15 @@ export function rotaChat(app) {
       return res.json({
         resposta: respostaDaIA,
         modeloUsado: modelo,
-        temperaturaUsada: temperatura
+        temperaturaUsada: temperatura,
+        presence: presence_penalty,
+        frequency: frequency_penalty,
+        token:token,
+        top_p:top_p
+
+        
+
+
       });
 
     } catch (erro) {
