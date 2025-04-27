@@ -1,182 +1,222 @@
+// Seletores principais
 const chat = document.getElementById("chat");
 const limpar = document.getElementById("btnLimpar");
 const enviar = document.getElementById("btnenviar");
 const form = document.getElementById("form");
 const input = document.getElementById("messageInput");
-const msg = document.getElementsByClassName("msg");
-const instrucao = localStorage.getItem("InstrucoesUsuario")
+const sidebar = document.getElementById("sidebar");
+const instrucao = localStorage.getItem("InstrucoesUsuario");
+const textBoasVindas = document.getElementById("textBoasVindas"); // Corrigido para evitar erro
 
-
-  
-
-// Recupera mensagens salvas ao iniciar
-window.addEventListener("DOMContentLoaded", () => {     
-
-  const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
-  if(historico.length === 0){   
-   
-    Object.assign(limpar.style, {
-      display: "none"
-     });
-    
-     Object.assign(enviar.style, {
-      display: "none"
-     });    
-
-    Object.assign(messageInput.style, {
-      height: '70px',
-      padding: '10px',  
-      marginBottom: '200px',
-      fontSize: '16px',
-      resize: 'vertical',
-      borderRadius: '8px',     
-
-     });     
-    
-     messageInput.style.transition = "all 0.5s ease";  
-     Object.assign(textBoasVindas.style, {
-      display: "flex"
-     }) 
-  }else{
-    Object.assign(limpar.style, {
-      display: ""
-     }) 
-    
-     Object.assign(enviar.style, {
-      display: ""
-     }) 
+// Função para adicionar mensagens no chat
+function adicionarMensagem(origem, texto, classe) {
+  if (!texto) {
+    console.warn("Texto inválido ou indefinido:", texto);
+    return;
   }
- 
-  historico.forEach(mensagem => {
-    adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
-  });
+
+  const msgDiv = document.createElement("div");
+  msgDiv.classList.add("msg", classe);
+
+  const textoSanitizado = texto.replace(/<\/?[^>]+(>|$)/g, ""); // Remove tags perigosas
+  msgDiv.innerHTML = marked.parse(textoSanitizado); // Converte markdown em HTML
+
+  chat.appendChild(msgDiv);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Carrega histórico salvo ao iniciar
+window.addEventListener("DOMContentLoaded", () => {
+  const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+
+  if (historico.length === 0) {
+    Object.assign(limpar.style, { display: "none" });
+    Object.assign(enviar.style, { display: "none" });
+    Object.assign(input.style, {
+      height: "70px",
+      padding: "10px",
+      marginBottom: "200px",
+      fontSize: "16px",
+      resize: "vertical",
+      borderRadius: "8px",
+      transition: "all 0.5s ease"
+    });
+
+    if (textBoasVindas) {
+      textBoasVindas.style.display = "flex";
+    }
+  } else {
+    Object.assign(limpar.style, { display: "" });
+    Object.assign(enviar.style, { display: "" });
+
+    historico.forEach((mensagem) => {
+      adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
+    });
+  }
+
+  // Carregar seleção de modelo salvo
+  const modeloSalvo =
+    localStorage.getItem("modeloSelecionado") || "qwen-qwq-32b";
+  const modeTemperatura = localStorage.getItem("modeTemperatura") || "0.5";
+  const modePresence = localStorage.getItem("modePresence") || "0.0";
+  const modeFrequency = localStorage.getItem("modeFrequency") || "0.0";
+  const tokenSalvo = localStorage.getItem("token") || "3000";
+
+  document.getElementById("modeloLLM").value = modeloSalvo;
+  document.getElementById("modeTemperatura").value = modeTemperatura;
+  document.getElementById("modePresence").value = modePresence;
+  document.getElementById("modeFrequency").value = modeFrequency;
+  document.getElementById("token").value = tokenSalvo;
 });
 
-
-
-// Limpa tudo (localStorage + tela)
-function apagar() {
-  localStorage.removeItem("chatHistorico");
-  chat.innerHTML = "";
-  console.log("Histórico de mensagens apagado.");
-  Object.assign(messageInput.style, {
-    height: '70px',
-    padding: '10px',
-    marginBottom: '200px',
-    fontSize: '16px',
-    resize: 'vertical',
-    borderRadius: '8px',
-   
-   });
-   messageInput.style.transition = "all 0.5s ease";
-
-   Object.assign(textBoasVindas.style, {
-    display: "flex"
-   }) 
-
-   location.reload();
-
-}
-
-document.getElementById('messageInput').addEventListener("keydown", animacaoTextAreaEnviar);
-
-function animacaoTextAreaEnviar(){
-  Object.assign(textBoasVindas.style, {
-    display: "none"
-   });
-   
-   
-   
-    messageInput.style.marginBottom = '';
- 
-}
-
-
-
-
-// Salva mensagem no localStorage
+// Salva mensagens no localStorage
 function salvarMensagem(origem, texto, classe) {
+  if (!texto || !origem || !classe) {
+    console.warn("Dados inválidos para salvar:", { origem, texto, classe });
+    return;
+  }
+
   const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
   historico.push({ origem, texto, classe });
   localStorage.setItem("chatHistorico", JSON.stringify(historico));
 }
 
+// Limpa o chat e localStorage
+function limparTela() {
+  localStorage.removeItem("chatHistorico");
+  chat.innerHTML = "";
+  console.log("Histórico apagado.");
+
+  Object.assign(input.style, {
+    height: "70px",
+    padding: "10px",
+    marginBottom: "200px",
+    fontSize: "16px",
+    resize: "vertical",
+    borderRadius: "8px",
+    transition: "all 0.5s ease"
+  });
+
+  if (textBoasVindas) {
+    textBoasVindas.style.display = "flex";
+  }
+
+  location.reload();
+}
+
+// Restaura histórico de mensagens da API
+async function restaurar() {
+  try {
+    const resposta = await fetch("http://127.0.0.1:80/api/logs");
+    const dados = await resposta.json();
+
+    console.log("DADOS RECEBIDOS:", dados);
+
+    const historicoConvertido = dados.logs.map((item) => ({
+      origem: item.role === "user" ? "Você" : "IA",
+      texto: item.content,
+      classe: item.role
+    }));
+
+    localStorage.setItem("chatHistorico", JSON.stringify(historicoConvertido));
+
+    historicoConvertido.forEach((msg) => {
+      adicionarMensagem(msg.origem, msg.texto, msg.classe);
+    });
+
+    if (historicoConvertido.length > 0) {
+      location.reload();
+    }
+  } catch (erro) {
+    console.error("Erro ao restaurar histórico:", erro);
+  }
+}
+
+// Animação ao começar a digitar
+input.addEventListener("keydown", () => {
+  if (textBoasVindas) {
+    textBoasVindas.style.display = "none";
+  }
+  input.style.marginBottom = "";
+});
+
+// Envia a mensagem para a API
 async function enviarMensagem() {
-  const llmEscolhido = pegarSelecionado();
-  
   const mensagem = input.value.trim();
   if (!mensagem) return;
 
   adicionarMensagem("Você", mensagem, "user");
   salvarMensagem("Você", mensagem, "user");
+
   input.value = "";
 
-  if(mensagem){
-    Object.assign(limpar.style, {
-      display: ""
-     }) 
-    
-     Object.assign(enviar.style, {
-      display: ""
-     }) 
-    
-  }
-
+  Object.assign(limpar.style, { display: "" });
+  Object.assign(enviar.style, { display: "" });
 
   const top_p_padrao = 1;
-    
+
   try {
     const resposta = await fetch("http://127.0.0.1/api/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         mensagem: mensagem,
         orientacaoUsuario: instrucao,
         modelo: pegarSelecionado(),
         temperatura: pegarTemperatura(),
-        presence_penalty:pegarPresence(),
+        presence_penalty: pegarPresence(),
         frequency_penalty: pegarFrequency(),
         max_tokens: token(),
         top_p: top_p_padrao
-        
       })
     });
 
     const dados = await resposta.json();
     const textoIA = dados.resposta || "(sem resposta)";
+
     adicionarMensagem("IA", textoIA, "assistant");
     salvarMensagem("IA", textoIA, "assistant");
-    
-
   } catch (erro) {
     console.error("Erro:", erro);
     const erroMsg = "❌ Erro ao se comunicar com a API.";
     adicionarMensagem("IA", erroMsg, "assistant");
     salvarMensagem("IA", erroMsg, "assistant");
   }
-
- 
-
-  
 }
 
-function adicionarMensagem(origem, texto, classe) {
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("msg", classe);
-  const textoSanitizado = texto.replace(/<\/?[^>]+(>|$)/g, ""); 
-  msgDiv.innerHTML = marked.parse(textoSanitizado); // Markdown -> HTML
-  chat.appendChild(msgDiv);
-  chat.scrollTop = chat.scrollHeight;
+// Funções auxiliares para pegar valores e salvar localmente
+function pegarSelecionado() {
+  const modelo = document.getElementById("modeloLLM").value;
+  localStorage.setItem("modeloSelecionado", modelo);
+  return modelo;
+}
+function pegarTemperatura() {
+  const temp = document.getElementById("modeTemperatura").value;
+  localStorage.setItem("modeTemperatura", temp);
+  return temp;
+}
+function pegarPresence() {
+  const presence = document.getElementById("modePresence").value;
+  localStorage.setItem("modePresence", presence);
+  return presence;
+}
+function pegarFrequency() {
+  const frequency = document.getElementById("modeFrequency").value;
+  localStorage.setItem("modeFrequency", frequency);
+  return frequency;
+}
+function token() {
+  const tokenVal = document.getElementById("token").value;
+  localStorage.setItem("token", tokenVal);
+  return tokenVal;
 }
 
+// Eventos de formulário e teclado
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   enviarMensagem();
 });
 
-// Envia com Enter
 input.addEventListener("keypress", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
@@ -184,72 +224,10 @@ input.addEventListener("keypress", (e) => {
   }
 });
 
-const sidebar = document.getElementById("sidebar");
-
+// Menu lateral
 function toggleMenu() {
-  sidebar.classList.toggle('open');
- 
+  sidebar.classList.toggle("open");
 }
 
-
-
-function pegarSelecionado() {
-  const modelo = document.getElementById("modeloLLM").value;
-  localStorage.setItem("modeloSelecionado", modelo);  
-  const valor = modelo;
-  console.log("Selecionado:", valor);
-  return valor
-}
-function pegarTemperatura() {
-  const modelo = document.getElementById("modeTemperatura").value;
-  localStorage.setItem("modeTemperatura", modelo);  
-  const valor = modelo;
-  console.log("modeTemperatura:", valor);
-  return valor
-}
-function pegarPresence() {
-  const modelo = document.getElementById("modePresence").value;
-  localStorage.setItem("modePresence", modelo);  
-  const valor = modelo;
-  console.log("modePresence:", valor);
-  return valor
-}
-function pegarFrequency() {
-  const modelo = document.getElementById("modeFrequency").value;
-  localStorage.setItem("modeFrequency", modelo);  
-  const valor = modelo;
-  console.log("modeFrequency:", valor);
-  return valor
-}
-function token() {
-  const modelo = document.getElementById("token").value;
-  localStorage.setItem("token", modelo);  
-  const valor = modelo;
-  console.log("token:", valor);
-  return valor
-}
-
- // Ao carregar a página, define o modelo previamente salvo (se houver)
- window.addEventListener("DOMContentLoaded", () => {
-  const modeloSalvo = localStorage.getItem("modeloSelecionado");
-  const modeTemperatura = localStorage.getItem("modeTemperatura");
-  const modePresence = localStorage.getItem("modePresence");
-  const modeFrequency = localStorage.getItem("modeFrequency");
-  const token = localStorage.getItem("token");
-  if (modeloSalvo || modeTemperatura || modePresence || modeFrequency || token) {
-    document.getElementById("modeloLLM").value = modeloSalvo;
-    document.getElementById("modeTemperatura").value = modeTemperatura;
-    document.getElementById("modePresence").value = modePresence;
-    document.getElementById("modeFrequency").value = modeFrequency;
-    document.getElementById("token").value = token;
-  } else {
-    // Define um padrão caso nenhum tenha sido salvo ainda
-    document.getElementById("modeloLLM").value = "qwen-qwq-32b";
-    document.getElementById("modeTemperatura").value = "0.5";
-    document.getElementById("modePresence").value = "0.0";
-    document.getElementById("modeFrequency").value = "0.0";
-    document.getElementById("token").value = "3000";
-  }
-});
-
-// modal
+// Botão limpar
+limpar.addEventListener("click", limparTela);

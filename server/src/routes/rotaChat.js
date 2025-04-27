@@ -5,11 +5,23 @@ import salvarConversa from '../controllers/salvarMensagens.js';
 import { contarTokens } from '../controllers/contarTokens.js';
 import { resumirTexto } from '../controllers/resumirTexto.js';
 import { sanitizarTexto } from "../controllers/sanitizar.js"
-
+import { deletarLog } from "../controllers/deletarLog.js";
+import { atualizar } from "../controllers/atualizarLog.js";
 
 export function rotaChat(app) {
-  app.post('/api/chat', async (req, res) => {
+  // Rota para deletar logs
+  app.delete("/api/del", (req, res) => {
+    const resultado = deletarLog();
+    res.status(resultado.status === "success" ? 200 : 500).json(resultado);
+  });
 
+  // Rota para listar logs
+  app.get("/api/logs", (req, res) => {
+    const resultado = atualizar();
+    res.status(resultado.status === "success" ? 200 : 500).json(resultado);
+  });
+
+  app.post("/api/chat", async (req, res) => {
     try {
       const {
         mensagem,
@@ -17,15 +29,16 @@ export function rotaChat(app) {
         orientacaoUsuario = "",
         modelo,
         temperatura,
-        presence_penalty, 
-        frequency_penalty, 
+        presence_penalty,
+        frequency_penalty,
         token,
         top_p
-        
       } = req.body;
 
       if (!mensagem || mensagem.trim() === "") {
-        return res.status(400).json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
+        return res
+          .status(400)
+          .json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
       }
 
       // 🔁 Recupera histórico salvo nos logs
@@ -43,12 +56,15 @@ export function rotaChat(app) {
       });
 
       // 📝 Concatena e resume histórico se necessário
-      const textoHistorico = historicoTotal.map(msg => `${msg.role}: ${msg.content}`).join("\n");
-      const resumoHistorico = textoHistorico.length > 1000
-        ? await resumirTexto(textoHistorico)
-        : textoHistorico;
+      const textoHistorico = historicoTotal
+        .map((msg) => `${msg.role}: ${msg.content}`)
+        .join("\n");
+      const resumoHistorico =
+        textoHistorico.length > 1000
+          ? await resumirTexto(textoHistorico)
+          : textoHistorico;
 
-        const orientacaoPadrao = `
+      const orientacaoPadrao = `
         Você é um assistente que responde sempre usando **apenas Markdown válido** e bem estruturado.        
         Regras obrigatórias para cada resposta:        
         1. Sempre comece com um título principal usando \`#\` com base no tema da resposta.
@@ -78,15 +94,13 @@ export function rotaChat(app) {
         ---        
         Responda todas as perguntas do usuário **seguindo exatamente esse padrão**.
         `;
-        
 
-          let orientacaoUsada = "";
-          if(orientacaoUsuario === null || orientacaoUsuario === "" ){
-            orientacaoUsada = orientacaoPadrao
-          }else{
-            orientacaoUsada = orientacaoUsuario
-          }
-
+      let orientacaoUsada = "";
+      if (orientacaoUsuario === null || orientacaoUsuario === "") {
+        orientacaoUsada = orientacaoPadrao;
+      } else {
+        orientacaoUsada = orientacaoUsuario;
+      }
 
       const mensagens = [
         { role: "system", content: orientacaoUsada },
@@ -95,27 +109,31 @@ export function rotaChat(app) {
       ];
 
       // 🔢 Conta os tokens
-      const totalTokens = contarTokens(mensagens.map(m => m.content).join(" "));
-      if (totalTokens > token) { // verificar aqui
+      const totalTokens = contarTokens(
+        mensagens.map((m) => m.content).join(" ")
+      );
+      if (totalTokens > token) {
+        // verificar aqui
         console.warn("⚠️ Reduzindo contexto por excesso de tokens...");
         mensagens.splice(1, mensagens.length - 2); // Remove o resumo
         mensagens.unshift({ role: "system", content: orientacaoPadrao });
       }
 
-     
-
       // console.log(modelo, "modelo");
       // console.log("temperatura", temperatura , "temperatura");
-      
 
-      const resposta = await enviarMensagem(mensagens, modelo, temperatura, presence_penalty,frequency_penalty,token, top_p  );
+      const resposta = await enviarMensagem(
+        mensagens,
+        modelo,
+        temperatura,
+        presence_penalty,
+        frequency_penalty,
+        token,
+        top_p
+      );
 
-     
-      
       const respostaDaIAOriginal = resposta.choices[0]?.message?.content || "";
       const respostaDaIA = sanitizarTexto(respostaDaIAOriginal);
-
-      
 
       const mensagemSalvaJSON = [
         { role: "user", content: mensagem },
@@ -123,24 +141,21 @@ export function rotaChat(app) {
       ];
 
       salvarConversa(mensagemSalvaJSON);
-     
+
       return res.json({
         resposta: respostaDaIA,
         modeloUsado: modelo,
         temperaturaUsada: temperatura,
         presence: presence_penalty,
         frequency: frequency_penalty,
-        token:token,
-        top_p:top_p
-
-        
-
-
+        token: token,
+        top_p: top_p
       });
-
     } catch (erro) {
       console.error("❌ Erro na rota /api/chat:", erro);
-      return res.status(500).json({ error: "Erro ao gerar resposta com modelo LLM." });
+      return res
+        .status(500)
+        .json({ error: "Erro ao gerar resposta com modelo LLM." });
     }
   });
 }
