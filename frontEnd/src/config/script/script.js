@@ -30,16 +30,14 @@ function adicionarMensagem(origem, texto, classe) {
 async function quantMensagem() {
   const resposta = await fetch("http://127.0.0.1:80/api/logs");
   const dados = await resposta.json();
-  const quantMSG = dados;
-
-  return quantMSG;
+  return dados;
 }
 
 // Carrega histórico salvo ao iniciar
 window.addEventListener("DOMContentLoaded", () => {
   const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
   quantMensagem().then((res) => {
-    console.log("ffff", res.logs.length);
+
 
     if (res.logs.length == 0) {
       Object.assign(btnRestaurar.style, { display: "none" });
