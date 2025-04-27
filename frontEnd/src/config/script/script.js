@@ -2,6 +2,8 @@
 const chat = document.getElementById("chat");
 const limpar = document.getElementById("btnLimpar");
 const enviar = document.getElementById("btnenviar");
+const btnDeletar = document.getElementById("btnDeletar");
+const btnRestaurar = document.getElementById("btnRestaurar");
 const form = document.getElementById("form");
 const input = document.getElementById("messageInput");
 const sidebar = document.getElementById("sidebar");
@@ -25,12 +27,30 @@ function adicionarMensagem(origem, texto, classe) {
   chat.scrollTop = chat.scrollHeight;
 }
 
+async function quantMensagem() {
+  const resposta = await fetch("http://127.0.0.1:80/api/logs");
+  const dados = await resposta.json();
+  const quantMSG = dados;
+
+  return quantMSG;
+}
+
 // Carrega histórico salvo ao iniciar
 window.addEventListener("DOMContentLoaded", () => {
   const historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+  quantMensagem().then((res) => {
+    console.log("ffff", res.logs.length);
+
+    if (res.logs.length == 0) {
+      Object.assign(btnRestaurar.style, { display: "none" });
+    } else {
+      Object.assign(btnRestaurar.style, { display: "" });
+    }
+  });
 
   if (historico.length === 0) {
     Object.assign(limpar.style, { display: "none" });
+    Object.assign(btnDeletar.style, { display: "none" });
     Object.assign(enviar.style, { display: "none" });
     Object.assign(input.style, {
       height: "70px",
@@ -48,6 +68,8 @@ window.addEventListener("DOMContentLoaded", () => {
   } else {
     Object.assign(limpar.style, { display: "" });
     Object.assign(enviar.style, { display: "" });
+
+    Object.assign(btnDeletar.style, { display: "" });
 
     historico.forEach((mensagem) => {
       adicionarMensagem(mensagem.origem, mensagem.texto, mensagem.classe);
@@ -105,19 +127,20 @@ function limparTela() {
 }
 
 async function apagar() {
-  try {
-    const resposta = await fetch("http://127.0.0.1:80/api/del", {
-      method: "DELETE"
-    });
+  if (confirm("Você realmente deseja deletar todo o Histórico?")) {
+    try {
+      const resposta = await fetch("http://127.0.0.1:80/api/del", {
+        method: "DELETE"
+      });
 
-    const dados = await resposta.json();
-    console.log("DADOS DELETADOS", dados);
-    limparTela();
-  } catch (erro) {
-    console.error("Erro ao apagar histórico:", erro);
+      const dados = await resposta.json();
+      console.log("DADOS DELETADOS", dados);
+      limparTela();
+    } catch (erro) {
+      console.error("Erro ao apagar histórico:", erro);
+    }
   }
 }
-
 
 // Restaura histórico de mensagens da API
 async function restaurar() {
@@ -140,7 +163,10 @@ async function restaurar() {
     });
 
     if (historicoConvertido.length > 0) {
+      alert("Mensagens Restauradas com Sucesso");
       location.reload();
+    } else {
+      alert("Repositório esta vazio , sem mensagens salvas");
     }
   } catch (erro) {
     console.error("Erro ao restaurar histórico:", erro);

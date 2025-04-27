@@ -226,10 +226,28 @@
 
 /* Botão Limpar - vermelho */
 .botao-limpar {
+  background-color: #d2cece;
+    color: rgb(23, 23, 23);
+  }
+  
+  .botao-limpar:hover {
+    background-color: #a81f1f;
+  }
+  
+  .botao-restaurar {
+    background-color: #de9c19;
+    color: white;
+  }
+  
+  .botao-restaurar:hover {
+    background-color: #a81f1f;
+  }
+  
+  .botao-apagar {
   background-color: #c62828;
   color: white;
 }
-.botao-limpar:hover {
+.botao-apagar:hover {
   background-color: #a81f1f;
 }
 
