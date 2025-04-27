@@ -104,6 +104,21 @@ function limparTela() {
   location.reload();
 }
 
+async function apagar() {
+  try {
+    const resposta = await fetch("http://127.0.0.1:80/api/del", {
+      method: "DELETE"
+    });
+
+    const dados = await resposta.json();
+    console.log("DADOS DELETADOS", dados);
+    limparTela();
+  } catch (erro) {
+    console.error("Erro ao apagar histórico:", erro);
+  }
+}
+
+
 // Restaura histórico de mensagens da API
 async function restaurar() {
   try {
