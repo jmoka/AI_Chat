@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // Define como o nome do arquivo será salvo
-    cb(null, `${Date.now()}-${file.originalname}`); // Prefixa o nome do arquivo com a data/hora atual para evitar conflitos
+    cb(null, file.originalname); // Prefixa o nome do arquivo com a data/hora atual para evitar conflitos
   }
 });
 
