@@ -128,3 +128,116 @@
           font-size: 16px;
       }
   }
+.arquivo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.arquivo-item button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.arquivo-item button:hover {
+    background-color: #c0392b;
+}
+
+.arquivo-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* Permite quebrar para linha de baixo se for necessário */
+}
+
+.arquivo-item span {
+    flex: 1 1 auto;
+    word-break: break-word;
+    /* Quebra nomes de arquivos longos */
+}
+
+.arquivo-item button {
+    flex: 0 0 auto;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.arquivo-item button:hover {
+    background-color: #c0392b;
+}
+
+/* Responsividade: em telas pequenas, empilha os elementos */
+@media (max-width: 600px) {
+    .arquivo-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .arquivo-item button {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+.arquivo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    gap: 12px;
+}
+
+.arquivo-item span {
+    flex: 1;
+    word-break: break-word;
+    font-size: 14px;
+}
+
+.arquivo-item button {
+    flex-shrink: 0;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    /* Impede quebra de linha no botão */
+}
+
+.arquivo-item button:hover {
+    background-color: #c0392b;
+}
+
+/* Em telas pequenas, o layout se mantém: nome quebra em várias linhas, botão continua fixo ao lado */
+@media (max-width: 600px) {
+    .arquivo-item {
+        flex-wrap: nowrap;
+    }
+}

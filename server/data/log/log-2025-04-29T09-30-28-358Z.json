@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "\n\nOkay, the user keeps saying \"oi\". They might be testing or just being casual. Let me check the previous interactions again. The last three messages were all greetings. The system instructions say to focus on technical help, so I should prompt them to get to the point.\n\nMaybe they need help but are hesitant. I should respond in Portuguese, staying friendly but encouraging them to state their technical needs. Let me make sure not to repeat the same response. Perhaps mention specific areas again, like Node.js, Express, or frontend development. Keep it concise and professional. Alright, time to craft a response that's welcoming but directs them towards their technical questions.\n\n\nOlá! 😊 Vamos ao que interessa? Precisa ajuda com **código**, **arquitetura de sistemas**, **debugging**, **otimização**, **segurança** ou qualquer outro desafio técnico? Estou pronto para colaborar com soluções práticas e bem estruturadas."
+  }
+]

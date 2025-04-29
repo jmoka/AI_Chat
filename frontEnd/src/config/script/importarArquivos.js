@@ -1,4 +1,7 @@
-const API_URL = "http://localhost"; // Sem :3000 nem :5500
+const API_URL = "http://localhost"; // Sem :3000 ou :5500
+
+const inputArquivo = document.getElementById("inputArquivo");
+const listaArquivos = document.getElementById("listaArquivos");
 
 async function importarArquivos() {
   const arquivos = inputArquivo.files;
@@ -31,9 +34,7 @@ async function importarArquivos() {
       const resultado = await response.json();
       console.log("Arquivo enviado:", resultado.fileName);
 
-      const item = document.createElement("div");
-      item.textContent = resultado.fileName;
-      listaArquivos.appendChild(item);
+      adicionarArquivoNaLista(resultado.fileName);
     } catch (error) {
       console.error("Erro ao importar arquivo:", error);
       alert(`Erro ao importar arquivo: ${error.message}`);
@@ -42,3 +43,40 @@ async function importarArquivos() {
 
   inputArquivo.value = "";
 }
+
+function adicionarArquivoNaLista(nomeArquivo) {
+  const item = document.createElement("div");
+  item.classList.add("arquivo-item");
+
+  const nome = document.createElement("span");
+  nome.textContent = nomeArquivo;
+
+  const btnExcluir = document.createElement("button");
+  btnExcluir.textContent = "Excluir";
+  btnExcluir.onclick = () => deletarArquivo(nomeArquivo, item);
+
+  item.appendChild(nome);
+  item.appendChild(btnExcluir);
+  listaArquivos.appendChild(item);
+}
+
+async function listarArquivos() {
+  listaArquivos.innerHTML = ""; // limpa lista antes de adicionar
+  try {
+    const response = await fetch(`${API_URL}/api/upload`);
+    if (!response.ok) {
+      throw new Error("Erro ao listar arquivos.");
+    }
+
+    const arquivos = await response.json(); // <- array de strings
+    arquivos.forEach((nomeArquivo) => {
+      adicionarArquivoNaLista(nomeArquivo); // <- passa a string direto
+    });
+  } catch (error) {
+    console.error("Erro ao listar arquivos:", error);
+    alert(`Erro ao listar arquivos: ${error.message}`);
+  }
+}
+
+// Carrega os arquivos ao abrir a página
+window.addEventListener("DOMContentLoaded", listarArquivos);

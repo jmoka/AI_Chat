@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url); // Converte a URL do módulo 
 const __dirname = path.dirname(__filename); // Extrai apenas o diretório do caminho do arquivo
 
 // Define o caminho base para as pastas de dados
-const baseDataPath = path.resolve(__dirname, "../../../data"); // Caminho absoluto para a pasta 'data', três níveis acima
+const baseDataPath = path.resolve(__dirname, "../../data"); // Caminho absoluto para a pasta 'data', três níveis acima
 
 // Define o caminho específico para uploads
 const uploadDir = path.join(baseDataPath, "uploads"); // Define a subpasta 'uploadDir' dentro da 'data'
