@@ -1,0 +1,44 @@
+{
+  "PeriodoApuracao": {
+    "MesApuracao": 3,
+    "AnoApuracao": 2025
+  },
+  "DadosIniciais": {
+    "SemMovimento": false,
+    "QualificacaoPj": 1,
+    "TributacaoLucro": 3,
+    "VariacoesMonetarias": 2,
+    "ResponsavelApuracao": {
+      "CpfResponsavel": "42857210230",
+      "TelResponsavel": {
+        "Ddd": "91",
+        "NumTelefone": "985614217"
+      },
+      "EmailResponsavel": "jotaconsultoria@outlook.com",
+      "RegistroCrc": {
+        "UfRegistro": "PA",
+        "NumRegistro": "018423"
+      }
+    }
+  },
+  "Debitos": {
+    "Irpj": {
+      "ListaDebitos": [
+        {
+          "IdDebito": 1,
+          "CodigoDebito": "208901",
+          "ValorDebito": 2415.62
+        }
+      ]
+    },
+    "Csll": {
+      "ListaDebitos": [
+        {
+          "IdDebito": 2,
+          "CodigoDebito": "237201",
+          "ValorDebito": 10865.63
+        }
+      ]
+    }
+  }
+}

@@ -89,9 +89,9 @@ async function Voltar(){
 }
 
 function abrirPaginaInstrucoes() {
-    window.location.href = 'pgInstrucoes.html';
-  }
-  
-  function Voltar() {
-    window.location.href = 'index.html';
-  }
+  window.location.href = "frontEnd/pgInstrucoes.html";
+}
+
+function Voltar() {
+  window.location.href = "/";
+}
