@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 // __dirname é útil para construir caminhos relativos a partir do diretório atual, especialmente ao trabalhar com arquivos e diretórios.
 // Caminhos padrão para pastas de dados
 const baseDataPath = path.resolve(__dirname, '../../data'); //// Caminho absoluto para o diretório de dados da aplicação
-const uploadDir = path.join(baseDataPath, 'uploads');
+const uploadDir = path.join(baseDataPath, "uploads");
 const processedDir = path.join(baseDataPath, 'processed');
 const logDir = path.join(baseDataPath, 'log');
 
@@ -108,6 +108,7 @@ export const groq = new Groq({ apiKey: API_URL });
 // O app é a instância do servidor Express que foi criada anteriormente.
 
 rotaChat(app);
+
 
 
 //============================================================================

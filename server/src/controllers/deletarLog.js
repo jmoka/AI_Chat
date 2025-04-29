@@ -2,13 +2,11 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Converte a URL do arquivo atual em um caminho de arquivo
 const __filename = fileURLToPath(import.meta.url);
-// Extrai o diretório a partir do caminho do arquivo atual
 const __dirname = path.dirname(__filename);
 
-export function deletarLog() {
-  const logDir = path.resolve(__dirname, "../../data/log"); // Caminho para o diretório de logs
+export function deletarLog(req, res) {
+  const logDir = path.resolve(__dirname, "../../data/log");
 
   try {
     if (fs.existsSync(logDir)) {
@@ -18,16 +16,23 @@ export function deletarLog() {
         fs.unlinkSync(filePath); // Exclui cada arquivo
       });
       console.log("📂 Todos os logs foram deletados.");
-      return { status: "success", message: "Todos os logs foram deletados." };
+      return res.status(200).json({
+        status: "success",
+        message: "Todos os logs foram deletados."
+      });
     } else {
       console.warn("⚠️ Diretório de logs não encontrado.");
-      return {
+      return res.status(404).json({
         status: "warning",
         message: "Diretório de logs não encontrado."
-      };
+      });
     }
   } catch (erro) {
     console.error("❌ Erro ao deletar logs:", erro);
-    return { status: "error", message: "Erro ao deletar logs.", error: erro };
+    return res.status(500).json({
+      status: "error",
+      message: "Erro ao deletar logs.",
+      error: erro
+    });
   }
 }

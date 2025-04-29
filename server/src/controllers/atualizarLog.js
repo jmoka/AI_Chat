@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function atualizar() {
+export function atualizar(req, res) {
   const logDir = path.resolve(__dirname, "../../data/log");
 
   try {
@@ -24,15 +24,19 @@ export function atualizar() {
           return []; // Ignora arquivos inválidos
         }
       });
-      return { status: "success", logs: logs.flat() }; // Retorna todos os logs como um único array
+      return res.status(200).json({ status: "success", logs: logs.flat() });
     } else {
-      return {
+      return res.status(404).json({
         status: "warning",
         message: "Diretório de logs não encontrado."
-      };
+      });
     }
   } catch (erro) {
     console.error("Erro ao listar logs:", erro);
-    return { status: "error", message: "Erro ao listar logs.", error: erro };
+    return res.status(500).json({
+      status: "error",
+      message: "Erro ao listar logs.",
+      error: erro
+    });
   }
 }

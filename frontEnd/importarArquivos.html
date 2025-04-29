@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gerenciador de Arquivos</title>
+    <link rel="stylesheet" href="./src/config/style/importarArquivo.css">
+
+   
+</head>
+
+<body>
+
+    <div id="container">
+
+        <!-- Lado Esquerdo: Listas -->
+        <div class="coluna">
+            <div>
+                <h1>Arquivos Importados</h1>
+                <div id="listaArquivos" class="lista"></div>
+            </div>
+
+            <div>
+                <h1>Arquivos Processados</h1>
+                <div id="arquivosProcessados" class="lista"></div>
+            </div>
+
+            <div class="botoes">
+                <button onclick="processarArquivos()">Processar Arquivos</button>
+            </div>
+        </div>
+
+        <!-- Lado Direito: Upload -->
+        <div class="coluna">
+            <div>
+                <h1>Importar Arquivo</h1>
+                <input type="file" id="inputArquivo" multiple>
+            </div>
+
+            <div class="botoes">
+                <button onclick="importarArquivos()">Importar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="./src/config/script/importarArquivos.js">  </script>
+
+</body>
+
+</html>

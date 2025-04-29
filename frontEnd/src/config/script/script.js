@@ -10,7 +10,10 @@ const sidebar = document.getElementById("sidebar");
 const instrucao = localStorage.getItem("InstrucoesUsuario");
 const textBoasVindas = document.getElementById("textBoasVindas"); // Corrigido para evitar erro
 
+// import function_adicionarMensagem from "./adicionarMensagem.js";
+
 // Função para adicionar mensagens no chat
+
 function adicionarMensagem(origem, texto, classe) {
   if (!texto) {
     console.warn("Texto inválido ou indefinido:", texto);
@@ -145,27 +148,46 @@ async function restaurar() {
   try {
     const resposta = await fetch("http://127.0.0.1:80/api/logs");
     const dados = await resposta.json();
-
     console.log("DADOS RECEBIDOS:", dados);
 
-    const historicoConvertido = dados.logs.map((item) => ({
-      origem: item.role === "user" ? "Você" : "IA",
-      texto: item.content,
-      classe: item.role
-    }));
+    // Verifica se a resposta é um array ou possui a propriedade "logs"
+    let logsArray = [];
+    if (Array.isArray(dados)) {
+      logsArray = dados;
+    } else if (dados && Array.isArray(dados.logs)) {
+      logsArray = dados.logs;
+    }
+
+    if (logsArray.length < 1) {
+      alert("⚠️ Repositório de mensagens vazio");
+      return;
+    }
+
+    const historicoConvertido = logsArray
+      .map((item) => {
+        // Verifica se o item possui as propriedades esperadas
+        if (item && item.role && item.content) {
+          
+          return {
+            origem: item.role === "user" ? "Você" : "IA",
+            texto: item.content,
+            classe: item.role === "user" ? "user" : "assistant"
+          };
+        } else {
+          console.warn("Mensagem inválida ou incompleta:", item);
+          return null;
+        }
+      })
+      .filter((item) => item !== null);
 
     localStorage.setItem("chatHistorico", JSON.stringify(historicoConvertido));
-
+    
     historicoConvertido.forEach((msg) => {
       adicionarMensagem(msg.origem, msg.texto, msg.classe);
     });
 
-    if (historicoConvertido.length > 0) {
-      alert("Mensagens Restauradas com Sucesso");
-      location.reload();
-    } else {
-      alert("Repositório esta vazio , sem mensagens salvas");
-    }
+    alert("⚠️ Mensagens Restauradas com Sucesso");
+    location.reload();
   } catch (erro) {
     console.error("Erro ao restaurar histórico:", erro);
   }
