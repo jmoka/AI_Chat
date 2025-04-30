@@ -116,6 +116,20 @@
     width: 100%; /* mesmo tamanho fixo */
     text-align: center;
     background-color: chocolate;
+    margin-bottom: 5px;
+    }
+    
+    .botaoabrirArquivos {
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      /* mesmo tamanho fixo */
+      text-align: center;
+      background-color: chocolate;
+      margin-bottom: 5px;
   }
   
   

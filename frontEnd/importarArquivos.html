@@ -2,51 +2,38 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciador de Arquivos</title>
-    <link rel="stylesheet" href="./src/config/style/importarArquivo.css">
-
-   
+    <link rel="stylesheet" href="./src/config/style/importarArquivo.css" />
 </head>
 
 <body>
-
     <div id="container">
-
-        <!-- Lado Esquerdo: Listas -->
+        <!-- Coluna 1: Arquivos Importados -->
         <div class="coluna">
-            <div>
-                <h1>Arquivos Importados</h1>
-                <div id="listaArquivos" class="lista"></div>
+            <h1>Arquivos Importados</h1>
+            <div id="listaArquivos" class="lista"></div>
             </div>
 
-            <div>
-                <h1>Arquivos Processados</h1>
-                <div id="arquivosProcessados" class="lista"></div>
-            </div>
-
-            <div class="botoes">
-                <button onclick="processarArquivos()">Processar Arquivos</button>
-            </div>
+        <!-- Coluna 2: Arquivos Processados -->
+        <div class="coluna">
+            <h1>Arquivos Processados</h1>
+            <div id="arquivosProcessados" class="lista"></div>
         </div>
 
-        <!-- Lado Direito: Upload -->
-        <div class="coluna">
-            <div>
-                <h1>Importar Arquivo</h1>
-                <input type="file" id="inputArquivo" multiple>
-            </div>
-
+        <!-- Linha Inferior com Input e Botões -->
+        <div id="rodape">
+            <input type="file" id="inputArquivo" multiple />
             <div class="botoes">
                 <button onclick="importarArquivos()">Importar</button>
+                <button onclick="processarArquivos()">Processar Arquivos</button>
+                <button onclick="Voltar()">Voltar</button>
             </div>
         </div>
-
     </div>
 
-    <script src="./src/config/script/arquivosEnviados.js">  </script>
-
+    <script src="./src/config/script/arquivosEnviados.js"></script>
 </body>
 
 </html>

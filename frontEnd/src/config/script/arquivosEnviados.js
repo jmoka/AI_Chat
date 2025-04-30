@@ -6,6 +6,7 @@ const inputArquivo = document.getElementById("inputArquivo");
 
 // Pega a referência do contêiner onde a lista de arquivos será exibida
 const listaArquivos = document.getElementById("listaArquivos");
+const arquivosProcessados = document.getElementById("arquivosProcessados");
 
 // Função para importar os arquivos selecionados no input
 async function importarArquivos() {
@@ -62,29 +63,54 @@ async function importarArquivos() {
   inputArquivo.value = "";
 }
 
-// Função que adiciona um item à lista de arquivos exibida na interface
+// Função que adiciona um item à lista de arquivos importados
 function adicionarArquivoNaLista(nomeArquivo) {
-  // Cria um elemento div para o item
   const item = document.createElement("div");
-  item.classList.add("arquivo-item"); // Adiciona classe para estilização
-
-  // Cria um span com o nome do arquivo
+  item.classList.add("arquivo-item");
   const nome = document.createElement("span");
   nome.textContent = nomeArquivo;
-
-  // Cria um botão de excluir
   const btnExcluir = document.createElement("button");
   btnExcluir.textContent = "Excluir";
-
-  // Define ação ao clicar no botão: chama função para deletar
   btnExcluir.onclick = () => deletarArquivo(nomeArquivo, item);
-
-  // Adiciona o nome e o botão ao item
   item.appendChild(nome);
   item.appendChild(btnExcluir);
-
-  // Adiciona o item à lista de arquivos na página
   listaArquivos.appendChild(item);
+}
+
+// Nova função para adicionar arquivo processado à lista
+function adicionarArquivoProcessadoNaLista(nomeArquivo) {
+  const item = document.createElement("div");
+  item.classList.add("arquivo-item");
+  const nome = document.createElement("span");
+  nome.textContent = nomeArquivo;
+  // Se desejar, pode incluir um botão para ação nos arquivos processados
+  const btnExcluir = document.createElement("button");
+  btnExcluir.textContent = "Excluir";
+  btnExcluir.onclick = () => deletarArquivo(nomeArquivo, item);
+  item.appendChild(nome);
+  item.appendChild(btnExcluir);
+  arquivosProcessados.appendChild(item);
+}
+
+// Função para listar os arquivos processados
+async function listarArquivosProcessados() {
+  // Limpa a lista visual atual para evitar duplicação
+  arquivosProcessados.innerHTML = "";
+
+  try {
+    const response = await fetch(`${API_URL}/api/processed`);
+    if (!response.ok) {
+      throw new Error("Erro ao listar arquivos processados.");
+    }
+    const arquivos = await response.json();
+    // Para cada nome de arquivo retornado, adiciona na lista de processados
+    arquivos.forEach((nomeArquivo) => {
+      adicionarArquivoProcessadoNaLista(nomeArquivo);
+    });
+  } catch (error) {
+    console.error("Erro ao listar arquivos processados:", error);
+    alert(`Erro ao listar arquivos processados: ${error.message}`);
+  }
 }
 
 // Função que lista os arquivos já enviados
@@ -113,5 +139,28 @@ async function listarArquivos() {
   }
 }
 
+async function processarArquivos() {
+  const response = await fetch(`${API_URL}/api/processarArquivos`, {
+    method: "POST"
+  });
+
+  if (!response.ok) {
+    alert("Erro ao processar arquivos.");
+  } else {
+    alert("Arquivos processados com sucesso.");
+    // Atualiza a lista de arquivos processados após o processamento
+    listarArquivosProcessados();
+  }
+}
+
+function abrirPaginaArquivos() {
+  window.location.href = "frontEnd/importarArquivos.html";
+}
+
+function Voltar() {
+  window.location.href = "/";
+}
+
 // Ao carregar a página, chama a função para listar os arquivos
 window.addEventListener("DOMContentLoaded", listarArquivos);
+window.addEventListener("DOMContentLoaded", listarArquivosProcessados);

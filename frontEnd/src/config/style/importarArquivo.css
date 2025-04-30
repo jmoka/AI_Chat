@@ -1,205 +1,163 @@
-  * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-  }
+/* Reset e corpo */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-  }
-
-  #container {
-      display: flex;
-      flex-wrap: wrap;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      max-width: 1200px;
-      width: 100%;
-      overflow: hidden;
-  }
-
-  .coluna {
-      flex: 1;
-      min-width: 350px;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      border-right: 1px solid #e0e0e0;
-      background-color: #ffffff;
-  }
-
-  .coluna:last-child {
-      border-right: none;
-  }
-
-  h1 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 8px;
-  }
-
-  .lista {
-      background: #f9fafb;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      height: 250px;
-      overflow-y: auto;
-      padding: 10px;
-      font-size: 16px;
-      color: #555;
-      line-height: 1.4;
-  }
-
-  input[type="file"] {
-      padding: 15px;
-      border: 2px dashed #bbb;
-      border-radius: 8px;
-      background: #fafafa;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-      transition: border-color 0.3s;
-  }
-
-  input[type="file"]:hover {
-      border-color: #007bff;
-  }
-
-  .botoes {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-  }
-
-  button {
-      flex: 1;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      min-width: 120px;
-  }
-
-  button:hover {
-      background-color: #0056b3;
-  }
-
-  @media (max-width: 768px) {
-      body {
-          padding: 10px;
-      }
-
-      #container {
-          flex-direction: column;
-      }
-
-      .coluna {
-          border-right: none;
-          border-bottom: 1px solid #e0e0e0;
-      }
-
-      .coluna:last-child {
-          border-bottom: none;
-      }
-
-      h1 {
-          font-size: 22px;
-      }
-
-      .lista {
-          height: 200px;
-          font-size: 15px;
-      }
-
-      button {
-          padding: 12px;
-          font-size: 16px;
-      }
-  }
-.arquivo-item {
+html,
+body {
+    height: 100%;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f4f8;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 6px 10px;
-    margin-bottom: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.arquivo-item button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-.arquivo-item button:hover {
-    background-color: #c0392b;
-}
-
-.arquivo-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f9f9f9;
-    gap: 10px;
-    flex-wrap: wrap;
-    /* Permite quebrar para linha de baixo se for necessário */
-}
-
-.arquivo-item span {
-    flex: 1 1 auto;
-    word-break: break-word;
-    /* Quebra nomes de arquivos longos */
-}
-
-.arquivo-item button {
-    flex: 0 0 auto;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.arquivo-item button:hover {
-    background-color: #c0392b;
-}
-
-/* Responsividade: em telas pequenas, empilha os elementos */
-@media (max-width: 600px) {
-    .arquivo-item {
-        flex-direction: column;
-        align-items: flex-start;
+    padding: 20px;
     }
 
-    .arquivo-item button {
+/* Container principal */
+#container {
+    flex: 1;
+    display: flex;
+        flex-wrap: wrap;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
         width: 100%;
-        margin-top: 8px;
+        overflow: hidden;
+    min-height: 600px;
+}
+
+/* Colunas */
+.coluna {
+    flex: 1;
+    min-width: 350px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border-right: 1px solid #e0e0e0;
+    background-color: #ffffff;
+}
+
+.coluna:last-child {
+    border-right: none;
+}
+
+/* Títulos */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Listas de arquivos */
+.lista {
+    background: #f9fafb;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Rodapé com input e botões */
+#rodape {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    gap: 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+}
+
+#rodape input[type="file"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px dashed #bbb;
+    border-radius: 8px;
+    background: #fafafa;
+    cursor: pointer;
+    font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+#rodape input[type="file"]:hover {
+    border-color: #007bff;
+}
+
+#rodape .botoes {
+    display: flex;
+    justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+/* Botões */
+button {
+    flex: 1;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 120px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+        #container {
+            flex-direction: column;
+        }
+
+        .coluna {
+            border-right: none;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .coluna:last-child {
+            border-bottom: none;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .lista {
+            height: 200px;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        #rodape .botoes {
+        flex-direction: column;
     }
 }
 
+/* Estilo dos itens de arquivo */
 .arquivo-item {
     display: flex;
     align-items: center;
@@ -210,6 +168,7 @@
     border-radius: 6px;
     background-color: #f9f9f9;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .arquivo-item span {
@@ -228,16 +187,19 @@
     border-radius: 4px;
     font-size: 14px;
     white-space: nowrap;
-    /* Impede quebra de linha no botão */
 }
 
 .arquivo-item button:hover {
     background-color: #c0392b;
 }
 
-/* Em telas pequenas, o layout se mantém: nome quebra em várias linhas, botão continua fixo ao lado */
+/* Ajuste em telas menores */
 @media (max-width: 600px) {
     .arquivo-item {
         flex-wrap: nowrap;
     }
+.arquivo-item button {
+    width: 100%;
+    margin-top: 8px;
+}
 }
