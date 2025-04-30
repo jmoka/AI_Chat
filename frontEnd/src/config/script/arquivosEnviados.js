@@ -99,9 +99,7 @@ async function listarArquivosProcessados() {
 
   try {
     const response = await fetch(`${API_URL}/api/processed`);
-    if (!response.ok) {
-      throw new Error("Erro ao listar arquivos processados.");
-    }
+
     const arquivos = await response.json();
     // Para cada nome de arquivo retornado, adiciona na lista de processados
     arquivos.forEach((nomeArquivo) => {
@@ -118,39 +116,25 @@ async function listarArquivos() {
   // Limpa a lista visual atual para evitar duplicação
   listaArquivos.innerHTML = "";
 
-  try {
-    // Faz uma requisição GET para obter os arquivos enviados
-    const response = await fetch(`${API_URL}/api/upload`);
-    if (!response.ok) {
-      throw new Error("Erro ao listar arquivos.");
-    }
+  // Faz uma requisição GET para obter os arquivos enviados
+  const response = await fetch(`${API_URL}/api/upload`);
 
-    // Espera a resposta como JSON (esperado: array de strings)
-    const arquivos = await response.json();
+  // Espera a resposta como JSON (esperado: array de strings)
+  const arquivos = await response.json();
 
-    // Para cada nome de arquivo retornado, adiciona na lista visual
-    arquivos.forEach((nomeArquivo) => {
-      adicionarArquivoNaLista(nomeArquivo);
-    });
-  } catch (error) {
-    // Captura e exibe erros da requisição
-    console.error("Erro ao listar arquivos:", error);
-    alert(`Erro ao listar arquivos: ${error.message}`);
-  }
+  // Para cada nome de arquivo retornado, adiciona na lista visual
+  arquivos.forEach((nomeArquivo) => {
+    adicionarArquivoNaLista(nomeArquivo);
+  });
 }
 
 async function processarArquivos() {
   const response = await fetch(`${API_URL}/api/processarArquivos`, {
     method: "POST"
   });
+  listarArquivosProcessados();
 
-  if (!response.ok) {
-    alert("Erro ao processar arquivos.");
-  } else {
-    alert("Arquivos processados com sucesso.");
-    // Atualiza a lista de arquivos processados após o processamento
-    listarArquivosProcessados();
-  }
+  console.log("Arquivos processados com sucesso.");
 }
 
 function abrirPaginaArquivos() {
