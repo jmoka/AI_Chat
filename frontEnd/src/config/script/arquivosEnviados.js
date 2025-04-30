@@ -145,6 +145,26 @@ function Voltar() {
   window.location.href = "/";
 }
 
+function deletarArquivo(nomeArquivo, item) {
+  // Faz uma requisição DELETE para remover o arquivo
+  fetch(`${API_URL}/api/upload/${nomeArquivo}`, {
+    method: "DELETE"
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Se a exclusão foi bem-sucedida, remove o item da lista visual
+        listaArquivos.removeChild(item);
+        console.log("Arquivo excluído:", nomeArquivo);
+      } else {
+        throw new Error("Erro ao excluir arquivo.");
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao excluir arquivo:", error);
+      alert(`Erro ao excluir arquivo: ${error.message}`);
+    });
+}
+
 // Ao carregar a página, chama a função para listar os arquivos
 window.addEventListener("DOMContentLoaded", listarArquivos);
 window.addEventListener("DOMContentLoaded", listarArquivosProcessados);

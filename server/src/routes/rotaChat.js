@@ -60,4 +60,9 @@ export function rotaChat(app) {
   app.delete("/api/del", (req, res) => {
     deletarLog(req, res); // Apenas chama deletarLog
   });
+
+  app.delete("/api/upload/:fileName", (req, res) => {
+    deletarArquivosImportados(req, res);
+  });
 }
+

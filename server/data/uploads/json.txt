@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "ana frança ",
+      "email": "ana@example.com",
+      "age": 29,
+      "address": {
+        "street": "Rua das Flores, 123",
+        "city": "São Paulo",
+        "state": "SP",
+        "zip": "01010-000"
+      }
+    },
+   
+  ]
+}
