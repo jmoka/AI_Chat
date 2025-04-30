@@ -15,9 +15,9 @@ const __dirname = path.dirname(__filename);
 
 // Pastas base
 const baseDataPath = path.resolve(__dirname, "../../../data");
-const uploadDir = path.join(baseDataPath, "uploadDir");
-const processedDir = path.join(baseDataPath, "processed");
-const logDir = path.join(baseDataPath, "log");
+// const uploadDir = path.join(baseDataPath, "uploadDir");
+// const processedDir = path.join(baseDataPath, "processed");
+// const logDir = path.join(baseDataPath, "log");
 
 
  export async function chat(req, res) {

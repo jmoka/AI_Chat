@@ -2,22 +2,23 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { upload, imprtarArquivo } from "../controllers/importarArquivo.js"; // Upload
+import { upload, imprtarArquivo } from "../controllers/importarArquivo.js";
 import { chat } from "../controllers/chat.js";
 import { listarArquivosImportdos } from "../controllers/listarArquivosImportdos.js";
 import { deletarArquivosImportados } from "../controllers/deletarArquivosImportados.js";
 import { listarArquivosProcessados } from "../controllers/listarArquivosProcessados.js";
 import { listarLog } from "../controllers/listarLog.js";
 import { deletarLog } from "../controllers/deletarLog.js";
+import { processFiles } from "../controllers/processarArquivos.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Pastas base
 const baseDataPath = path.resolve(__dirname, "../../../data");
-const uploadDir = path.join(baseDataPath, "upload");
-const processedDir = path.join(baseDataPath, "processed");
-const logDir = path.join(baseDataPath, "log");
+// const uploadDir = path.join(baseDataPath, "uploads");
+// const processedDir = path.join(baseDataPath, "processed");
+// const logDir = path.join(baseDataPath, "log");
 
 export function rotaChat(app) {
   // Upload de arquivo
@@ -36,6 +37,11 @@ export function rotaChat(app) {
   // Listar arquivos processados
   app.get("/api/processed", (req, res) => {
     return listarArquivosProcessados(req, res);
+  });
+
+  // processar arquivos
+  app.post("/api/processarArquivos", (req, res) => {
+    return processFiles(req, res);
   });
 
   // Listar arquivos de log
