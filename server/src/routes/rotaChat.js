@@ -6,6 +6,7 @@ import { upload, imprtarArquivo } from "../controllers/importarArquivo.js";
 import { chat } from "../controllers/chat.js";
 import { listarArquivosImportdos } from "../controllers/listarArquivosImportdos.js";
 import { deletarArquivosImportados } from "../controllers/deletarArquivosImportados.js";
+import { deletarArquivosProcessados } from "../controllers/deletarArquivosProcessados.js";
 import { listarArquivosProcessados } from "../controllers/listarArquivosProcessados.js";
 import { listarLog } from "../controllers/listarLog.js";
 import { deletarLog } from "../controllers/deletarLog.js";
@@ -42,6 +43,10 @@ export function rotaChat(app) {
   // processar arquivos
   app.post("/api/processarArquivos", (req, res) => {
     return processFiles(req, res);
+  });
+
+  app.delete("/api/processarArquivos/:fileName", (req, res) => {
+    deletarArquivosProcessados(req, res);
   });
 
   // Listar arquivos de log

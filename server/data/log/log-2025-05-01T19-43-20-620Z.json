@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "vc consegue me informar o email de joão silva"
+  },
+  {
+    "role": "assistant",
+    "content": "**João Silva**\nEmail: `joao.silva@example.com`"
+  }
+]

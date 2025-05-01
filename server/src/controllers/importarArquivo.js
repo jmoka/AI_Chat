@@ -15,7 +15,7 @@ const baseDataPath = path.resolve(__dirname, "../../data"); // Caminho absoluto 
 const uploads = path.join(baseDataPath, "uploads"); // Define a subpasta 'uploads' dentro da 'data'
 
 // Apenas para debug: mostra no console onde os arquivos serão armazenados
-console.log("Diretório de uploads:", uploads); // Exibe o caminho de upload no console
+// console.log("Diretório de uploads:", uploads); // Exibe o caminho de upload no console
 
 // Configuração de armazenamento para o multer
 const storage = multer.diskStorage({

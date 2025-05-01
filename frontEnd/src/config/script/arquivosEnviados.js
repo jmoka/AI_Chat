@@ -52,6 +52,7 @@ async function importarArquivos() {
 
       // Adiciona o arquivo à lista visual
       adicionarArquivoNaLista(resultado.fileName);
+      alert("Arquivo importado com sucesso.");
     } catch (error) {
       // Captura e exibe erros de envio
       console.error("Erro ao importar arquivo:", error);
@@ -86,7 +87,7 @@ function adicionarArquivoProcessadoNaLista(nomeArquivo) {
   // Se desejar, pode incluir um botão para ação nos arquivos processados
   const btnExcluir = document.createElement("button");
   btnExcluir.textContent = "Excluir";
-  btnExcluir.onclick = () => deletarArquivo(nomeArquivo, item);
+  btnExcluir.onclick = () => deletarArquivoProcessados(nomeArquivo, item);
   item.appendChild(nome);
   item.appendChild(btnExcluir);
   arquivosProcessados.appendChild(item);
@@ -132,9 +133,15 @@ async function processarArquivos() {
   const response = await fetch(`${API_URL}/api/processarArquivos`, {
     method: "POST"
   });
-  listarArquivosProcessados();
-
-  console.log("Arquivos processados com sucesso.");
+  if (response.ok) {
+    alert("Arquivos processados com sucesso.");
+    listarArquivosProcessados();
+  } else {
+    console.error("Erro ao processar arquivos:", response.statusText);
+    alert(
+      "Erro ao processar arquivos. Verifique o console para mais detalhes."
+    );
+  }
 }
 
 function abrirPaginaArquivos() {
@@ -146,23 +153,58 @@ function Voltar() {
 }
 
 function deletarArquivo(nomeArquivo, item) {
-  // Faz uma requisição DELETE para remover o arquivo
-  fetch(`${API_URL}/api/upload/${nomeArquivo}`, {
-    method: "DELETE"
-  })
-    .then((response) => {
-      if (response.ok) {
-        // Se a exclusão foi bem-sucedida, remove o item da lista visual
-        listaArquivos.removeChild(item);
-        console.log("Arquivo excluído:", nomeArquivo);
-      } else {
-        throw new Error("Erro ao excluir arquivo.");
-      }
+  if (confirm("Deseja realmente Deletar Arquivo?")) {
+    // Usuário clicou em OK
+    console.log("Confirmado!");
+    // Faz uma requisição DELETE para remover o arquivo
+    fetch(`${API_URL}/api/upload/${nomeArquivo}`, {
+      method: "DELETE"
     })
-    .catch((error) => {
-      console.error("Erro ao excluir arquivo:", error);
-      alert(`Erro ao excluir arquivo: ${error.message}`);
-    });
+      .then((response) => {
+        if (response.ok) {
+          // Se a exclusão foi bem-sucedida, remove o item da lista visual
+          listaArquivos.removeChild(item);
+          console.log("Arquivo excluído:", nomeArquivo);
+          alert("Arquivo excluído com sucesso.");
+        } else {
+          throw new Error("Erro ao excluir arquivo.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir arquivo:", error);
+        alert(`Erro ao excluir arquivo: ${error.message}`);
+      });
+  } else {
+    // Usuário clicou em Cancelar
+    console.log("Cancelado.");
+  }
+}
+function deletarArquivoProcessados(nomeArquivo, item) {
+  if (confirm("Deseja realmente continuar?")) {
+    // Usuário clicou em OK
+    console.log("Confirmado!");
+    // Faz uma requisição DELETE para remover o arquivo
+    fetch(`${API_URL}/api/processarArquivos/${nomeArquivo}`, {
+      method: "DELETE"
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Se a exclusão foi bem-sucedida, remove o item da lista visual de processados
+          arquivosProcessados.removeChild(item);
+          console.log("Arquivo excluído:", nomeArquivo);
+          alert("Arquivo excluído com sucesso.");
+        } else {
+          throw new Error("Erro ao excluir arquivo.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir arquivo:", error);
+        alert(`Erro ao excluir arquivo: ${error.message}`);
+      });
+  } else {
+    // Usuário clicou em Cancelar
+    console.log("Cancelado.");
+  }
 }
 
 // Ao carregar a página, chama a função para listar os arquivos

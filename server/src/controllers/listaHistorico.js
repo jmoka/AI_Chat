@@ -17,28 +17,32 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 export function listaHistorico() {
   const historico = [];
-  const logDir = path.resolve(__dirname, '../../data/log');
+  const logDir = path.resolve(__dirname, "../../data/log");
 
   try {
-    const arquivosJSON = fs.readdirSync(logDir, { withFileTypes: true })
-      .filter(file => file.isFile() && file.name.endsWith('.json'))
+    const arquivosJSON = fs
+      .readdirSync(logDir, { withFileTypes: true })
+      .filter((file) => file.isFile() && file.name.endsWith(".json"))
       .sort((a, b) => b.name.localeCompare(a.name)) // Arquivos do mais recente ao mais antigo
-      .map(file => path.join(logDir, file.name));
+      .map((file) => path.join(logDir, file.name));
 
     for (const filePath of arquivosJSON) {
       try {
-        const conteudo = fs.readFileSync(filePath, 'utf-8');
+        const conteudo = fs.readFileSync(filePath, "utf-8");
         const dados = JSON.parse(conteudo);
 
         if (Array.isArray(dados)) {
           historico.push(...dados);
-        } else if (typeof dados === 'object' && dados !== null) {
+        } else if (typeof dados === "object" && dados !== null) {
           historico.push(dados);
         } else {
           console.warn(`⚠️ Dados inválidos no arquivo ${filePath}:`, dados);
         }
       } catch (erro) {
-        console.warn(`⚠️ Erro ao ler ou interpretar ${filePath}:`, erro.message);
+        console.warn(
+          `⚠️ Erro ao ler ou interpretar ${filePath}:`,
+          erro.message
+        );
       }
     }
 
@@ -49,12 +53,11 @@ export function listaHistorico() {
       }
       return 0; // Se não houver timestamp, mantém a ordem lida
     });
-
   } catch (erro) {
     console.warn(`⚠️ Erro ao acessar o diretório de logs:`, erro.message);
   }
 
-  console.log("📜 Histórico carregado do log:", historico);
+  // console.log("📜 Histórico carregado do log:", historico);
   return historico;
 }
 
