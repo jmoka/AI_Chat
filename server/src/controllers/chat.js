@@ -57,7 +57,7 @@ export async function chat(req, res) {
         .json({ error: "Campo obrigatório: mensagem não pode estar vazia." });
     }
 
-    console.log("arquivosdddddddddddddd", ...historico);
+    // console.log("arquivosdddddddddddddd", ...historico);
     // console.log("lerArquivosProcessados()", lerArquivosProcessados());
 
     const historicoSalvo = listaHistorico();
