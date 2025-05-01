@@ -1,22 +1,17 @@
 # Ignora node_modules e arquivos de ambiente
 node_modules/
 .env
+data/log/
+data/processed/
+data/uploads/
 
 # Ignora arquivos PDF na raiz
 *.pdf
+*.text
+*.excel
+*.csv
+*.xlsx
+*.xls
+*.xlsm
 
-# Logs (corrigido: "log" e não "logs")
-data/log/*
-!data/log/.gitkeep
 
-# Processados
-data/processed/*
-!data/processed/.gitkeep
-
-# Uploads
-data/uploads/*
-!data/uploads/.gitkeep
-
-# Atualizações
-data/update/*
-!data/update/.gitkeep

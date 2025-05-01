@@ -1,3 +1,0 @@
-touch data/log/.gitkeep
-touch data/processed/.gitkeep
-touch data/uploads/.gitkeep
