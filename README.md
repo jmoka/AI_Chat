@@ -1,197 +1,152 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🧠 AI Chat - MSG</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        padding: 20px;
-      }
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      h1,
-      h2,
-      h3 {
-        color: #333;
-      }
-      hr {
-        border: 0;
-        border-top: 1px solid #e0e0e0;
-        margin: 20px 0;
-      }
-      pre {
-        background: #f4f4f4;
-        padding: 15px;
-        border-radius: 6px;
-        overflow-x: auto;
-      }
-      code {
-        background: #ececec;
-        padding: 2px 4px;
-        border-radius: 4px;
-        font-family: Consolas, monospace;
-      }
-      ul,
-      ol {
-        margin: 0 0 20px 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>🧠 AI Chat - MSG</h1>
-      <p>
-        Uma aplicação Node.js com Express que integra a API da <strong>Groq</strong>
-        para criar um sistema de chat inteligente, com armazenamento de histórico em
-        arquivos JSON. Ideal para interações persistentes com modelos de linguagem.
-      </p>
+# 🧠 AI Chat - MSG
 
-      <hr />
+Uma aplicação Node.js com Express que integra a API da **Groq** para criar um sistema de chat inteligente, com armazenamento de histórico em arquivos JSON. Ideal para interações persistentes com modelos de linguagem.
 
-      <h2>📁 Estrutura do Projeto</h2>
-      <pre>
-AI_CHAT-MSG/
+**IDEAL PARA CONCENTRAR AS INFORMAÇÕES DE UM ÚNICO ASSUNTO, USANDO DIVERSAS LLMs DISPONÍVEIS NA API GROQ.**
+
+## 📁 Estrutura do Projeto
+
+AI\_CHAT-MSG/
 ├── server/
 │   └── src/
 │       ├── api/
 │       │   └── server.js              # Inicializa o servidor Express
 │       ├── routes/
 │       │   └── rotaChat.js            # Define a rota /api/chat
-│       ├── controllers/
-│       │   ├── enviarMensagem.js      # Comunica com a API da Groq
-│       │   ├── historicoMSG.js        # Carrega histórico das conversas
-│       │   └── salvarMensagens.js     # Salva o histórico
+│       ├── controllers/               # Lógica do backend
+│       │   ├── atualizarLog.js
+│       │   ├── chat.js
+│       │   ├── contarTokens.js
+│       │   ├── deletarArquivosImportados.js
+│       │   ├── deletarArquivosProcessados.js
+│       │   ├── deletarLog.js
+│       │   ├── enviarMensagem.js
+│       │   ├── escolherModelo.js
+│       │   ├── importarArquivo.js
+│       │   ├── limitarlog.js
+│       │   ├── listaHistorico.js
+│       │   ├── listarArquivosImportdos.js
+│       │   ├── listarArquivosProcessados.js
+│       │   ├── listarLog.js
+│       │   ├── processarArquivos.js
+│       │   ├── resumirTexto.js
+│       │   ├── salvarMensagens.js
+│       │   └── sanitizar.js
 ├── log/                              # Diretório com arquivos de histórico (JSON)
 ├── .env                              # Configuração: chave da API da Groq, etc.
 ├── package.json
 └── README.md
-      </pre>
 
-      <hr />
+## 🚀 Tecnologias Utilizadas
 
-      <h2>🚀 Tecnologias Utilizadas</h2>
-      <ul>
-        <li><strong>Node.js</strong> e <strong>Express</strong>: Servidor e gerenciamento de rotas.</li>
-        <li><strong>API da Groq</strong>: Integração com modelo de linguagem.</li>
-        <li><strong>JSON Files</strong>: Armazenamento persistente do histórico de conversas.</li>
-        <li><strong>ES6 Modules</strong>: Organização moderna do código.</li>
-      </ul>
+- **Node.js** e **Express**: Servidor e gerenciamento de rotas.
+- **API da Groq**: Integração com modelo de linguagem.
+- **JSON Files**: Armazenamento persistente do histórico de conversas.
+- **ES6 Modules**: Organização moderna do código.
 
-      <hr />
+## ⚙️ Como Configurar e Rodar o Projeto
 
-      <h2>⚙️ Como Configurar e Rodar o Projeto</h2>
-      <h3>1. Clonar o Repositório</h3>
-      <p>Abra o terminal e execute:</p>
-      <pre>
-git clone https://github.com/seuusuario/AI_CHAT-MSG.git
+### 1. Clonar o Repositório
+
+git clone <https://github.com/seuusuario/AI_CHAT-MSG.git>
 cd AI_CHAT-MSG
-      </pre>
-      <h3>2. Instalar as Dependências</h3>
-      <pre>
+
+### 2. Instalar as Dependências
+
 npm install
-      </pre>
-      <h3>3. Configurar o Arquivo <code>.env</code></h3>
-      <p>
-        Crie um arquivo chamado <code>.env</code> na raiz do projeto com o seguinte
-        conteúdo:
-      </p>
-      <pre>
-GROQ_API_KEY=sua-chave-da-groq-aqui
-      </pre>
-      <p>
-        Substitua <code>sua-chave-da-groq-aqui</code> pela sua chave de API da Groq.
-      </p>
-      <h3>4. Iniciar o Servidor</h3>
-      <p>
-        Execute o comando:
-      </p>
-      <pre>
-npm start
-      </pre>
-      <p>
-        O servidor será iniciado na porta definida (por padrão, 80 ou conforme variável de ambiente).
-      </p>
 
-      <hr />
+### 3. Configurar o Arquivo `.env`
 
-      <h2>💬 Como Funciona</h2>
-      <ol>
-        <li>
-          <strong>POST para <code>/api/chat</code>:</strong> O cliente envia os seguintes dados:
-          <ul>
-            <li><code>mensagem</code>: Texto do usuário.</li>
-            <li><code>orientacao</code>: (Opcional) Instruções ou prompt inicial.</li>
-            <li><code>historico</code>: (Opcional) Histórico de mensagens anteriores.</li>
-            <li><code>modelo</code>: (Opcional) Número do modelo Groq a ser utilizado.</li>
-            <li>
-              Outras configurações, como <code>temperatura</code>, <code>presence_penalty</code>, etc.
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong>Processamento:</strong>
-          <p>
-            O histórico é carregado (incluindo arquivos processados e o histórico salvo). Um contexto é
-            montado e enviado para a API da Groq através da função <code>enviarMensagem</code>. A resposta
-            é sanitizada e retornada ao cliente.
-          </p>
-        </li>
-        <li>
-          <strong>Armazenamento do Histórico:</strong>
-          <p>
-            As conversas são salvas no diretório <code>log/</code> em formato JSON, permitindo a persistência do
-            histórico.
-          </p>
-        </li>
-      </ol>
+## Crie um arquivo chamado `.env` na raiz do projeto com o seguinte conteúdo
 
-      <hr />
+    - CONTEUDO O .env
+    GROQ_API_KEY = <chave key groq>
+    PORT = 80
+Substitua `sua-chave-da-groq-aqui` pela sua chave da API Groq.
 
-      <h2>🐞 Erros Comuns</h2>
-      <ul>
-        <li>
-          <strong>GROQ_API_KEY ausente:</strong>
-          <em>Verifique se o arquivo <code>.env</code> contém a chave da Groq.</em>
-        </li>
-        <li>
-          <strong>Histórico vazio ou corrompido:</strong>
-          <em>Certifique-se de que o diretório <code>log/</code> contenha arquivos JSON válidos.</em>
-        </li>
-        <li>
-          <strong>Modelo não especificado:</strong>
-          <em>Inclua o campo <code>modelo</code> na requisição.</em>
-        </li>
-      </ul>
+### 4. Iniciar o Servidor
+  
+  npm start
 
-      <hr />
+O servidor será iniciado na porta definida (por padrão, 80 ou conforme variável de ambiente).
 
-      <h2>🤝 Contribuindo</h2>
-      <p>Contribuições são bem-vindas!</p>
-      <ul>
-        <li>Abra <strong>issues</strong> com sugestões ou bugs.</li>
-        <li>Envie <strong>pull requests</strong> com melhorias.</li>
-      </ul>
+## 💬 Como Funciona
 
-      <hr />
+1. **POST para `/api/chat`**
 
-      <h2>📄 Licença</h2>
-      <p>
-        Este projeto está licenciado sob a licença <strong>MIT</strong>. Consulte o arquivo
-        <code>LICENSE</code> para mais detalhes.
-      </p>
+   O cliente envia:
 
-      <hr />
+   - `mensagem`: Texto do usuário.
+   - `orientacao`: (Opcional) Prompt/instruções.
+   - `historico`: (Opcional) Histórico salvo.
+   - `modelo`: (Opcional) Código do modelo LLM.
+   - Outras configurações opcionais (temperatura, penalties...).
 
-      <p>Feito com 💬 por [Seu Nome ou Time].</p>
-    </div>
-  </body>
-</html>
+2. **Processamento Interno**
+
+   - O histórico, arquivos e orientações são combinados.
+   - O contexto é enviado para a API Groq.
+   - A resposta é limpa e retornada.
+
+3. **Armazenamento**
+
+   - Conversas são salvas como JSON no diretório `log/`.
+
+---
+
+## 📸 Demonstrações Visuais
+
+Abaixo estão algumas capturas de tela do funcionamento do sistema **AI Chat - MSG**.
+**➤ Coloque as imagens na pasta `imgs/` na raiz do projeto** com os nomes correspondentes:
+
+### 📥 Upload de Arquivos
+
+![Upload de Arquivos](./imgs/index.png)
+
+### 🧠 Interação com LLM (Chat)
+
+![Chat com LLM](./imgs/46934b07-63b3-4318-9dd5-103dd0b930d2.png)
+
+### 🧾 Histórico Salvo
+
+![Histórico JSON](./imgs/06934a4d-cf0a-413d-b64c-c2147a041b04.png)
+
+### 📂 Arquivos Processados
+
+![Arquivos Processados](./imgs/52cde686-c941-478f-a68b-71ff45a3b4f2.png)
+
+### 🧹 Limpeza de Diretórios
+
+![Limpeza de Arquivos](./imgs/190a7c63-afb2-4542-ae5c-2ab58f9551f9.png)
+
+---
+
+## 🐞 Erros Comuns
+
+- **GROQ\_API\_KEY ausente**
+  ➤ Verifique se o `.env` foi criado corretamente.
+
+- **Histórico vazio ou corrompido**
+  ➤ Confira os arquivos no diretório `log/`.
+
+- **Modelo não especificado**
+  ➤ Sempre inclua o campo `modelo` na requisição.
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas!
+
+- Abra **issues** com sugestões ou bugs.
+- Envie **pull requests** com melhorias.
+
+---
+
+## 📄 Licença
+
+Sistema de estudos privado para uso pessoal e educacional.
+
+---
+
+Feito com 💬 por **João Tavares**
