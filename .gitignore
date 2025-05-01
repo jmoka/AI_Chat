@@ -2,22 +2,21 @@
 node_modules/
 .env
 
-# Ignora arquivos PDF na raiz (caso existam)
+# Ignora arquivos PDF na raiz
 *.pdf
 
-# Ignora arquivos nas pastas específicas, mas mantém as pastas
-# Logs
-data/logs/*
-!data/logs/.gitkeep
+# Logs (corrigido: "log" e não "logs")
+data/log/*
+!data/log/.gitkeep
 
 # Processados
 data/processed/*
 !data/processed/.gitkeep
 
+# Uploads
+data/uploads/*
+!data/uploads/.gitkeep
+
 # Atualizações
 data/update/*
 !data/update/.gitkeep
-
-# Uploads
-uploads/*
-!uploads/.gitkeep
