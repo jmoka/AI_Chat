@@ -6,6 +6,7 @@ Uma aplicação Node.js com Express que integra a API da **Groq** para criar um 
 
 ## 📁 Estrutura do Projeto
 
+````bash
 AI\_CHAT-MSG/
 ├── server/
 │   └── src/
@@ -36,6 +37,7 @@ AI\_CHAT-MSG/
 ├── .env                              # Configuração: chave da API da Groq, etc.
 ├── package.json
 └── README.md
+````
 
 ## 🚀 Tecnologias Utilizadas
 
