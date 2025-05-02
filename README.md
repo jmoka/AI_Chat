@@ -99,25 +99,29 @@ O servidor será iniciado na porta definida (por padrão, 80 ou conforme variáv
 Abaixo estão algumas capturas de tela do funcionamento do sistema **AI Chat - MSG**.
 **➤ Coloque as imagens na pasta `imgs/` na raiz do projeto** com os nomes correspondentes:
 
-### 📥 Upload de Arquivos
+### 📥 TELA PRINCIPAL
 
-![Upload de Arquivos](./imgs/index.png)
+![TELA PRINCIPAL](./imgs/index.png)
 
-### 🧠 Interação com LLM (Chat)
+### 🧠 LOGICA DE RESPOSTR
 
-![Chat com LLM](./imgs/46934b07-63b3-4318-9dd5-103dd0b930d2.png)
+![LOGICA DE RESPOSTR](./imgs/logicaDeResposta.png)
 
-### 🧾 Histórico Salvo
+### 🧾 BOTÕES PRINCIPAIS
 
-![Histórico JSON](./imgs/06934a4d-cf0a-413d-b64c-c2147a041b04.png)
+    - ENVIAR
+    - LIMPAR
+    - APAGAR TUDO O HISTÓRICO
 
-### 📂 Arquivos Processados
+![BOTÕES PRINCIPAIS](./imgs/btnsAcaoPrincipal.png)
 
-![Arquivos Processados](./imgs/52cde686-c941-478f-a68b-71ff45a3b4f2.png)
+### 📂 CONFIGURAÇÕES
 
-### 🧹 Limpeza de Diretórios
+![CONFIGURAÇÕES](./imgs/configuracoes.png)
 
-![Limpeza de Arquivos](./imgs/190a7c63-afb2-4542-ae5c-2ab58f9551f9.png)
+### 🧹 Enviar Arquivos para LLM
+
+![ENVIAR ARQUIVOS](./imgs/arquivos.png)
 
 ---
 
